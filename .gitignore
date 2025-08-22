@@ -1,0 +1,28 @@
+node_modules/
+.env
+changelog.md
+# Sensitive files
+*.pem
+*.key
+*.cert
+*.crt
+*.pfx
+*.p12
+*.keystore
+*.jks
+secrets.json
+credentials.json
+config.json
+auth.json
+private.json
+# Additional sensitive files
+api_keys.txt
+oauth_tokens.txt
+jwt_secret.txt
+encryption_keys.txt
+service_account.json
+.npmrc
+.env.local
+.env.development
+.env.test
+.env.production

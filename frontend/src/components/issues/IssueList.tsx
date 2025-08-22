@@ -1,0 +1,257 @@
+import React from 'react';
+import { 
+  Grid, 
+  Box, 
+  Typography, 
+  TextField, 
+  MenuItem, 
+  FormControl, 
+  InputLabel, 
+  Select, 
+  Pagination, 
+  CircularProgress,
+  Alert,
+  Paper,
+  InputAdornment,
+  SelectChangeEvent
+} from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
+import IssueCard from './IssueCard';
+import { Issue, IssueStatus, IssueCategory } from '../../types';
+import { usePagination, useFiltering } from '../../hooks';
+
+interface IssueListProps {
+  issues: Issue[];
+  loading: boolean;
+  error: string | null;
+  onFlagIssue?: (issue: Issue) => void;
+  selectable?: boolean;
+  selectedIssues?: Issue[];
+  onSelectIssue?: (issue: Issue) => void;
+  showToolbar?: boolean;
+}
+
+const IssueList: React.FC<IssueListProps> = ({ 
+  issues = [], 
+  loading, 
+  error, 
+  onFlagIssue,
+  selectable = false,
+  selectedIssues = [],
+  onSelectIssue,
+  showToolbar = true
+ }) => {
+  // Setup filtering with custom hook
+  const { 
+    filters, 
+    setFilter, 
+    filteredData: filteredIssues 
+  } = useFiltering({
+    data: Array.isArray(issues) ? issues : [],
+    initialFilters: {
+      searchTerm: '',
+      status: '',
+      category: ''
+    },
+    filterFn: (issue, filters) => {
+      const matchesSearch = !filters.searchTerm || 
+        (typeof issue.title === 'string' && typeof filters.searchTerm === 'string' && 
+         issue.title.toLowerCase().includes(filters.searchTerm.toLowerCase())) || 
+        (typeof issue.description === 'string' && typeof filters.searchTerm === 'string' && 
+         issue.description.toLowerCase().includes(filters.searchTerm.toLowerCase()));
+      
+      const matchesStatus = !filters.status || issue.status === filters.status;
+      const matchesCategory = !filters.category || issue.category === filters.category;
+      
+      return matchesSearch && matchesStatus && matchesCategory;
+    }
+  });
+
+  // Setup pagination with custom hook
+  const { 
+    page, 
+    pageSize, 
+    totalPages, 
+    setPage,
+    metadata: { 
+      startIndex: firstItemIndex, 
+      endIndex: lastItemIndex 
+    } 
+  } = usePagination({
+    initialPage: 0,
+    initialPageSize: 9,
+    totalItems: filteredIssues.length
+  });
+
+  // Get current page of issues
+  const currentIssues = filteredIssues.slice(firstItemIndex, lastItemIndex);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFilter('searchTerm', e.target.value);
+    setPage(0); // Reset to first page when search changes
+  };
+
+  const handleStatusFilterChange = (e: SelectChangeEvent<string>) => {
+    setFilter('status', e.target.value);
+    setPage(0);
+  };
+
+  const handleCategoryFilterChange = (e: SelectChangeEvent<string>) => {
+    setFilter('category', e.target.value);
+    setPage(0);
+  };
+
+  const handlePageChange = (_: React.ChangeEvent<unknown>, newPage: number) => {
+    setPage(newPage - 1);
+  };
+
+  const isIssueSelected = (issue: Issue): boolean => {
+    return selectedIssues.some(selected => selected.id === issue.id);
+  };
+
+  return (
+    <Box>
+      {showToolbar && (
+        <Paper elevation={0} sx={{ p: 3, mb: 4, backgroundColor: '#1e1e1e' }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
+                placeholder="Search issues..."
+                value={filters.searchTerm || ''}
+                onChange={handleSearchChange}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon sx={{ color: '#aaa' }} />
+                    </InputAdornment>
+                  ),
+                }}
+                sx={{ 
+                  '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                      borderColor: '#444',
+                    },
+                    '&:hover fieldset': {
+                      borderColor: '#666',
+                    },
+                  },
+                  '& .MuiInputBase-input': {
+                    color: '#fff',
+                  },
+                }}
+              />
+            </Grid>
+            
+            <Grid item xs={12} sm={6} md={3}>
+              <FormControl fullWidth>
+                <InputLabel id="status-filter-label" sx={{ color: '#aaa' }}>Status</InputLabel>
+                <Select
+                  labelId="status-filter-label"
+                  value={filters.status?.toString() || ''}
+                  label="Status"
+                  onChange={handleStatusFilterChange}
+                  sx={{ 
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#444',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#666',
+                    },
+                    '& .MuiInputBase-input': {
+                      color: '#fff',
+                    },
+                  }}
+                >
+                  <MenuItem value="">All Statuses</MenuItem>
+                  {Object.values(IssueStatus).map((status) => (
+                    <MenuItem key={status} value={status}>
+                      {status && typeof status === 'string' ? status.charAt(0).toUpperCase() + status.slice(1).replace('_', ' ') : 'Unknown'}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={3}>
+              <FormControl fullWidth>
+                <InputLabel id="category-filter-label" sx={{ color: '#aaa' }}>Category</InputLabel>
+                <Select
+                  labelId="category-filter-label"
+                  value={filters.category?.toString() || ''}
+                  label="Category"
+                  onChange={handleCategoryFilterChange}
+                  sx={{ 
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#444',
+                    },
+                    '&:hover .MuiOutlinedInput-notchedOutline': {
+                      borderColor: '#666',
+                    },
+                    '& .MuiInputBase-input': {
+                      color: '#fff',
+                    },
+                  }}
+                >
+                  <MenuItem value="">All Categories</MenuItem>
+                  {Object.values(IssueCategory).map((category) => (
+                    <MenuItem key={category} value={category}>
+                      {category && typeof category === 'string' ? category.charAt(0).toUpperCase() + category.slice(1).replace('_', ' ') : 'Unknown'}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Paper>
+      )}
+      
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Alert severity="error" sx={{ my: 2 }}>{error}</Alert>
+      ) : filteredIssues.length === 0 ? (
+        <Box sx={{ textAlign: 'center', my: 4 }}>
+          <Typography variant="h6" color="text.secondary">
+            No issues found
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Try adjusting your search or filters
+          </Typography>
+        </Box>
+      ) : (
+        <>
+          <Grid container spacing={3}>
+            {currentIssues.map((issue) => (
+              <Grid item xs={12} sm={6} md={4} key={issue.id}>
+                <IssueCard 
+                  issue={issue} 
+                  onFlag={onFlagIssue}
+                  selectable={selectable}
+                  selected={isIssueSelected(issue)}
+                  onSelect={onSelectIssue}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          
+          {totalPages > 1 && (
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+              <Pagination 
+                count={totalPages} 
+                page={page + 1} 
+                onChange={handlePageChange} 
+                color="primary" 
+                shape="rounded"
+              />
+            </Box>
+          )}
+        </>
+      )}
+    </Box>
+  );
+};
+
+export default IssueList;
