@@ -96,7 +96,7 @@ interface ApiInterface {
   delete: <T>(url: string, config?: any) => Promise<{ data: T }>;
 }
 
-// Create the API instance
+// Create the API instance with performance optimizations
 const api: ApiInterface = USE_MOCK_SERVICE ? mockApi : {
   get: async <T>(url: string, config?: any) => {
     const response = await axiosInstance.get<T>(url, config);

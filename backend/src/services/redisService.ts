@@ -30,6 +30,10 @@ export const cacheKeys = {
     `user:${userId}:issues:${page}:${limit}`,
   allIssues: (page: number, limit: number, filters: string) => 
     `all:issues:${page}:${limit}:${filters}`,
+  NEARBY_ISSUES_PATTERN: 'nearby:*',
+  ISSUE_DETAIL_PATTERN: 'issue:*',
+  USER_ISSUES_PATTERN: 'user:*:issues:*',
+  ALL_ISSUES_PATTERN: 'all:issues:*',
 };
 
 // Create Redis client

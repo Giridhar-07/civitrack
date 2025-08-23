@@ -1,0 +1,106 @@
+import { Model, DataTypes, Optional } from 'sequelize';
+import sequelize from '../config/database';
+
+// Define interface for Location attributes
+interface LocationAttributes {
+  id: string;
+  latitude: number;
+  longitude: number;
+  address: string;
+  geom?: any; // PostGIS geometry field
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+// Define interface for Location creation attributes
+interface LocationCreationAttributes extends Optional<LocationAttributes, 'id' | 'geom'> {}
+
+// Define Location model
+class Location extends Model<LocationAttributes, LocationCreationAttributes> implements LocationAttributes {
+  public id!: string;
+  public latitude!: number;
+  public longitude!: number;
+  public address!: string;
+  public geom!: any;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+// Initialize Location model
+Location.init(
+  {
+    id: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
+      primaryKey: true,
+    },
+    latitude: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    longitude: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    geom: {
+      type: DataTypes.GEOMETRY('POINT', 4326),
+      allowNull: true,
+    }
+  },
+  {
+    sequelize,
+    modelName: 'Location',
+    tableName: 'locations',
+    timestamps: true,
+  }
+);
+
+// Add hooks to automatically set geom field from lat/long
+Location.beforeCreate(async (location) => {
+  if (location.latitude && location.longitude) {
+    location.geom = { type: 'Point', coordinates: [location.longitude, location.latitude] };
+  }
+});
+
+Location.beforeUpdate(async (location) => {
+  if (location.changed('latitude') || location.changed('longitude')) {
+    location.geom = { type: 'Point', coordinates: [location.longitude, location.latitude] };
+  }
+});
+
+// Add migration function to add geom column if it doesn't exist
+export const migrateLocationTable = async () => {
+  try {
+    // Check if geom column exists
+    const [results] = await sequelize.query(
+      "SELECT column_name FROM information_schema.columns WHERE table_name = 'locations' AND column_name = 'geom'"
+    );
+    
+    // If geom column doesn't exist, add it
+    if ((results as any[]).length === 0) {
+      await sequelize.query(
+        "ALTER TABLE locations ADD COLUMN geom GEOMETRY(Point, 4326)"
+      );
+      
+      // Update existing records to set geom from lat/long
+      await sequelize.query(
+        "UPDATE locations SET geom = ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)"
+      );
+      
+      // Create spatial index
+      await sequelize.query(
+        "CREATE INDEX location_geom_idx ON locations USING GIST (geom)"
+      );
+      
+      console.log('Successfully added geom column and spatial index to locations table');
+    }
+  } catch (error) {
+    console.error('Error migrating locations table:', error);
+  }
+};
+
+export default Location;

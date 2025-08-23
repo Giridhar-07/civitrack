@@ -22,6 +22,33 @@ export interface IssueFilterParams {
   userId?: string;
 }
 
+// Function for infinite scroll with pagination
+export const getIssuesNearby = async (
+  latitude: number, 
+  longitude: number, 
+  radius: number = 5, 
+  page: number = 1, 
+  limit: number = 20
+): Promise<{
+  data: Issue[];
+  pagination: {
+    total: number;
+    hasNextPage: boolean;
+  }
+}> => {
+  try {
+    const response = await api.get('/issues/nearby', {
+      params: { latitude, longitude, radius, page, limit }
+    });
+    return {
+      data: (response.data as { issues: Issue[] }).issues,
+      pagination: (response.data as { pagination: { total: number; hasNextPage: boolean } }).pagination
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 const issueService = {
   getAllIssues: async (filters?: IssueFilterParams): Promise<Issue[]> => {
     try {
@@ -133,6 +160,45 @@ const issueService = {
         params: { latitude, longitude, radius }
       });
       return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // New method with pagination support for infinite scroll
+  getIssuesNearby: async (
+    latitude: number, 
+    longitude: number, 
+    radius: number = 5, 
+    page: number = 1, 
+    limit: number = 20
+  ): Promise<{
+    data: Issue[];
+    pagination: {
+      total: number;
+      hasNextPage: boolean;
+    };
+  }> => {
+    try {
+      const response = await api.get<{
+        issues: Issue[];
+        pagination: {
+          total: number;
+          page: number;
+          limit: number;
+          pages: number;
+        };
+      }>('\/issues\/nearby', {
+        params: { latitude, longitude, radius, page, limit }
+      });
+      
+      return {
+        data: response.data.issues,
+        pagination: {
+          total: response.data.pagination.total,
+          hasNextPage: page < response.data.pagination.pages
+        }
+      };
     } catch (error) {
       throw error;
     }

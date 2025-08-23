@@ -89,6 +89,10 @@ app.use(cookieParser());
 // Add compression for better performance
 app.use(compression());
 
+// Add performance monitoring middleware
+import { performanceMonitor } from './utils/performanceMonitor';
+app.use(performanceMonitor);
+
 // JSON body parser with size limits
 app.use(express.json({ limit: '1mb' })); // Limit JSON body size
 app.use(express.urlencoded({ extended: true, limit: '1mb' })); // Limit URL-encoded body size
@@ -123,6 +127,9 @@ initializeSocketIO(server);
 // Start server
 const PORT = process.env.PORT || 5000;
 
+// Import and run geospatial migration
+import { migrateGeospatial } from './scripts/migrateGeospatial';
+
 // Connect to database and start server
 const startServer = async () => {
   try {
@@ -135,10 +142,19 @@ const startServer = async () => {
     console.log('Database models synchronized successfully.');
     
     // Start server
-    server.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`WebSocket server initialized`);
-    });
+server.listen(PORT, async () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`WebSocket server initialized`);
+  console.log(`Performance monitoring enabled`);
+  
+  // Run geospatial migration
+  try {
+    await migrateGeospatial();
+    console.log('Geospatial migration completed successfully');
+  } catch (error) {
+    console.error('Geospatial migration failed:', error);
+  }
+});
   } catch (error) {
     console.error('Unable to connect to the database or start server:', error);
     process.exit(1);

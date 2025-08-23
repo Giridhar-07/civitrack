@@ -55,6 +55,12 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
         { model: Location, as: 'location' }
       ]
     });
+    
+    // Emit real-time update via WebSocket
+    emitNewIssue(createdIssue);
+    
+    // Clear nearby issues cache
+    await cacheUtils.clearByPattern(cacheKeys.NEARBY_ISSUES_PATTERN);
 
     return successResponse(res, createdIssue, 'Issue created successfully', 201);
   } catch (error) {
