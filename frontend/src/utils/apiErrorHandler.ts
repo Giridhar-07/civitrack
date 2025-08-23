@@ -50,14 +50,39 @@ export const extractErrorMessage = (error: unknown): ApiErrorResponse => {
       }
     }
 
+    // Check for offline status first
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+      return {
+        message: 'You are currently offline. Please check your internet connection and try again.',
+        errorCode: 'OFFLINE_ERROR'
+      };
+    }
+    
     // Handle network errors using our utility function
     if (isNetworkError(error)) {
       // Differentiate between timeout and other network errors
       if (error.code === 'ECONNABORTED') {
         return { 
-          message: 'Request timed out. Please check your internet connection and try again later.', 
+          message: 'Request timed out. The server is taking too long to respond. Please try again later.', 
           errorCode: 'TIMEOUT_ERROR' 
         };
+      }
+      
+      // Check for specific network error messages
+      if (error.message) {
+        if (error.message.includes('Failed to fetch')) {
+          return {
+            message: 'Failed to connect to the server. Please check your internet connection and try again.',
+            errorCode: 'NETWORK_ERROR'
+          };
+        }
+        
+        if (error.message.includes('Network Error')) {
+          return {
+            message: 'Network connection issue. Please check your internet connection and try again.',
+            errorCode: 'NETWORK_ERROR'
+          };
+        }
       }
       
       return {
@@ -68,7 +93,7 @@ export const extractErrorMessage = (error: unknown): ApiErrorResponse => {
 
     if (!error.response) {
       return { 
-        message: 'Network error. Please check your connection and try again.', 
+        message: 'Unable to connect to the server. Please check your connection and try again.', 
         errorCode: 'NETWORK_ERROR' 
       };
     }

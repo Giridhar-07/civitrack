@@ -6,6 +6,8 @@ import { successResponse, errorResponse, badRequestResponse, notFoundResponse } 
 import { calculateBoundingBox, calculateDistance } from '../utils/geospatial';
 import { IssueStatus, IssueCategory } from '../types/enums';
 import sequelize from '../config/database';
+import { cacheUtils, cacheKeys, cacheTTL } from '../services/redisService';
+import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
 
 // Create a new issue
 export const createIssue = async (req: Request, res: Response): Promise<Response> => {
@@ -136,7 +138,7 @@ export const getIssues = async (req: Request, res: Response): Promise<Response> 
 // Get issues near a location
 export const getNearbyIssues = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { latitude, longitude, radius = 5 } = req.query; // radius in km, default 5km
+    const { latitude, longitude, radius = 5, page = 1, limit = 20 } = req.query; // radius in km, default 5km
     
     if (!latitude || !longitude) {
       return badRequestResponse(res, 'Latitude and longitude are required');
@@ -145,44 +147,72 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
     const lat = parseFloat(latitude as string);
     const lng = parseFloat(longitude as string);
     const radiusKm = parseFloat(radius as string);
+    const pageNum = parseInt(page as string, 10);
+    const limitNum = parseInt(limit as string, 10);
     
-    // Calculate bounding box for initial filtering
-    const [minLat, minLng, maxLat, maxLng] = calculateBoundingBox(lat, lng, radiusKm);
+    // Generate cache key for this query
+    const cacheKey = cacheKeys.nearbyIssues(lat, lng, radiusKm, pageNum, limitNum);
     
-    // Find locations within the bounding box
-    const locations = await Location.findAll({
-      where: {
-        latitude: { [Op.between]: [minLat, maxLat] },
-        longitude: { [Op.between]: [minLng, maxLng] }
-      }
-    });
-    
-    // Filter locations by actual distance using Haversine formula
-    const locationIdsInRadius = locations
-      .filter(location => {
-        const distance = calculateDistance(
-          lat, 
-          lng, 
-          location.latitude, 
-          location.longitude
-        );
-        return distance <= radiusKm;
-      })
-      .map(location => location.id);
-    
-    // Get issues for these locations
-    const issues = await Issue.findAll({
-      where: {
-        locationId: { [Op.in]: locationIdsInRadius }
+    // Try to get from cache first
+    const result = await cacheUtils.getOrSet(
+      cacheKey,
+      async () => {
+        const offset = (pageNum - 1) * limitNum;
+        
+        // Use a single optimized spatial query with ST_DWithin
+        // Get total count for pagination
+        const { count } = await Issue.findAndCountAll({
+          include: [{ 
+            model: Location, 
+            as: 'location',
+            where: sequelize.literal(`ST_DWithin(
+              "location"."geom"::geography,
+              ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326)::geography,
+              ${radiusKm * 1000}
+            )`)
+          }]
+        });
+        
+        // Get paginated issues
+        const issues = await Issue.findAll({
+          include: [
+            { model: User, as: 'user', attributes: ['id', 'username', 'name'] },
+            { 
+              model: Location, 
+              as: 'location',
+              where: sequelize.literal(`ST_DWithin(
+                "location"."geom"::geography,
+                ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326)::geography,
+                ${radiusKm * 1000}
+              )`)
+            }
+          ],
+          order: [['reportedAt', 'DESC']],
+          limit: limitNum,
+          offset: offset
+        });
+        
+        // Calculate pagination metadata
+        const totalPages = Math.ceil(count / limitNum);
+        const hasNextPage = pageNum < totalPages;
+        const hasPrevPage = pageNum > 1;
+        
+        return {
+          issues,
+          pagination: {
+            total: count,
+            page: pageNum,
+            limit: limitNum,
+            totalPages,
+            hasNextPage,
+            hasPrevPage
+          }
+        };
       },
-      include: [
-        { model: User, as: 'user', attributes: ['id', 'username', 'name'] },
-        { model: Location, as: 'location' }
-      ],
-      order: [['reportedAt', 'DESC']]
-    });
+      cacheTTL.NEARBY_ISSUES
+    );
     
-    return successResponse(res, issues, 'Nearby issues retrieved successfully');
+    return successResponse(res, result, 'Nearby issues retrieved successfully');
   } catch (error) {
     console.error('Get nearby issues error:', error);
     return errorResponse(res, 'Error retrieving nearby issues');

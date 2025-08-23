@@ -163,11 +163,16 @@ if (!USE_MOCK_SERVICE) {
       // Use our error handler utility to extract a standardized error message
       const errorResponse = extractErrorMessage(error);
       
-      // Check if this is a network error or timeout
+      // Check if this is a network error or timeout with enhanced detection
       const isNetworkError = !error.response || 
         (error as any).code === 'ECONNABORTED' || 
         errorResponse.errorCode === 'NETWORK_ERROR' || 
-        errorResponse.errorCode === 'TIMEOUT_ERROR';
+        errorResponse.errorCode === 'TIMEOUT_ERROR' ||
+        errorResponse.errorCode === 'OFFLINE_ERROR' ||
+        error.message?.includes('Network Error') ||
+        error.message?.includes('Failed to fetch') ||
+        error.message?.includes('connection') ||
+        (typeof navigator !== 'undefined' && !navigator.onLine);
       
       // Handle authentication errors (401) specially
       if (errorResponse.statusCode === 401) {

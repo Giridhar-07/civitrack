@@ -6,10 +6,12 @@ import path from 'path';
 import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
+import http from 'http';
 import routes from './routes';
 import sequelize from './config/database';
 import { syncModels } from './models';
 import { errorResponse } from './utils/response';
+import { initializeSocketIO } from './services/socketService';
 
 // Load environment variables
 dotenv.config();
@@ -112,6 +114,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   return errorResponse(res, 'Internal server error', 500);
 });
 
+// Create HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.IO
+initializeSocketIO(server);
+
 // Start server
 const PORT = process.env.PORT || 5000;
 
@@ -127,8 +135,9 @@ const startServer = async () => {
     console.log('Database models synchronized successfully.');
     
     // Start server
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
+      console.log(`WebSocket server initialized`);
     });
   } catch (error) {
     console.error('Unable to connect to the database or start server:', error);

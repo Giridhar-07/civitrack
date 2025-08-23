@@ -41,7 +41,12 @@ interface IssueMapProps {
 // Component to recenter map when center prop changes
 const ChangeMapView: React.FC<{ center: LatLngExpression }> = ({ center }) => {
   const map = useMap();
-  map.setView(center, map.getZoom());
+  
+  // Use useEffect to avoid state updates during render
+  useEffect(() => {
+    map.setView(center, map.getZoom());
+  }, [center, map]);
+  
   return null;
 };
 
@@ -154,7 +159,7 @@ const IssueMap: React.FC<IssueMapProps> = ({
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
           maxZoom={19}
           keepBuffer={8}
           updateWhenZooming={false}

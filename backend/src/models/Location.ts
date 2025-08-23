@@ -7,6 +7,7 @@ interface LocationAttributes {
   latitude: number;
   longitude: number;
   address?: string;
+  geom?: any; // PostGIS geometry point
   createdAt: Date;
   updatedAt: Date;
 }
@@ -48,6 +49,10 @@ Location.init(
         max: 180,
       },
     },
+    geom: {
+      type: DataTypes.GEOMETRY('POINT', 4326),
+      allowNull: true,
+    },
     address: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -68,8 +73,25 @@ Location.init(
     modelName: 'Location',
     tableName: 'locations',
     timestamps: true,
+    hooks: {
+      beforeCreate: (location: Location) => {
+        if (location.latitude && location.longitude) {
+          (location as any).geom = { type: 'Point', coordinates: [location.longitude, location.latitude] };
+        }
+      },
+      beforeUpdate: (location: Location) => {
+        if (location.latitude && location.longitude) {
+          (location as any).geom = { type: 'Point', coordinates: [location.longitude, location.latitude] };
+        }
+      }
+    },
     indexes: [
       // Add spatial index for faster geospatial queries
+      {
+        name: 'location_geom_idx',
+        using: 'GIST',
+        fields: ['geom']
+      },
       {
         fields: ['latitude', 'longitude'],
       },

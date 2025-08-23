@@ -49,8 +49,7 @@ export const verifyToken = (token: string): JwtPayload => {
     };
     
     const decoded = jwt.verify(token, JWT_SECRET, verifyOptions);
-    // Cast to our custom JwtPayload type
-    return decoded as unknown as JwtPayload;
+    return decoded as JwtPayload;
   } catch (error: any) {
     // Enhanced error handling with specific error messages
     if (error.name === 'TokenExpiredError') {
