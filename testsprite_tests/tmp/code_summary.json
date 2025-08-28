@@ -1,0 +1,54 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React",
+    "Node.js",
+    "Express",
+    "PostgreSQL",
+    "Redis"
+  ],
+  "features": [
+    {
+      "name": "Authentication",
+      "description": "User registration, login, and session management",
+      "files": [
+        "frontend/src/services/authService.ts",
+        "backend/src/controllers/authController.ts",
+        "backend/src/routes/authRoutes.ts"
+      ]
+    },
+    {
+      "name": "Issue Reporting",
+      "description": "Creating issues with location data and photo uploads",
+      "files": [
+        "frontend/src/services/issueService.ts",
+        "backend/src/controllers/issueController.ts",
+        "backend/src/routes/issueRoutes.ts"
+      ]
+    },
+    {
+      "name": "Issue Discovery",
+      "description": "Map-based issue browsing with filtering capabilities",
+      "files": [
+        "frontend/src/pages/IssueMap.tsx",
+        "frontend/src/components/IssueFilter.tsx"
+      ]
+    },
+    {
+      "name": "Redis Caching",
+      "description": "Caching layer for performance optimization",
+      "files": [
+        "backend/src/services/redisService.ts",
+        "backend/src/config/redis.ts"
+      ]
+    },
+    {
+      "name": "Real-time Updates",
+      "description": "WebSocket integration for real-time issue updates",
+      "files": [
+        "frontend/src/services/socketService.ts",
+        "backend/src/controllers/socketController.ts"
+      ]
+    }
+  ]
+}

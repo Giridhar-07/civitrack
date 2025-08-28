@@ -74,12 +74,14 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     // Find user by email
     const user = await User.findOne({ where: { email } });
     if (!user) {
+      // Consistent 401 response for invalid credentials
       return unauthorizedResponse(res, 'Invalid credentials');
     }
 
     // Check password
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
+      // Consistent 401 response for invalid credentials
       return unauthorizedResponse(res, 'Invalid credentials');
     }
 
@@ -100,7 +102,19 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     return successResponse(res, { user: userData, token }, 'Login successful');
   } catch (error) {
     console.error('Login error:', error);
-    return errorResponse(res, 'Error during login');
+    
+    // Enhanced error handling with more specific error messages
+    if (error instanceof Error) {
+      if (error.name === 'SequelizeConnectionError' || error.name === 'SequelizeConnectionRefusedError') {
+        return errorResponse(res, 'Database connection error. Please try again later.', 503);
+      }
+      
+      if (error.name === 'SequelizeTimeoutError') {
+        return errorResponse(res, 'Database timeout. Please try again later.', 504);
+      }
+    }
+    
+    return errorResponse(res, 'Error during login. Please try again later.', 500);
   }
 };
 

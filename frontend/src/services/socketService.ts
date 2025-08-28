@@ -19,15 +19,17 @@ const eventHandlers: Record<string, EventHandler[]> = {
 // Initialize socket connection
 export const initializeSocket = (): typeof Socket => {
   if (!socket) {
-    const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    const BACKEND_URL = process.env.REACT_APP_API_URL || 'http://localhost:5001';
     
     socket = io(BACKEND_URL, {
       auth: {
         withCredentials: true
       },
-      reconnectionAttempts: 5,
+      reconnectionAttempts: 10,
       reconnectionDelay: 1000,
-      timeout: 10000,
+      timeout: 20000,
+      transports: ['polling', 'websocket'],
+      forceNew: true
     });
 
     // Set up default event listeners

@@ -82,7 +82,7 @@ const authService = {
         console.error('Login API timeout error:', error.message);
         // Throw a more user-friendly error for network issues
         const networkError = new Error('Network connection issue. Please check your internet connection and try again.');
-        networkError.errorCode = 'NETWORK_ERROR';
+        networkError.errorCode = 'TIMEOUT_ERROR';
         throw networkError;
       } else if (!error.response) {
         console.error('Login API network error:', error.message);
@@ -90,11 +90,20 @@ const authService = {
         networkError.errorCode = 'NETWORK_ERROR';
         throw networkError;
       } else if (error.response?.status === 401 || error.statusCode === 401 || error.status === 401) {
-        // Handle authentication errors properly
-        console.error('Login API authentication error:', error.message);
+        // Handle authentication errors properly with consistent 401 response
+        console.error('Login API authentication error:', error.response?.data?.message || 'Invalid credentials');
         const authError = new Error(error.response?.data?.message || 'Invalid email or password');
         (authError as any).status = 401;
+        (authError as any).statusCode = 401;
         throw authError;
+      } else if (error.response?.status === 429) {
+        // Handle rate limiting errors
+        console.error('Login API rate limit error:', error.response?.data?.message || 'Too many requests');
+        const rateLimitError = new Error('Too many login attempts. Please try again later.');
+        (rateLimitError as any).status = 429;
+        (rateLimitError as any).statusCode = 429;
+        (rateLimitError as any).retryAfter = error.response?.headers?.['retry-after'] || 60;
+        throw rateLimitError;
       } else {
         console.error('Login API error:', error.response?.data || error.message);
         throw error;

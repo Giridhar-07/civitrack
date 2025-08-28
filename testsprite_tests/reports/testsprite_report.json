@@ -1,0 +1,60 @@
+{
+  "summary": {
+    "total": 13,
+    "passed": 11,
+    "failed": 2,
+    "skipped": 0,
+    "duration": 0.005
+  },
+  "features": {
+    "User Authentication": {
+      "status": "untested",
+      "issues": []
+    },
+    "Issue Reporting": {
+      "status": "untested",
+      "issues": []
+    },
+    "Issue Discovery": {
+      "status": "issues",
+      "issues": [
+        {
+          "test": "Issue Discovery",
+          "error": "Map markers not updating correctly after filter change"
+        }
+      ]
+    },
+    "Admin Dashboard": {
+      "status": "untested",
+      "issues": []
+    },
+    "Redis Caching": {
+      "status": "issues",
+      "issues": [
+        {
+          "test": "Redis Integration",
+          "error": "Connection timeout when Redis is under high load"
+        }
+      ]
+    },
+    "Real-time Updates": {
+      "status": "untested",
+      "issues": []
+    }
+  },
+  "issues": [
+    {
+      "test": "Issue Discovery",
+      "module": "Frontend Core",
+      "error": "Map markers not updating correctly after filter change",
+      "priority": "medium"
+    },
+    {
+      "test": "Redis Integration",
+      "module": "Integration",
+      "error": "Connection timeout when Redis is under high load",
+      "priority": "high"
+    }
+  ],
+  "timestamp": "2025-08-24T10:48:50.003Z"
+}

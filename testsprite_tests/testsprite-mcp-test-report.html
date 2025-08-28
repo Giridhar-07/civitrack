@@ -1,0 +1,152 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Markdown Preview</title>
+      <style>
+        body {
+          font-family: sans-serif;
+          padding: 40px;
+          line-height: 1.6;
+          background: #fdfdfd;
+          color: #333;
+        }
+        pre {
+          background: #f4f4f4;
+          padding: 10px;
+          border-radius: 5px;
+          overflow-x: auto;
+        }
+        code {
+          font-family: monospace;
+          background: #eee;
+          padding: 2px 4px;
+        }
+        table {
+          border-collapse: collapse;
+          width: 100%;
+          margin-top: 20px;
+        }
+        th, td {
+          border: 1px solid #ccc;
+          padding: 8px 12px;
+          text-align: left;
+        }
+        th {
+          background-color: #f2f2f2;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>TestSprite AI Testing Report (MCP)</h1>
+<hr>
+<h2>1️⃣ Document Metadata</h2>
+<ul>
+<li><strong>Project Name:</strong> civiTrack</li>
+<li><strong>Version:</strong> N/A</li>
+<li><strong>Date:</strong> 2025-08-24</li>
+<li><strong>Prepared by:</strong> TestSprite AI Team</li>
+</ul>
+<hr>
+<h2>2️⃣ Requirement Validation Summary</h2>
+<h3>Requirement: User Registration</h3>
+<ul>
+<li><strong>Description:</strong> Verify user registration functionality.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC001</li>
+<li><strong>Test Name:</strong> User Registration with Valid Data</li>
+<li><strong>Test Code:</strong> <a href="./TC001_User_Registration_with_Valid_Data.py">TC001_User_Registration_with_Valid_Data.py</a></li>
+<li><strong>Test Error:</strong> Test failed: Unable to complete user registration due to server timeout error. No registration success confirmation received and backend password hash verification could not be performed. Please investigate server connectivity or backend issues preventing registration.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/65556872-21a8-4f74-86c5-e7e6b4591a3e/33e62ad2-95a0-47ad-a8e7-2ff1939296b0">View Result</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Investigate and fix backend server scalability and rate limiting policies to prevent 429 errors during user registration. Implement retry mechanisms or client-side backoff to reduce request bursts.</li>
+</ul>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC002</li>
+<li><strong>Test Name:</strong> User Registration with Invalid Data</li>
+<li><strong>Test Code:</strong> <a href="./TC002_User_Registration_with_Invalid_Data.py">TC002_User_Registration_with_Invalid_Data.py</a></li>
+<li><strong>Test Error:</strong> N/A</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/65556872-21a8-4f74-86c5-e7e6b4591a3e/57bc6cb7-b120-481a-a036-fed4ed0a1a07">View Result</a></li>
+<li><strong>Status:</strong> ✅ Passed</li>
+<li><strong>Severity:</strong> Low</li>
+<li><strong>Analysis / Findings:</strong> Confirm validation covers all edge cases including unusual invalid input. Consider adding UI hints or real-time validation for better user experience.</li>
+</ul>
+<hr>
+<h3>Requirement: User Login</h3>
+<ul>
+<li><strong>Description:</strong> Verify user login functionality.</li>
+</ul>
+<h4>Test 1</h4>
+<ul>
+<li><strong>Test ID:</strong> TC003</li>
+<li><strong>Test Name:</strong> User Login with Correct Credentials</li>
+<li><strong>Test Code:</strong> <a href="./TC003_User_Login_with_Correct_Credentials.py">TC003_User_Login_with_Correct_Credentials.py</a></li>
+<li><strong>Test Error:</strong> Login attempt with valid credentials failed due to server connection error: 'Unable to connect to the server. Please try again later.' No JWT token was issued and session did not start. This indicates a backend or network issue preventing successful login. Test concluded with failure.</li>
+<li><strong>Test Visualization and Result:</strong> <a href="https://www.testsprite.com/dashboard/mcp/tests/65556872-21a8-4f74-86c5-e7e6b4591a3e/316b26c3-2539-4b33-998e-7c4e99648e5a">View Result</a></li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Resolve backend server overload or rate limit issues causing refusals. Implement appropriate error handling and retry strategies on frontend to cope with server unavailability.</li>
+</ul>
+<h4>Test 2</h4>
+<ul>
+<li><strong>Test ID:</strong> TC004</li>
+<li><strong>Test Name:</strong> User Login with Incorrect Credentials</li>
+<li><strong>Test Code:</strong> <a href="./TC004_User_Login_with_Incorrect_Credentials.py">TC004_User_Login_with_Incorrect_Credentials.py</a></li>
+<li><strong>Test Error:</strong> Unable to verify login failure with correct HTTP 401 due to backend connection errors and server overload; test encountered server connection error instead of expected error response.</li>
+<li><strong>Test Visualization and Result:</strong> N/A</li>
+<li><strong>Status:</strong> ❌ Failed</li>
+<li><strong>Severity:</strong> High</li>
+<li><strong>Analysis / Findings:</strong> Fix backend availability and rate limiting causing server errors. Ensure backend correctly responds with 401 Unauthorized for invalid login attempts.</li>
+</ul>
+<hr>
+<h2>3️⃣ Coverage &amp; Matching Metrics</h2>
+<ul>
+<li><strong>85% of product requirements tested</strong></li>
+<li><strong>70% of tests passed</strong></li>
+<li><strong>Key gaps / risks:</strong>
+<ul>
+<li>Backend server scalability issues causing test failures.</li>
+<li>Missing edge validation in user registration.</li>
+<li>No password reset implementation.</li>
+</ul>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Total Tests</th>
+<th>✅ Passed</th>
+<th>⚠️ Partial</th>
+<th>❌ Failed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User Registration</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>User Login</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<hr>
+
+    </body>
+    </html>
+  

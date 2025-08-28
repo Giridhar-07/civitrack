@@ -21,6 +21,7 @@ class Location extends Model<LocationAttributes, LocationCreationAttributes> imp
   public latitude!: number;
   public longitude!: number;
   public address?: string;
+  public geom?: any;
   public createdAt!: Date;
   public updatedAt!: Date;
 }
@@ -74,24 +75,13 @@ Location.init(
     tableName: 'locations',
     timestamps: true,
     hooks: {
-      beforeCreate: (location: Location) => {
+      beforeSave: (location: Location) => {
         if (location.latitude && location.longitude) {
-          (location as any).geom = { type: 'Point', coordinates: [location.longitude, location.latitude] };
-        }
-      },
-      beforeUpdate: (location: Location) => {
-        if (location.latitude && location.longitude) {
-          (location as any).geom = { type: 'Point', coordinates: [location.longitude, location.latitude] };
+          location.geom = { type: 'Point', coordinates: [location.longitude, location.latitude] };
         }
       }
     },
     indexes: [
-      // Add spatial index for faster geospatial queries
-      {
-        name: 'location_geom_idx',
-        using: 'GIST',
-        fields: ['geom']
-      },
       {
         fields: ['latitude', 'longitude'],
       },

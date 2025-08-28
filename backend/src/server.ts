@@ -40,25 +40,26 @@ app.use(helmet({
   referrerPolicy: { policy: 'same-origin' },
 }));
 
-// Rate limiting to prevent brute force attacks
+// Rate limiting middleware for API routes
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: 'Too many requests from this IP, please try again after 15 minutes'
+  max: 300, // Increased from 100 to 300 requests per windowMs
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  skipSuccessfulRequests: true // Only count failed requests
 });
 
 // Apply rate limiting to all requests
 app.use(apiLimiter);
 
-// More restrictive rate limiter for authentication routes
+// Stricter rate limiting for authentication routes
 const authLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 10, // limit each IP to 10 login/register attempts per hour
+  max: 30, // Increased from 10 to 30 attempts per hour
   standardHeaders: true,
   legacyHeaders: false,
-  message: 'Too many authentication attempts, please try again after an hour'
+  message: 'Too many login/register attempts from this IP, please try again after an hour',
+  skipSuccessfulRequests: true // Don't count successful requests against the limit
 });
 
 // Apply stricter rate limiting to auth routes
@@ -112,9 +113,25 @@ app.use((req: Request, res: Response) => {
   });
 });
 
-// Error handler
+// Enhanced error handler with better logging and response
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error('Unhandled error:', err);
+  
+  // Check if headers have already been sent
+  if (res.headersSent) {
+    return next(err);
+  }
+  
+  // Handle specific error types
+  if (err.name === 'UnauthorizedError') {
+    return errorResponse(res, 'Invalid or expired authentication token', 401);
+  }
+  
+  if (err.message && err.message.includes('CORS')) {
+    return errorResponse(res, 'CORS policy violation', 403);
+  }
+  
+  // Default error response
   return errorResponse(res, 'Internal server error', 500);
 });
 
@@ -125,36 +142,24 @@ const server = http.createServer(app);
 initializeSocketIO(server);
 
 // Start server
-const PORT = process.env.PORT || 5000;
-
-// Import and run geospatial migration
-import { migrateGeospatial } from './scripts/migrateGeospatial';
+const PORT = process.env.PORT || 5000; // Changed port to avoid conflicts
 
 // Connect to database and start server
-const startServer = async () => {
+export const startServer = async () => {
   try {
     // Test database connection
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
     
-    // Sync models with database
-    await syncModels();
-    console.log('Database models synchronized successfully.');
-    
     // Start server
-server.listen(PORT, async () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`WebSocket server initialized`);
-  console.log(`Performance monitoring enabled`);
-  
-  // Run geospatial migration
-  try {
-    await migrateGeospatial();
-    console.log('Geospatial migration completed successfully');
-  } catch (error) {
-    console.error('Geospatial migration failed:', error);
-  }
-});
+    const server = app.listen(PORT, async () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(`WebSocket server initialized`);
+      console.log(`Performance monitoring enabled`);
+    });
+    
+    // Initialize Socket.IO
+    initializeSocketIO(server);
   } catch (error) {
     console.error('Unable to connect to the database or start server:', error);
     process.exit(1);

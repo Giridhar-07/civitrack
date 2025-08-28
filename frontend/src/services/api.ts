@@ -34,7 +34,7 @@ console.log('API URL:', process.env.REACT_APP_API_URL || 'http://localhost:5000/
 const unwrap = <T>(response: AxiosResponse<any, any>): T => {
   const resData = response?.data;
   // If backend wraps payload as { success, message, data }, return inner data
-  if (resData && typeof resData === 'object' && 'data' in resData) {
+  if (resData && typeof resData === 'object' && 'success' in resData && resData.success && 'data' in resData) {
     return (resData.data as T);
   }
   // Otherwise, return as-is

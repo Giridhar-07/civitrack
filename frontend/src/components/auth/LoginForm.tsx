@@ -42,9 +42,16 @@ const LoginForm: React.FC = () => {
       let errorMessage = 'Login failed. Please try again.';
       
       // Handle different error types
-      if (err.errorCode === 'NETWORK_ERROR' || err.errorCode === 'TIMEOUT_ERROR') {
+      if (err.errorCode === 'NETWORK_ERROR') {
         // Handle network errors
         errorMessage = err.message || 'Network connection issue. Please check your internet connection and try again.';
+      } else if (err.errorCode === 'TIMEOUT_ERROR') {
+        // Handle timeout errors
+        errorMessage = err.message || 'Server response timeout. The system will automatically retry. Please wait a moment.';
+      } else if (err.response?.status === 429 || err.statusCode === 429 || err.status === 429) {
+        // Handle rate limiting errors
+        const retryAfter = err.retryAfter || 60;
+        errorMessage = `Too many login attempts. Please try again after ${Math.ceil(retryAfter / 60)} minute(s).`;
       } else if (err.response?.status === 401 || err.statusCode === 401 || err.status === 401) {
         // Handle authentication errors - check response.status, statusCode and status properties
         errorMessage = 'Invalid email or password. Please try again.';

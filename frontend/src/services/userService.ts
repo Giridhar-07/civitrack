@@ -22,19 +22,19 @@ export interface UpdateUserData {
 const userService = {
   // Admin: get all users with pagination and optional filters
   adminGetUsers: async (params?: AdminGetUsersParams): Promise<AdminGetUsersResponse> => {
-    const response = await api.get<AdminGetUsersResponse>('/auth/admin/users', { params });
+    const response = await api.get<AdminGetUsersResponse>('/users/admin', { params });
     return response.data as unknown as AdminGetUsersResponse;
   },
 
   // Update user (admin only)
   updateUser: async (userId: string, userData: UpdateUserData): Promise<User> => {
-    const response = await api.put<User>(`/auth/admin/users/${userId}`, userData);
+    const response = await api.put<User>(`/users/${userId}`, userData);
     return response.data;
   },
 
   // Delete user (admin only)
   deleteUser: async (userId: string): Promise<void> => {
-    await api.delete(`/auth/admin/users/${userId}`);
+    await api.delete(`/users/${userId}`);
   }
 };
 
