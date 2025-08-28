@@ -77,26 +77,45 @@ const InfiniteScrollMap: React.FC<InfiniteScrollMapProps> = ({
   // Handle real-time updates
   useEffect(() => {
     // Join room for real-time updates
-    const roomId = `nearby:${currentLocation.latitude.toFixed(4)}:${currentLocation.longitude.toFixed(4)}:${radius}`;
-    setRoomId(roomId);
-    joinNearbyIssuesRoom(currentLocation.latitude, currentLocation.longitude, radius);
+    try {
+      const roomId = `nearby:${currentLocation.latitude.toFixed(4)}:${currentLocation.longitude.toFixed(4)}:${radius}`;
+      setRoomId(roomId);
+      joinNearbyIssuesRoom(currentLocation.latitude, currentLocation.longitude, radius);
+      
+      console.log('Successfully joined room for real-time updates:', roomId);
+    } catch (error) {
+      console.error('Failed to join room for real-time updates:', error);
+      // Continue without real-time updates - don't block map functionality
+    }
     
     // Set up event listeners for real-time updates
     const handleNewIssue = (newIssue: Issue) => {
-      // Check if issue is within our current data
-      const issueExists = issues.some(issue => issue.id === newIssue.id);
-      if (!issueExists) {
-        // Add to our list if it's new
-        resetScroll();
+      try {
+        // Check if issue is within our current data
+        const issueExists = issues.some(issue => issue.id === newIssue.id);
+        if (!issueExists) {
+          // Add to our list if it's new
+          resetScroll();
+        }
+      } catch (error) {
+        console.error('Error handling new issue:', error);
       }
     };
     
     const handleIssueUpdate = (updatedIssue: Issue) => {
-      resetScroll();
+      try {
+        resetScroll();
+      } catch (error) {
+        console.error('Error handling issue update:', error);
+      }
     };
     
     const handleIssueDelete = (issueId: string) => {
-      resetScroll();
+      try {
+        resetScroll();
+      } catch (error) {
+        console.error('Error handling issue delete:', error);
+      }
     };
     
     // Add event listeners

@@ -8,6 +8,7 @@ export interface User {
   role: string;
   createdAt: Date;
   isAdmin?: boolean;
+  profileImage?: string;
 }
 
 export interface Issue {
@@ -30,6 +31,7 @@ export interface Location {
   latitude: number;
   longitude: number;
   address?: string;
+  locationName?: string;
 }
 
 export interface Flag {

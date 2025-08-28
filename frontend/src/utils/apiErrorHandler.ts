@@ -9,6 +9,7 @@ export interface ApiErrorResponse {
   statusCode?: number;
   errorCode?: string;
   fieldErrors?: Record<string, string[]>;
+  isNetworkError?: boolean;
 }
 
 /**

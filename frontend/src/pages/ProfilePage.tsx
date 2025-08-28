@@ -21,7 +21,11 @@ import {
   DialogActions,
   TextField,
   IconButton,
-  Snackbar
+  Snackbar,
+  Chip,
+  List,
+  ListItem,
+  ListItemText
 } from '@mui/material';
 import {
   Person as PersonIcon,
@@ -30,7 +34,8 @@ import {
   History as HistoryIcon,
   Bookmark as BookmarkIcon,
   Close as CloseIcon,
-  Save as SaveIcon
+  Save as SaveIcon,
+  PhotoCamera as PhotoCameraIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import IssueList from '../components/issues/IssueList';
@@ -79,6 +84,7 @@ const ProfilePage: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
   const [user, setUser] = useState<User | null>(null);
   const [userIssues, setUserIssues] = useState<Issue[]>([]);
+  const [savedIssues, setSavedIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
@@ -90,6 +96,8 @@ const ProfilePage: React.FC = () => {
     username: ''
   });
   const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [snackbar, setSnackbar] = useState<{ open: boolean; message: string; severity: 'success' | 'error' }>({ 
     open: false, 
     message: '', 
@@ -101,28 +109,66 @@ const ProfilePage: React.FC = () => {
       setLoading(true);
       setError(null);
       
+      // Check if we're online before making requests
+      const isOffline = typeof navigator !== 'undefined' && !navigator.onLine;
+      if (isOffline) {
+        console.warn('Device is offline, showing offline message');
+        setError('You are currently offline. Some profile data may not be available.');
+        setLoading(false);
+        return;
+      }
+      
       try {
         // Get current user
-        const currentUser = await authService.getCurrentUser();
-        setUser(currentUser);
-        
-        // Initialize edit form data
-        if (currentUser) {
-          setEditFormData({
-            name: currentUser.name || '',
-            email: currentUser.email || '',
-            username: currentUser.username || ''
-          });
+        let currentUser;
+        try {
+          currentUser = await authService.getCurrentUser();
+          setUser(currentUser);
+          
+          // Initialize edit form data
+          if (currentUser) {
+            setEditFormData({
+              name: currentUser.name || '',
+              email: currentUser.email || '',
+              username: currentUser.username || ''
+            });
+          }
+        } catch (userErr: any) {
+          console.error('Error fetching user data:', userErr);
+          // Continue with partial data if possible
+          if (userErr.isNetworkError || userErr.message?.includes('Network')) {
+            setError('Limited connectivity. Some profile data may not be available.');
+          } else {
+            setError('Failed to load user data. Please try again later.');
+            setLoading(false);
+            return;
+          }
         }
         
-        // Get user's issues
+        // Get user's issues if we have a user
         if (currentUser && currentUser.id) {
-          const issues = await issueService.getIssuesByUser();
-          setUserIssues(issues);
+          try {
+            const issues = await issueService.getIssuesByUser();
+            setUserIssues(issues);
+          } catch (issueErr: any) {
+            console.error('Error fetching user issues:', issueErr);
+            // Continue with empty issues array
+            setUserIssues([]);
+          }
+          
+          // Get saved issues
+          try {
+            const saved = await issueService.getSavedIssues();
+            setSavedIssues(saved);
+          } catch (savedErr: any) {
+            console.error('Error fetching saved issues:', savedErr);
+            // Continue with empty saved issues array
+            setSavedIssues([]);
+          }
         }
-      } catch (err) {
-        console.error('Error fetching user data:', err);
-        setError('Failed to load user data. Please try again later.');
+      } catch (err: any) {
+        console.error('Unexpected error in profile page:', err);
+        setError('An unexpected error occurred. Please try again later.');
       } finally {
         setLoading(false);
       }
@@ -169,6 +215,7 @@ const ProfilePage: React.FC = () => {
   const handleSaveProfile = async () => {
     setSaving(true);
     try {
+      // Fix: Use backend route /auth/profile for profile updates
       const updatedUser = await api.put<User>('/auth/profile', editFormData);
       
       // Update local user state
@@ -188,6 +235,76 @@ const ProfilePage: React.FC = () => {
       });
     } finally {
       setSaving(false);
+    }
+  };
+  
+  const handleProfileImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    
+    const file = e.target.files[0];
+    if (!file.type.startsWith('image/')) {
+      setSnackbar({
+        open: true,
+        message: 'Please select an image file.',
+        severity: 'error'
+      });
+      return;
+    }
+    
+    // Create a preview
+    const previewUrl = URL.createObjectURL(file);
+    setProfileImage(previewUrl);
+    
+    // Upload the image
+    setUploadingImage(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append('image', file);
+      
+      const response = await api.post<{ profileImage: string }>('/auth/profile/image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      
+      // Update user state with new profile image
+      setUser(prevUser => {
+        if (!prevUser) return prevUser;
+        return {
+          ...prevUser,
+          profileImage: response.data.profileImage
+        };
+      });
+      
+      setSnackbar({
+        open: true,
+        message: 'Profile image updated successfully!',
+        severity: 'success'
+      });
+    } catch (error: any) {
+      console.error('Error uploading profile image:', error);
+      
+      // Check for network errors
+      if (error.isNetworkError || error.message?.includes('Network')) {
+        setSnackbar({
+          open: true,
+          message: 'Network connection issue. Please check your internet connection and try again.',
+          severity: 'error'
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: error?.message || 'Failed to upload profile image. Please try again.',
+          severity: 'error'
+        });
+      }
+      
+      // Revoke the preview URL on error
+      URL.revokeObjectURL(previewUrl);
+      setProfileImage(null);
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -232,7 +349,8 @@ const ProfilePage: React.FC = () => {
           <Grid item xs={12} md={4} lg={3}>
             <Paper elevation={3} sx={{ p: 3, backgroundColor: '#1e1e1e', borderRadius: 2 }}>
               <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mb: 3 }}>
-                <Avatar 
+                <Box sx={{ position: 'relative' }}>
+                  <Avatar 
                   sx={{ 
                     width: 100, 
                     height: 100, 
@@ -240,9 +358,36 @@ const ProfilePage: React.FC = () => {
                     fontSize: '2.5rem',
                     mb: 2
                   }}
+                  src={user.profileImage || profileImage || undefined}
                 >
                   {(user?.name?.[0] ?? user?.username?.[0] ?? '?').toUpperCase()}
                 </Avatar>
+                <IconButton
+                  sx={{
+                    position: 'absolute',
+                    bottom: 10,
+                    right: -10,
+                    backgroundColor: theme.palette.primary.main,
+                    '&:hover': { backgroundColor: theme.palette.primary.dark },
+                    width: 36,
+                    height: 36
+                  }}
+                  component="label"
+                  disabled={uploadingImage}
+                >
+                  {uploadingImage ? (
+                    <CircularProgress size={24} sx={{ color: '#fff' }} />
+                  ) : (
+                    <PhotoCameraIcon sx={{ fontSize: 20, color: '#fff' }} />
+                  )}
+                  <input
+                    type="file"
+                    hidden
+                    accept="image/*"
+                    onChange={handleProfileImageUpload}
+                  />
+                </IconButton>
+                </Box>
                 <Typography variant="h5" gutterBottom>
                   {user.name}
                 </Typography>
@@ -361,27 +506,35 @@ const ProfilePage: React.FC = () => {
               </TabPanel>
               
               <TabPanel value={tabValue} index={1}>
-                <Box sx={{ textAlign: 'center', py: 4 }}>
-                  <Typography variant="h6" gutterBottom>
-                    No Saved Issues
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" paragraph>
-                    You haven't saved any issues for later reference.
-                  </Typography>
-                  <Button 
-                    variant="contained" 
-                    onClick={() => navigate('/')}
-                    sx={{ 
-                      mt: 2,
-                      backgroundColor: '#2196F3',
-                      '&:hover': {
-                        backgroundColor: '#1976D2',
-                      },
-                    }}
-                  >
-                    Browse Issues
-                  </Button>
-                </Box>
+                {savedIssues.length > 0 ? (
+                  <IssueList 
+                    issues={savedIssues} 
+                    loading={false} 
+                    error={null} 
+                  />
+                ) : (
+                  <Box sx={{ textAlign: 'center', py: 4 }}>
+                    <Typography variant="h6" gutterBottom>
+                      No Saved Issues
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary" paragraph>
+                      You haven't saved any issues for later reference.
+                    </Typography>
+                    <Button 
+                      variant="contained" 
+                      onClick={() => navigate('/')}
+                      sx={{ 
+                        mt: 2,
+                        backgroundColor: '#2196F3',
+                        '&:hover': {
+                          backgroundColor: '#1976D2',
+                        },
+                      }}
+                    >
+                      Browse Issues
+                    </Button>
+                  </Box>
+                )}
               </TabPanel>
             </Paper>
           </Grid>

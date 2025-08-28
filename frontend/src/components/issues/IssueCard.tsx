@@ -98,12 +98,26 @@ const IssueCard: React.FC<IssueCardProps> = ({
     >
       <CardActionArea onClick={handleCardClick} sx={{ flexGrow: 1 }}>
         {issue.photos && issue.photos.length > 0 && (
-          <CardMedia
-            component="img"
-            height="140"
-            image={issue.photos[0]}
-            alt={issue.title}
-          />
+          <Box sx={{ position: 'relative', height: '140px' }}>
+            <CardMedia
+              component="img"
+              height="140"
+              image={issue.photos[0]}
+              alt={issue.title}
+              sx={{ 
+                objectFit: 'cover',
+                height: '100%'
+              }}
+              onError={(e) => {
+                // Handle image loading errors
+                const target = e.target as HTMLImageElement;
+                target.onerror = null; // Prevent infinite error loop
+                target.src = '/assets/image-placeholder.png'; // Fallback image
+                target.alt = 'Image failed to load';
+                target.style.opacity = '0.7';
+              }}
+            />
+          </Box>
         )}
         
         <CardContent sx={{ flexGrow: 1 }}>

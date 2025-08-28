@@ -10,6 +10,7 @@ interface UserAttributes {
   email: string;
   password: string;
   role: string;
+  profileImage?: string;
   isAdmin?: boolean;
   isLocked?: boolean;
   createdAt: Date;
@@ -85,6 +86,10 @@ User.init(
       validate: {
         isIn: [['user', 'admin']],
       },
+    },
+    profileImage: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,

@@ -246,3 +246,27 @@ export const aiQuickHelpValidation = [
     .isString().withMessage('Topic must be a string')
     .isLength({ min: 2, max: 50 }).withMessage('Topic must be between 2 and 50 characters')
 ];
+
+export const adminUpdateUserValidation = [
+  param('id')
+    .isUUID(4).withMessage('Invalid user ID'),
+  body('name')
+    .optional()
+    .isLength({ min: 2, max: 100 }).withMessage('Name must be between 2 and 100 characters'),
+  body('email')
+    .optional()
+    .isEmail().withMessage('Email must be valid')
+    .normalizeEmail(),
+  body('username')
+    .optional()
+    .isLength({ min: 3, max: 30 }).withMessage('Username must be between 3 and 30 characters')
+    .matches(/^[a-zA-Z0-9_]+$/).withMessage('Username can only contain letters, numbers, and underscores'),
+  body('role')
+    .optional()
+    .isIn(['user', 'admin']).withMessage('Invalid role')
+];
+
+export const adminDeleteUserValidation = [
+  param('id')
+    .isUUID(4).withMessage('Invalid user ID')
+];

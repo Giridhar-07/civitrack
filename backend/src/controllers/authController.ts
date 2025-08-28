@@ -5,6 +5,7 @@ import sequelize from '../config/database';
 import { Op } from 'sequelize';
 import { generateToken } from '../utils/auth';
 import { successResponse, errorResponse, badRequestResponse, unauthorizedResponse } from '../utils/response';
+import { getFileUrl } from '../utils/upload';
 
 // Register a new user
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -131,6 +132,7 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<Respo
       email: user.email,
       role: user.role,
       isAdmin: user.isAdmin,
+      profileImage: user.profileImage,
       createdAt: user.createdAt,
     };
 
@@ -138,6 +140,33 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<Respo
   } catch (error) {
     console.error('Get current user error:', error);
     return errorResponse(res, 'Error retrieving user profile');
+  }
+};
+
+// Upload profile image
+export const uploadProfileImage = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const userId = (req as any).user.id;
+    
+    if (!req.file) {
+      return badRequestResponse(res, 'No image file provided');
+    }
+    
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return unauthorizedResponse(res, 'User not found');
+    }
+    
+    // Get the file URL
+    const profileImage = getFileUrl(req.file.filename);
+    
+    // Update user with profile image URL
+    await user.update({ profileImage });
+    
+    return successResponse(res, { profileImage }, 'Profile image updated successfully');
+  } catch (error) {
+    console.error('Profile image upload error:', error);
+    return errorResponse(res, 'Error uploading profile image');
   }
 };
 
@@ -279,5 +308,111 @@ export const getAllUsers = async (req: Request, res: Response): Promise<Response
   } catch (error) {
     console.error('Get all users error:', error);
     return errorResponse(res, 'Error retrieving users');
+  }
+};
+
+export const getUserById = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { id } = req.params as { id: string };
+    const user = await User.findByPk(id, {
+      attributes: ['id', 'username', 'name', 'email', 'role', 'isAdmin', 'createdAt']
+    });
+
+    if (!user) {
+      return errorResponse(res, 'User not found', 404);
+    }
+
+    return successResponse(res, user, 'User retrieved successfully');
+  } catch (error) {
+    console.error('Get user by ID error:', error);
+    return errorResponse(res, 'Error retrieving user');
+  }
+};
+
+export const updateUserByAdmin = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return badRequestResponse(res, 'Validation error', errors.array().map(err => err.msg));
+    }
+
+    const { id } = req.params as { id: string };
+    const { name, email, username, role } = req.body as { name?: string; email?: string; username?: string; role?: string };
+
+    const user = await User.findByPk(id);
+    if (!user) {
+      return errorResponse(res, 'User not found', 404);
+    }
+
+    if ((email && email !== user.email) || (username && username !== user.username)) {
+      const existingUser = await User.findOne({
+        where: {
+          [Op.and]: [
+            { id: { [Op.ne]: id } },
+            {
+              [Op.or]: [
+                { email: email || '' },
+                { username: username || '' }
+              ]
+            }
+          ]
+        }
+      });
+
+      if (existingUser) {
+        return badRequestResponse(res, 'Email or username is already taken');
+      }
+    }
+
+    await user.update({
+      name: name ?? user.name,
+      email: email ?? user.email,
+      username: username ?? user.username,
+      role: role ?? user.role,
+      isAdmin: role ? role === 'admin' : user.isAdmin
+    });
+
+    const userData = {
+      id: user.id,
+      username: user.username,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      isAdmin: user.isAdmin,
+      createdAt: user.createdAt,
+    };
+
+    return successResponse(res, userData, 'User updated successfully');
+  } catch (error) {
+    console.error('Admin update user error:', error);
+    return errorResponse(res, 'Error updating user');
+  }
+};
+
+export const deleteUserByAdmin = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return badRequestResponse(res, 'Validation error', errors.array().map(err => err.msg));
+    }
+
+    const { id } = req.params as { id: string };
+
+    const user = await User.findByPk(id);
+    if (!user) {
+      return errorResponse(res, 'User not found', 404);
+    }
+
+    // Optional: prevent deleting self
+    const currentUser = (req as any).user;
+    if (currentUser && currentUser.id === id) {
+      return badRequestResponse(res, 'You cannot delete your own account');
+    }
+
+    await user.destroy();
+    return successResponse(res, null, 'User deleted successfully');
+  } catch (error) {
+    console.error('Admin delete user error:', error);
+    return errorResponse(res, 'Error deleting user');
   }
 };

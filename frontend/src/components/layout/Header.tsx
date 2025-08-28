@@ -272,7 +272,10 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
                 onClick={handleProfileMenuOpen}
                 color="inherit"
               >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: '#4CAF50' }}>
+                <Avatar 
+                  sx={{ width: 32, height: 32, bgcolor: '#4CAF50' }}
+                  src={user?.profileImage || undefined}
+                >
                   {(user?.username?.[0] ?? user?.name?.[0] ?? '?').toUpperCase()}
                 </Avatar>
               </IconButton>

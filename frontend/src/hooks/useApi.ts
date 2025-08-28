@@ -115,7 +115,9 @@ const useApi = <T, P extends any[] = any[]>(
         loading: false,
         error: null
       });
-    }, [initialData])
+    }, [initialData]),
+    // Expose setState for direct state management
+    setState
   };
 };
 

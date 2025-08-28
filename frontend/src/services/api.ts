@@ -8,27 +8,47 @@ import { createRetryableAxiosInstance } from '../utils/apiRetry';
 export const USE_MOCK_SERVICE: boolean = false; // Set to false to use real backend
 console.log('Using mock service:', USE_MOCK_SERVICE);
 
-// Create a retryable axios instance with default config
+// Resolve API base URL securely across environments
+const resolveApiBaseUrl = (): string => {
+  const envUrl = process.env.REACT_APP_API_URL?.trim();
+  if (envUrl) {
+    return envUrl;
+  }
+  // In local dev, frontend runs on :3000 and backend on :5000 by default
+  if (typeof window !== 'undefined') {
+    const origin = window.location.origin;
+    const isLocal3000 = origin.includes('localhost:3000') || origin.includes('127.0.0.1:3000');
+    if (isLocal3000) {
+      return 'http://localhost:5000/api';
+    }
+    // Same-origin fallback (use reverse proxy or server-side /api)
+    return `${origin.replace(/\/$/, '')}/api`;
+  }
+  // SSR or unknown environment fallback
+  return 'http://localhost:5000/api';
+};
+
+const BASE_URL = resolveApiBaseUrl();
+console.log('API base URL resolved to:', BASE_URL);
+
+// Create a retryable axios instance with improved retry configuration
 const axiosInstance: AxiosInstance = createRetryableAxiosInstance({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:5000/api',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json'
   },
   withCredentials: true,
-  timeout: 10000, // 10 seconds timeout - reduced from 30s
+  timeout: 15000, // 15 seconds timeout
   timeoutErrorMessage: 'Request timed out. Please try again.'
 }, {
   // Custom retry configuration
-  maxRetries: 3, // Reduced from 5
+  maxRetries: 3,
   initialDelayMs: 1000,
   backoffFactor: 1.5,
-  maxDelayMs: 10000, // Reduced from 15000
+  maxDelayMs: 10000,
   retryStatusCodes: [408, 429, 500, 502, 503, 504],
   retryNetworkErrors: true
 });
-
-// Add console log to check if API URL is correctly set
-console.log('API URL:', process.env.REACT_APP_API_URL || 'http://localhost:5000/api');
 
 // Helper to normalize API responses (unwrap backend { success, message, data })
 const unwrap = <T>(response: AxiosResponse<any, any>): T => {
@@ -97,26 +117,193 @@ interface ApiInterface {
 }
 
 // Create the API instance with performance optimizations
+// API endpoint validation map to prevent 404 errors
+const VALID_API_ENDPOINTS = {
+  // Auth endpoints
+  '/auth/login': ['POST'],
+  '/auth/register': ['POST'],
+  '/auth/logout': ['POST'],
+  '/auth/me': ['GET'],
+  '/auth/refresh': ['POST'],
+  // Removed deprecated '/auth/password' in favor of '/auth/change-password'
+   '/auth/change-password': ['PUT'],
+   '/auth/profile': ['GET' , 'PUT'],
+   '/auth/profile/image': ['POST'],
+   '/auth/admin/users': ['GET'],
+   '/auth/admin/roles': ['GET'],
+   '/auth/admin/users/:id': ['GET', 'PUT', 'DELETE'],
+   '/auth/admin/roles/:id': ['PUT', 'DELETE'],
+   '/auth/admin/users/:id/roles': ['POST'],
+   '/auth/admin/users/:id/roles/:roleId': ['DELETE'],
+   '/auth/admin/roles/:id/users/:userId': ['DELETE'],
+   '/auth/admin/users/status-requests': ['GET'],
+   
+  // User endpoints
+  //'/users': ['GET'],
+  //'/users/:id': ['GET', 'PUT', 'DELETE'],
+  // Deprecated direct /users endpoints; use /auth/admin/users instead
+  // User endpoints handled under /auth/admin/users
+   
+  // Issue endpoints
+  '/issues': ['GET', 'POST'],
+  '/issues/nearby': ['GET'],
+  '/issues/user/me': ['GET'],
+  '/issues/:id': ['GET', 'PUT', 'DELETE'],
+  '/issues/:id/flag': ['POST'],
+  '/issues/flags/:flagId/resolve': ['PUT'],
+  '/issues/:id/comments': ['GET', 'POST'],
+  '/issues/:id/photos': ['GET','POST'],
+  
+ // Status Request endpoints
+ '/status-requests': ['GET'],
+ '/status-requests/issue/:id': ['GET', 'POST'],
+ '/status-requests/user/me': ['GET'],
+ '/status-requests/:id/review': ['PUT'],
+ 
+  // Map endpoints
+  '/map/layers': ['GET'],
+  '/map/markers': ['GET'],
+  
+  // AI endpoints
+  '/ai/chat': ['POST'],
+  '/ai/analyze': ['POST'],
+  '/ai/health': ['GET'],
+  '/ai/quick-help': ['GET']
+};
+
+// Validate if an endpoint exists in our API
+const validateEndpoint = (url: string, method: string): boolean => {
+  // Extract the base path without query parameters
+  const basePath = url.split('?')[0];
+  
+  // Check exact matches first
+  if (basePath in VALID_API_ENDPOINTS && (VALID_API_ENDPOINTS as Record<string, string[]>)[basePath].includes(method.toUpperCase())) {
+    return true;
+  }
+  
+  // Check for parameterized routes (e.g., /auth/admin/users/:id)
+  const urlParts = basePath.split('/').filter(Boolean);
+  
+  for (const endpoint in VALID_API_ENDPOINTS) {
+    const endpointParts = endpoint.split('/').filter(Boolean);
+    
+    // Skip if parts length doesn't match
+    if (urlParts.length !== endpointParts.length) continue;
+    
+    let isMatch = true;
+    for (let i = 0; i < endpointParts.length; i++) {
+      // If part starts with :, it's a parameter, so it matches anything
+      if (endpointParts[i].startsWith(':')) continue;
+      
+      // Otherwise, parts must match exactly
+      if (endpointParts[i] !== urlParts[i]) {
+        isMatch = false;
+        break;
+      }
+    }
+    
+    if (isMatch && (VALID_API_ENDPOINTS as Record<string, string[]>)[endpoint].includes(method.toUpperCase())) {
+      return true;
+    }
+  }
+  
+  return false;
+};
+
 const api: ApiInterface = USE_MOCK_SERVICE ? mockApi : {
   get: async <T>(url: string, config?: any) => {
-    const response = await axiosInstance.get<T>(url, config);
-    return { data: unwrap<T>(response) };
+    // Validate endpoint before making request
+    if (!validateEndpoint(url, 'GET')) {
+      console.error(`Invalid API endpoint: GET ${url}`);
+      throw new Error(`Invalid API endpoint: GET ${url}. This endpoint does not exist or is not accessible.`);
+    }
+    
+    try {
+      const response = await axiosInstance.get<T>(url, config);
+      return { data: unwrap<T>(response) };
+    } catch (error: any) {
+      if (error.statusCode === 404) {
+        console.error(`API endpoint not found: GET ${url}`);
+        throw new Error(`The requested resource was not found: ${url}`);
+      }
+      throw error;
+    }
   },
+  
   post: async <T>(url: string, data?: any, config?: any) => {
-    const response = await axiosInstance.post<T>(url, data, config);
-    return { data: unwrap<T>(response) };
+    // Validate endpoint before making request
+    if (!validateEndpoint(url, 'POST')) {
+      console.error(`Invalid API endpoint: POST ${url}`);
+      throw new Error(`Invalid API endpoint: POST ${url}. This endpoint does not exist or is not accessible.`);
+    }
+    
+    try {
+      const response = await axiosInstance.post<T>(url, data, config);
+      return { data: unwrap<T>(response) };
+    } catch (error: any) {
+      if (error.statusCode === 404) {
+        console.error(`API endpoint not found: POST ${url}`);
+        throw new Error(`The requested resource was not found: ${url}`);
+      }
+      throw error;
+    }
   },
+  
   put: async <T>(url: string, data?: any, config?: any) => {
-    const response = await axiosInstance.put<T>(url, data, config);
-    return { data: unwrap<T>(response) };
+    // Validate endpoint before making request
+    if (!validateEndpoint(url, 'PUT')) {
+      console.error(`Invalid API endpoint: PUT ${url}`);
+      throw new Error(`Invalid API endpoint: PUT ${url}. This endpoint does not exist or is not accessible.`);
+    }
+    
+    try {
+      const response = await axiosInstance.put<T>(url, data, config);
+      return { data: unwrap<T>(response) };
+    } catch (error: any) {
+      if (error.statusCode === 404) {
+        console.error(`API endpoint not found: PUT ${url}`);
+        throw new Error(`The requested resource was not found: ${url}`);
+      }
+      throw error;
+    }
   },
+  
   patch: async <T>(url: string, data?: any, config?: any) => {
-    const response = await axiosInstance.patch<T>(url, data, config);
-    return { data: unwrap<T>(response) };
+    // Validate endpoint before making request
+    if (!validateEndpoint(url, 'PATCH')) {
+      console.error(`Invalid API endpoint: PATCH ${url}`);
+      throw new Error(`Invalid API endpoint: PATCH ${url}. This endpoint does not exist or is not accessible.`);
+    }
+    
+    try {
+      const response = await axiosInstance.patch<T>(url, data, config);
+      return { data: unwrap<T>(response) };
+    } catch (error: any) {
+      if (error.statusCode === 404) {
+        console.error(`API endpoint not found: PATCH ${url}`);
+        throw new Error(`The requested resource was not found: ${url}`);
+      }
+      throw error;
+    }
   },
+  
   delete: async <T>(url: string, config?: any) => {
-    const response = await axiosInstance.delete<T>(url, config);
-    return { data: unwrap<T>(response) };
+    // Validate endpoint before making request
+    if (!validateEndpoint(url, 'DELETE')) {
+      console.error(`Invalid API endpoint: DELETE ${url}`);
+      throw new Error(`Invalid API endpoint: DELETE ${url}. This endpoint does not exist or is not accessible.`);
+    }
+    
+    try {
+      const response = await axiosInstance.delete<T>(url, config);
+      return { data: unwrap<T>(response) };
+    } catch (error: any) {
+      if (error.statusCode === 404) {
+        console.error(`API endpoint not found: DELETE ${url}`);
+        throw new Error(`The requested resource was not found: ${url}`);
+      }
+      throw error;
+    }
   }
 };
 
@@ -128,13 +315,10 @@ if (!USE_MOCK_SERVICE) {
       // Add authentication token to headers
       const token = localStorage.getItem('token');
       if (token) {
-        console.log('API: Adding auth token to request');
         if (!config.headers) {
           config.headers = {};
         }
         config.headers.Authorization = `Bearer ${token}`;
-      } else {
-        console.log('API: No auth token found for request');
       }
       
       // Log outgoing requests in development environment
@@ -163,7 +347,7 @@ if (!USE_MOCK_SERVICE) {
       // Use our error handler utility to extract a standardized error message
       const errorResponse = extractErrorMessage(error);
       
-      // Check if this is a network error or timeout with enhanced detection
+      // Enhanced network error detection with better handling
       const isNetworkError = !error.response || 
         (error as any).code === 'ECONNABORTED' || 
         errorResponse.errorCode === 'NETWORK_ERROR' || 
@@ -172,7 +356,15 @@ if (!USE_MOCK_SERVICE) {
         error.message?.includes('Network Error') ||
         error.message?.includes('Failed to fetch') ||
         error.message?.includes('connection') ||
+        error.message?.includes('timeout') ||
+        error.message?.includes('abort') ||
         (typeof navigator !== 'undefined' && !navigator.onLine);
+        
+      // Provide more specific error messages for network issues
+      if (isNetworkError) {
+        errorResponse.message = 'Network connection issue. Please check your internet connection and try again.';
+        errorResponse.errorCode = 'NETWORK_ERROR';
+      }
       
       // Handle authentication errors (401) specially
       if (errorResponse.statusCode === 401) {
@@ -207,10 +399,30 @@ if (!USE_MOCK_SERVICE) {
         }
       }
       
+      // Improve error messages for better user experience
+      if (errorResponse.message === 'An unexpected error occurred. Please try again.') {
+        // Check for specific error types and provide more helpful messages
+        if (error.response?.status === 500) {
+          errorResponse.message = 'The server encountered an error. Our team has been notified.';
+        } else if (error.response?.status === 404) {
+          errorResponse.message = 'The requested resource could not be found.';
+        } else if (error.response?.status === 403) {
+          errorResponse.message = 'You do not have permission to access this resource.';
+        }
+      }
+      
+      // Enhanced network error detection
+      if (!error.response || error.code === 'ECONNABORTED' || error.message?.includes('Network') || !navigator.onLine) {
+        errorResponse.message = 'Network connection issue. Please check your internet connection and try again.';
+        errorResponse.errorCode = 'NETWORK_ERROR';
+        errorResponse.isNetworkError = true;
+      }
+      
       // Log all errors in development environment with readable message
       if (process.env.NODE_ENV === 'development') {
         console.error('API Error:', errorResponse.message, {
-          processedError: errorResponse
+          processedError: errorResponse,
+          originalError: error
         });
       }
       

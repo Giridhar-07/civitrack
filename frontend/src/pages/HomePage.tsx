@@ -21,7 +21,7 @@ import {
   CardMedia,
   Divider
 } from '@mui/material';
-import { Add as AddIcon, Map as MapIcon, List as ListIcon, Refresh as RefreshIcon, KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import { Add as AddIcon, Map as MapIcon, List as ListIcon, Refresh as RefreshIcon, KeyboardArrowLeft, KeyboardArrowRight, MyLocation as MyLocationIcon } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import IssueList from '../components/issues/IssueList';
 import IssueMap from '../components/map/IssueMap';
@@ -42,8 +42,13 @@ const HomePage: React.FC = () => {
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   // Track current map center for refresh/pan-to-load
   const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
+  // Ensure we use 10km radius consistently
   const DEFAULT_RADIUS_KM = 10;
 
+  // Geolocation status for graceful UI handling
+  const [geoStatus, setGeoStatus] = useState<'idle' | 'granted' | 'denied' | 'unavailable'>('idle');
+  const [geoMessage, setGeoMessage] = useState<string | null>(null);
+  
   // State for search functionality
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [searchCategory, setSearchCategory] = useState<string>('all');
@@ -53,7 +58,8 @@ const HomePage: React.FC = () => {
     data: issues = [], 
     loading, 
     error,
-    execute: fetchIssues
+    execute: fetchIssues,
+    setState: setIssuesState
   } = useApi(issueService.getNearbyIssues, { immediate: false });
   
   // Filtered issues based on search term and category
@@ -75,33 +81,8 @@ const HomePage: React.FC = () => {
   }, [issues, searchTerm, searchCategory]);
 
   useEffect(() => {
-    // Get user's current location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const loc: [number, number] = [position.coords.latitude, position.coords.longitude];
-          setUserLocation(loc);
-          setMapCenter(loc);
-          // initial fetch using geolocation
-          fetchIssues(position.coords.latitude, position.coords.longitude, DEFAULT_RADIUS_KM);
-        },
-        (error) => {
-          console.warn('Failed to get user location:', error);
-          // Default to NYC coordinates if geolocation fails
-          const fallbackLoc: [number, number] = [40.7128, -74.0060];
-          setUserLocation(fallbackLoc);
-          setMapCenter(fallbackLoc);
-          fetchIssues(fallbackLoc[0], fallbackLoc[1], DEFAULT_RADIUS_KM);
-        },
-        { timeout: 8000 }
-      );
-    } else {
-      // Geolocation not supported - default to NYC
-      const fallbackLoc: [number, number] = [40.7128, -74.0060];
-      setUserLocation(fallbackLoc);
-      setMapCenter(fallbackLoc);
-      fetchIssues(fallbackLoc[0], fallbackLoc[1], DEFAULT_RADIUS_KM);
-    }
+    // Get user's current location (refactored to function for reuse)
+    requestGeolocation();
   }, []);
 
   // Real-time polling to refresh issues based on current center
@@ -120,6 +101,63 @@ const HomePage: React.FC = () => {
     const center = mapCenter || userLocation || [40.7128, -74.0060];
     fetchIssues(center[0], center[1], DEFAULT_RADIUS_KM);
   };
+
+  // Request geolocation with graceful fallbacks and user feedback
+  function requestGeolocation() {
+    // First, fetch all issues regardless of location to ensure we display all previously reported issues
+    issueService.getAllIssues().then(allIssues => {
+      if (allIssues && allIssues.length > 0) {
+        // Update issues state with all available issues
+        // This ensures both map and list views show all previously reported issues
+        setIssuesState({
+          data: allIssues,
+          loading: false,
+          error: null
+        });
+      }
+    }).catch(err => {
+      console.error('Failed to fetch all issues:', err);
+    });
+    
+    if (!navigator.geolocation) {
+      setGeoStatus('unavailable');
+      setGeoMessage('Geolocation is not supported by your browser. Showing a default area.');
+      const fallbackLoc: [number, number] = [40.7128, -74.0060]; // New York fallback
+      setUserLocation(fallbackLoc);
+      setMapCenter(fallbackLoc);
+      // Ensure we're using the 10km radius
+      fetchIssues(fallbackLoc[0], fallbackLoc[1], DEFAULT_RADIUS_KM);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setGeoStatus('granted');
+        setGeoMessage(null);
+        const loc: [number, number] = [position.coords.latitude, position.coords.longitude];
+        setUserLocation(loc);
+        setMapCenter(loc);
+        // Ensure we're using the 10km radius for user's actual location
+        fetchIssues(loc[0], loc[1], DEFAULT_RADIUS_KM);
+      },
+      (err) => {
+        if (err.code === err.PERMISSION_DENIED) {
+          setGeoStatus('denied');
+          setGeoMessage('Location permission denied. Showing a default area. You can enable permissions in your browser settings and try again.');
+        } else {
+          setGeoStatus('unavailable');
+          setGeoMessage('Unable to determine your location at the moment. Showing a default area.');
+        }
+        // Use New York as fallback with proper zoom level
+        const fallbackLoc: [number, number] = [40.7128, -74.0060]; // New York fallback
+        setUserLocation(fallbackLoc);
+        setMapCenter(fallbackLoc);
+        // Ensure we're using the 10km radius even for fallback location
+        fetchIssues(fallbackLoc[0], fallbackLoc[1], DEFAULT_RADIUS_KM);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  }
 
   // Carousel data
   const carouselItems = [
@@ -164,70 +202,9 @@ const HomePage: React.FC = () => {
   return (
     <Layout>
       <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-        {/* Website Description Section */}
+        {/* Website Description Section moved to bottom */}
         <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={12}>
-            <Paper 
-              elevation={3} 
-              sx={{ 
-                p: 4, 
-                borderRadius: 2,
-                background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)',
-                color: 'white'
-              }}
-            >
-              <Typography variant="h4" gutterBottom fontWeight="bold">
-                CiviTrack: Civic Issue Management Platform
-              </Typography>
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                Connecting citizens and local government for faster issue resolution
-              </Typography>
-              <Typography variant="body1" sx={{ mb: 3 }}>
-                CiviTrack is a comprehensive platform designed to streamline the reporting, tracking, and resolution of civic issues. 
-                Our platform empowers citizens to actively participate in community improvement while providing government agencies 
-                with the tools they need to efficiently address concerns.
-              </Typography>
-              {isAuthenticated ? (
-                <Button 
-                  variant="contained" 
-                  color="secondary" 
-                  size="large"
-                  onClick={() => navigate('/report')}
-                  sx={{ 
-                    fontWeight: 'bold', 
-                    px: 4, 
-                    py: 1.5,
-                    backgroundColor: 'white',
-                    color: '#2E7D32',
-                    '&:hover': {
-                      backgroundColor: '#e0e0e0',
-                    }
-                  }}
-                >
-                  Join CiviTrack Today
-                </Button>
-              ) : (
-                <Button 
-                  variant="contained" 
-                  color="secondary" 
-                  size="large"
-                  onClick={() => navigate('/register')}
-                  sx={{ 
-                    fontWeight: 'bold', 
-                    px: 4, 
-                    py: 1.5,
-                    backgroundColor: 'white',
-                    color: '#2E7D32',
-                    '&:hover': {
-                      backgroundColor: '#e0e0e0',
-                    }
-                  }}
-                >
-                  Join CiviTrack Today
-                </Button>
-              )}
-            </Paper>
-          </Grid>
+          {/* Intentionally left empty as per instruction to move to bottom */}
         </Grid>
 
         {/* Carousel Section */}
@@ -380,6 +357,14 @@ const HomePage: React.FC = () => {
                   Refresh
                 </Button>
                 <Button 
+                  variant="outlined" 
+                  startIcon={<MyLocationIcon />} 
+                  onClick={requestGeolocation}
+                  sx={{ mr: 1 }}
+                >
+                  Use My Location
+                </Button>
+                <Button 
                   variant="contained" 
                   startIcon={<AddIcon />} 
                   onClick={() => navigate('/report')}
@@ -392,23 +377,35 @@ const HomePage: React.FC = () => {
 
           <Grid item xs={12} md={8}>
             <Paper sx={{ p: 2, height: isMobile ? 'auto' : '600px' }}>
-              {loading && viewMode === 'map' ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-                  <CircularProgress />
-                </Box>
-              ) : error && viewMode === 'map' ? (
+              {error && viewMode === 'map' ? (
                 <Alert severity="error">{String(error?.message || error)}</Alert>
               ) : viewMode === 'map' ? (
-                <IssueMap 
-                  issues={filteredIssues || []}
-                  center={(mapCenter || userLocation || [40.7128, -74.0060]) as [number, number]}
-                  zoom={13}
-                  height={isMobile ? '400px' : '100%'}
-                  onMoveEnd={(center) => {
-                    setMapCenter([center.latitude, center.longitude]);
-                    fetchIssues(center.latitude, center.longitude, DEFAULT_RADIUS_KM);
-                  }}
-                />
+                <>
+                  {geoMessage && (
+                    <Box sx={{ mb: 1 }}>
+                      <Alert 
+                        severity={geoStatus === 'denied' ? 'warning' : 'info'}
+                        action={geoStatus !== 'granted' ? (
+                          <Button color="inherit" size="small" onClick={requestGeolocation}>
+                            Retry
+                          </Button>
+                        ) : undefined}
+                      >
+                        {geoMessage}
+                      </Alert>
+                    </Box>
+                  )}
+                  <IssueMap 
+                    issues={filteredIssues || []}
+                    center={(mapCenter || userLocation || [40.7128, -74.0060]) as [number, number]}
+                    zoom={13}
+                    height={isMobile ? '400px' : '100%'}
+                    onMoveEnd={(center) => {
+                      setMapCenter([center.latitude, center.longitude]);
+                      fetchIssues(center.latitude, center.longitude, DEFAULT_RADIUS_KM);
+                    }}
+                  />
+                </>
               ) : (
                 <Box>
                   {loading ? (
@@ -418,7 +415,7 @@ const HomePage: React.FC = () => {
                   ) : (
                     <IssueList 
                       issues={filteredIssues || []} 
-                      loading={!!loading} 
+                      loading={false} 
                       error={error?.message || null}
                       showToolbar={false}
                     />
@@ -473,6 +470,72 @@ const HomePage: React.FC = () => {
                 </Button>
               </Paper>
             )}
+          </Grid>
+        </Grid>
+        
+        {/* CiviTrack Description Section - Moved to bottom */}
+        <Grid container spacing={3} sx={{ mt: 6, mb: 4 }}>
+          <Grid item xs={12}>
+            <Paper 
+              elevation={3} 
+              sx={{ 
+                p: 4, 
+                borderRadius: 2,
+                background: 'linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%)',
+                color: 'white'
+              }}
+            >
+              <Typography variant="h4" gutterBottom fontWeight="bold">
+                CiviTrack: Civic Issue Management Platform
+              </Typography>
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Connecting citizens and local government for faster issue resolution
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 3 }}>
+                CiviTrack is a comprehensive platform designed to streamline the reporting, tracking, and resolution of civic issues. 
+                Our platform empowers citizens to actively participate in community improvement while providing government agencies 
+                with the tools they need to efficiently address concerns.
+              </Typography>
+              {isAuthenticated ? (
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  size="large"
+                  onClick={() => navigate('/report')}
+                  sx={{ 
+                    fontWeight: 'bold', 
+                    px: 4, 
+                    py: 1.5,
+                    backgroundColor: 'white',
+                    color: '#2E7D32',
+                    '&:hover': {
+                      backgroundColor: '#e0e0e0',
+                    }
+                  }}
+                >
+                  Join CiviTrack Today
+                </Button>
+              ) : (
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  size="large"
+                  onClick={() => navigate('/register')}
+                  sx={{ 
+                    fontWeight: 'bold', 
+                    px: 4, 
+                    py: 1.5,
+                    backgroundColor: 'white',
+                    color: '#2E7D32',
+                    '&:hover': {
+                      backgroundColor: '#e0e0e0',
+                    }
+                  }}
+                >
+                  Join CiviTrack Today
+                </Button>
+              )}
+            </Paper>
           </Grid>
         </Grid>
       </Container>
