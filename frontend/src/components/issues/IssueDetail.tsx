@@ -583,7 +583,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
                     // Handle image loading errors
                     const target = e.target as HTMLImageElement;
                     target.onerror = null; // Prevent infinite error loop
-                    target.src = '/assets/image-placeholder.png'; // Fallback image
+                    target.src = `${process.env.PUBLIC_URL}/assets/image-placeholder.png`; // Use absolute URL
                     target.alt = 'Image failed to load';
                     target.style.opacity = '0.7';
                   }}

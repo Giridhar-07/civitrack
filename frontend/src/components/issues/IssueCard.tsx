@@ -112,7 +112,8 @@ const IssueCard: React.FC<IssueCardProps> = ({
                 // Handle image loading errors
                 const target = e.target as HTMLImageElement;
                 target.onerror = null; // Prevent infinite error loop
-                target.src = '/assets/image-placeholder.png'; // Fallback image
+                // Use absolute URL for fallback image
+                target.src = `${process.env.PUBLIC_URL}/assets/image-placeholder.png`; 
                 target.alt = 'Image failed to load';
                 target.style.opacity = '0.7';
               }}

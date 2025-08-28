@@ -134,6 +134,9 @@ const issueService = {
           formData.append(`photos`, photo);
         });
       }
+      
+      // Add timestamp to prevent caching issues
+      formData.append('timestamp', Date.now().toString());
 
       const response = await api.post<Issue>('\/issues', formData, {
         headers: {
