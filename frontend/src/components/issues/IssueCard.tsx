@@ -20,7 +20,6 @@ import {
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { Issue, IssueStatus } from '../../types';
-import { BASE_URL } from '../../services/api'; // Import BASE_URL
 
 interface IssueCardProps {
   issue: Issue;
@@ -103,7 +102,7 @@ const IssueCard: React.FC<IssueCardProps> = ({
             <CardMedia
               component="img"
               height="140"
-              image={`${BASE_URL.replace('/api', '')}/uploads/${issue.photos[0]}`}
+              image={issue.photos[0]}
              alt={issue.title}
               sx={{ 
                 objectFit: 'cover',

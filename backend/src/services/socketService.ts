@@ -45,7 +45,7 @@ export const emitNewIssue = (issue: any) => {
   if (!io) return;
   
   // Calculate which rooms should receive this update based on issue location
-  const { latitude, longitude } = issue.Location;
+  const { latitude, longitude } = issue.location;
   
   // Broadcast to all rooms that might be interested in this issue
   // In a production app, you would calculate this more precisely

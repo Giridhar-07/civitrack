@@ -576,7 +576,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
             <Box sx={{ position: 'relative' }}>
               <Box sx={{ position: 'relative', width: '100%', minHeight: '300px' }}>
                 <img 
-                  src={issue.photos[currentPhotoIndex]} 
+                  src={issue.photos[currentPhotoIndex]}
                   alt={`Issue photo ${currentPhotoIndex + 1}`} 
                   style={{ width: '100%', height: 'auto', display: 'block' }} 
                   onError={(e) => {

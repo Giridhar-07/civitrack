@@ -12,9 +12,13 @@ import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/sock
 // Create a new issue
 export const createIssue = async (req: Request, res: Response): Promise<Response> => {
   try {
+    console.log('createIssue: Request body:', req.body);
+    console.log('createIssue: Request files:', req.files);
+
     // Validate request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.error('createIssue: Validation errors:', errors.array());
       return badRequestResponse(res, 'Validation error', errors.array().map(err => err.msg));
     }
 

@@ -98,6 +98,12 @@ app.use(performanceMonitor);
 app.use(express.json({ limit: '1mb' })); // Limit JSON body size
 app.use(express.urlencoded({ extended: true, limit: '1mb' })); // Limit URL-encoded body size
 
+// Custom middleware to log static file requests
+app.use('/uploads', (req, res, next) => {
+  console.log(`Static file request: ${req.method} ${req.originalUrl}`);
+  next();
+});
+
 // Serve static files from uploads directory
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 

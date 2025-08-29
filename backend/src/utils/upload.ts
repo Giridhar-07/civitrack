@@ -45,12 +45,7 @@ export default upload;
 
 // Helper function to get public URL for uploaded file
 export const getFileUrl = (filename: string): string => {
-  // Construct absolute URL for the uploaded file
-  // Assuming the backend is served from the root or a known base URL
-  // For development, this might be http://localhost:5000/uploads/filename
-  // For production, this should be the deployed backend URL
-  const backendBaseUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5000';
-  return `${backendBaseUrl}/uploads/${filename}`;
+  return `/uploads/${filename}`;
 };
 
 // Helper function to delete file
