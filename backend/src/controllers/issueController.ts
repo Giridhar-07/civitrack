@@ -594,3 +594,42 @@ export const resolveFlag = async (req: Request, res: Response): Promise<Response
     return errorResponse(res, 'Error resolving flag');
   }
 };
+
+// Get saved issues (placeholder: currently returns user's own issues)
+export const getSavedIssues = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const user = (req as any).user;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const offset = (page - 1) * limit;
+
+    const { count, rows: issues } = await Issue.findAndCountAll({
+      where: { reportedBy: user.id }, // Placeholder: assuming "saved" means "reported by user"
+      include: [
+        { model: Location, as: 'location' }
+      ],
+      order: [['reportedAt', 'DESC']],
+      limit,
+      offset
+    });
+
+    const totalPages = Math.ceil(count / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    return successResponse(res, {
+      issues,
+      pagination: {
+        total: count,
+        page,
+        limit,
+        totalPages,
+        hasNextPage,
+        hasPrevPage
+      }
+    }, 'Saved issues retrieved successfully');
+  } catch (error) {
+    console.error('Get saved issues error:', error);
+    return errorResponse(res, 'Error retrieving saved issues');
+  }
+};

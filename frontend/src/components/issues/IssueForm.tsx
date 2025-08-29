@@ -34,6 +34,7 @@ const IssueForm: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
   const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   
   // Initialize form with useApiForm hook
   const form = useApiForm<IssueFormData, void>(
@@ -84,7 +85,7 @@ const IssueForm: React.FC = () => {
       
       // Limit to 3 photos
       if (photoFiles.length + files.length > 3) {
-        form.setError('Maximum 3 photos allowed');
+        setUploadError('Maximum 3 photos allowed');
         return;
       }
       
@@ -92,13 +93,13 @@ const IssueForm: React.FC = () => {
       const validFiles = files.filter(file => {
         // Check if file is an image
         if (!file.type.startsWith('image/')) {
-          form.setError(`File "${file.name}" is not an image`);
+          setUploadError(`File "${file.name}" is not an image`);
           return false;
         }
         
         // Check file size (5MB max)
         if (file.size > 5 * 1024 * 1024) {
-          form.setError(`File "${file.name}" exceeds 5MB size limit`);
+          setUploadError(`File "${file.name}" exceeds 5MB size limit`);
           return false;
         }
         
@@ -317,6 +318,12 @@ const IssueForm: React.FC = () => {
                 multiple
               />
             </Button>
+            
+            {uploadError && (
+              <Alert severity="error" sx={{ mb: 2, width: '100%' }} onClose={() => setUploadError(null)}>
+                {uploadError}
+              </Alert>
+            )}
             
             <Grid container spacing={2}>
               {photoPreviewUrls.map((url, index) => (

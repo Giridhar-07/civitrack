@@ -28,7 +28,7 @@ const resolveApiBaseUrl = (): string => {
   return 'http://localhost:5000/api';
 };
 
-const BASE_URL = resolveApiBaseUrl();
+export const BASE_URL = resolveApiBaseUrl();
 console.log('API base URL resolved to:', BASE_URL);
 
 // Create a retryable axios instance with improved retry configuration
