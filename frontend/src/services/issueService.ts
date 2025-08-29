@@ -134,9 +134,6 @@ const issueService = {
           formData.append(`photos`, photo);
         });
       }
-      
-      // Add timestamp to prevent caching issues
-      formData.append('timestamp', Date.now().toString());
 
       const response = await api.post<Issue>('\/issues', formData, {
         headers: {
@@ -226,11 +223,26 @@ const issueService = {
   
   getSavedIssues: async (): Promise<Issue[]> => {
     try {
+      // Check if we're online before making the request
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        console.warn('Device is offline, returning empty saved issues array');
+        return [];
+      }
+      
       const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues\/saved');
       return response.data.issues || [];
     } catch (error: any) {
+      // Log the error with more details
       console.error('Error fetching saved issues:', error);
-      throw error; // Re-throw the error to be handled by the API interceptor
+      
+      // Return empty array for network errors instead of throwing
+      if (error.message?.includes('Network') || error.code === 'ECONNABORTED' || !navigator.onLine || error.isNetworkError) {
+        console.warn('Network error when fetching saved issues, returning empty array');
+        return [];
+      }
+      
+      // For other errors, return empty array to prevent UI breakage
+      return [];
     }
   },
   

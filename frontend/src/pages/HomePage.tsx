@@ -331,16 +331,16 @@ const HomePage: React.FC = () => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{ minHeight: '70vh' }}> {/* Adjusted minHeight to prevent overlap */}
           <Grid item xs={12}>
             <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <Typography variant="h5" sx={{ mr: 2 }}>
                   Community Issues
                 </Typography>
-                <Tabs 
-                  value={viewMode} 
-                  onChange={(_, newValue) => setViewMode(newValue)} 
+                <Tabs
+                  value={viewMode}
+                  onChange={(_, newValue) => setViewMode(newValue)}
                   aria-label="view mode tabs"
                 >
                   <Tab label="Map View" value="map" icon={<MapIcon />} iconPosition="start" />
@@ -348,25 +348,25 @@ const HomePage: React.FC = () => {
                 </Tabs>
               </Box>
               <Box>
-                <Button 
-                  variant="outlined" 
-                  startIcon={<RefreshIcon />} 
+                <Button
+                  variant="outlined"
+                  startIcon={<RefreshIcon />}
                   onClick={handleRefresh}
                   sx={{ mr: 1 }}
                 >
                   Refresh
                 </Button>
-                <Button 
-                  variant="outlined" 
-                  startIcon={<MyLocationIcon />} 
+                <Button
+                  variant="outlined"
+                  startIcon={<MyLocationIcon />}
                   onClick={requestGeolocation}
                   sx={{ mr: 1 }}
                 >
                   Use My Location
                 </Button>
-                <Button 
-                  variant="contained" 
-                  startIcon={<AddIcon />} 
+                <Button
+                  variant="contained"
+                  startIcon={<AddIcon />}
                   onClick={() => navigate('/report')}
                 >
                   Report Issue
@@ -383,7 +383,7 @@ const HomePage: React.FC = () => {
                 <>
                   {geoMessage && (
                     <Box sx={{ mb: 1 }}>
-                      <Alert 
+                      <Alert
                         severity={geoStatus === 'denied' ? 'warning' : 'info'}
                         action={geoStatus !== 'granted' ? (
                           <Button color="inherit" size="small" onClick={requestGeolocation}>
@@ -395,7 +395,7 @@ const HomePage: React.FC = () => {
                       </Alert>
                     </Box>
                   )}
-                  <IssueMap 
+                  <IssueMap
                     issues={filteredIssues || []}
                     center={(mapCenter || userLocation || [40.7128, -74.0060]) as [number, number]}
                     zoom={13}
@@ -407,15 +407,15 @@ const HomePage: React.FC = () => {
                   />
                 </>
               ) : (
-                <Box>
+                <Box sx={{ height: isMobile ? 'calc(100vh - 250px)' : 'calc(100vh - 300px)', overflowY: 'auto' }}>
                   {loading ? (
                     <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
                       <CircularProgress />
                     </Box>
                   ) : (
-                    <IssueList 
-                      issues={filteredIssues || []} 
-                      loading={false} 
+                    <IssueList
+                      issues={filteredIssues || []}
+                      loading={false}
                       error={error?.message || null}
                       showToolbar={false}
                     />
@@ -430,7 +430,7 @@ const HomePage: React.FC = () => {
               <Typography variant="h6" gutterBottom>
                 Search & Filter
               </Typography>
-              <TextField 
+              <TextField
                 label="Search issues"
                 variant="outlined"
                 fullWidth
@@ -460,8 +460,8 @@ const HomePage: React.FC = () => {
                 <Typography variant="h6" gutterBottom>
                   Quick Actions
                 </Typography>
-                <Button 
-                  variant="contained" 
+                <Button
+                  variant="contained"
                   fullWidth
                   startIcon={<AddIcon />}
                   onClick={() => navigate('/report')}

@@ -112,10 +112,12 @@ const IssueCard: React.FC<IssueCardProps> = ({
                 // Handle image loading errors
                 const target = e.target as HTMLImageElement;
                 target.onerror = null; // Prevent infinite error loop
-                // Use absolute URL for fallback image
-                target.src = `${process.env.PUBLIC_URL}/assets/image-placeholder.png`; 
+                // Use absolute URL with PUBLIC_URL for fallback image to ensure it works in all environments
+                target.src = `${process.env.PUBLIC_URL || ''}/assets/image-placeholder.png`; 
                 target.alt = 'Image failed to load';
                 target.style.opacity = '0.7';
+                // Add background color to make placeholder more visible
+                target.style.backgroundColor = '#2a2a2a';
               }}
             />
           </Box>

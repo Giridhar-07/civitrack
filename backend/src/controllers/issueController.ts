@@ -40,7 +40,7 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
       status: IssueStatus.REPORTED,
       reportedBy: user.id,
       locationId: location.id,
-      photos: req.files ? (req.files as Express.Multer.File[]).map(file => file.filename) : []
+      photos: req.body.photos || [] // Assume req.body.photos contains Firebase URLs
     });
 
     // Create initial status log

@@ -13,7 +13,7 @@ const resolveSocketUrl = (): string => {
     return origin || apiUrl;
   }
   // Fallback to backend default port from server.ts
-  return 'http://localhost:5000';
+  return 'http://localhost:5001';
 };
 
 // Socket.io client instance
