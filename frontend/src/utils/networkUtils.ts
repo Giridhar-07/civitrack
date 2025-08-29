@@ -18,14 +18,22 @@ export const isOnline = (): boolean => {
  * @returns boolean indicating if it's a network error
  */
 export const isNetworkError = (error: any): boolean => {
+  // Check browser online status first
+  if (typeof navigator !== 'undefined' && !navigator.onLine) {
+    return true;
+  }
+  
   return (
     !error.response || // No response typically means network error
     error.code === 'ECONNABORTED' || // Timeout
     error.message?.includes('Network Error') ||
     error.message?.includes('network error') ||
     error.message?.includes('timeout') ||
+    error.message?.includes('Failed to fetch') ||
+    error.message?.includes('connection') ||
     error.errorCode === 'NETWORK_ERROR' ||
-    error.errorCode === 'TIMEOUT_ERROR'
+    error.errorCode === 'TIMEOUT_ERROR' ||
+    error.errorCode === 'OFFLINE_ERROR'
   );
 };
 

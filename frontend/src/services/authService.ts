@@ -82,7 +82,7 @@ const authService = {
         console.error('Login API timeout error:', error.message);
         // Throw a more user-friendly error for network issues
         const networkError = new Error('Network connection issue. Please check your internet connection and try again.');
-        networkError.errorCode = 'NETWORK_ERROR';
+        networkError.errorCode = 'TIMEOUT_ERROR';
         throw networkError;
       } else if (!error.response) {
         console.error('Login API network error:', error.message);
@@ -90,11 +90,20 @@ const authService = {
         networkError.errorCode = 'NETWORK_ERROR';
         throw networkError;
       } else if (error.response?.status === 401 || error.statusCode === 401 || error.status === 401) {
-        // Handle authentication errors properly
-        console.error('Login API authentication error:', error.message);
+        // Handle authentication errors properly with consistent 401 response
+        console.error('Login API authentication error:', error.response?.data?.message || 'Invalid credentials');
         const authError = new Error(error.response?.data?.message || 'Invalid email or password');
         (authError as any).status = 401;
+        (authError as any).statusCode = 401;
         throw authError;
+      } else if (error.response?.status === 429) {
+        // Handle rate limiting errors
+        console.error('Login API rate limit error:', error.response?.data?.message || 'Too many requests');
+        const rateLimitError = new Error('Too many login attempts. Please try again later.');
+        (rateLimitError as any).status = 429;
+        (rateLimitError as any).statusCode = 429;
+        (rateLimitError as any).retryAfter = error.response?.headers?.['retry-after'] || 60;
+        throw rateLimitError;
       } else {
         console.error('Login API error:', error.response?.data || error.message);
         throw error;
@@ -179,16 +188,24 @@ const authService = {
       console.log('Current user data received:', response.data);
       return response.data;
     } catch (error: any) {
+      // Check for offline status first
+      if (!navigator.onLine) {
+        console.error('Get current user API offline error: Browser is offline');
+        const offlineError = new Error('You are currently offline. Please check your internet connection and try again.');
+        offlineError.errorCode = 'OFFLINE_ERROR';
+        throw offlineError;
+      }
+      
       // Enhanced error logging with specific handling for timeout errors
       if (error.code === 'ECONNABORTED' || (error.message && error.message.includes('timeout'))) {
         console.error('Get current user API timeout error:', error.message);
         // Throw a more user-friendly error for network issues
-        const networkError = new Error('Network connection issue. Please check your internet connection and try again.');
-        networkError.errorCode = 'NETWORK_ERROR';
-        throw networkError;
-      } else if (!error.response) {
+        const timeoutError = new Error('Request timed out. The server is taking too long to respond. Please try again later.');
+        timeoutError.errorCode = 'TIMEOUT_ERROR';
+        throw timeoutError;
+      } else if (!error.response || error.message?.includes('Network Error')) {
         console.error('Get current user API network error:', error.message);
-        const networkError = new Error('Unable to connect to the server. Please try again later.');
+        const networkError = new Error('Network connection issue. Please check your internet connection and try again.');
         networkError.errorCode = 'NETWORK_ERROR';
         throw networkError;
       } else if (error.response?.status === 401 || error.response?.status === 403) {
@@ -196,6 +213,11 @@ const authService = {
         console.error('Get current user API unauthorized error');
         localStorage.removeItem('token');
         return null;
+      } else if (error.response?.status >= 500) {
+        console.error('Get current user API server error:', error.response.status);
+        const serverError = new Error('Server is currently unavailable. Please try again later.');
+        serverError.errorCode = 'SERVER_ERROR';
+        throw serverError;
       } else {
         console.error('Get current user API error:', error.response?.data || error.message);
         throw error;

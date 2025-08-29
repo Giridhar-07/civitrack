@@ -11,6 +11,7 @@ interface LocationPickerProps {
 const LocationPicker: React.FC<LocationPickerProps> = ({ onLocationSelect, initialLocation }) => {
   const [location, setLocation] = useState<Location | null>(initialLocation || null);
   const [address, setAddress] = useState<string>('');
+  const [locationName, setLocationName] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
 
@@ -47,7 +48,7 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ onLocationSelect, initi
       const resolvedAddress = `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`;
       setAddress(resolvedAddress);
       // Also propagate address to parent once available
-      onLocationSelect({ latitude, longitude, address: resolvedAddress });
+      onLocationSelect({ latitude, longitude, address: resolvedAddress, locationName });
       
       // In a real implementation, you would do something like:
       // const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`);
@@ -137,9 +138,46 @@ const LocationPicker: React.FC<LocationPickerProps> = ({ onLocationSelect, initi
       />
       
       {location && (
-        <Typography variant="body2" sx={{ mt: 2, color: '#aaa' }}>
-          Selected coordinates: {location.latitude.toFixed(6)}, {location.longitude.toFixed(6)}
-        </Typography>
+        <Box sx={{ mt: 2 }}>
+          <Typography variant="body2" sx={{ color: '#aaa' }}>
+            Selected coordinates: {location.latitude.toFixed(6)}, {location.longitude.toFixed(6)}
+          </Typography>
+          
+          <TextField
+            fullWidth
+            label="Location Name (Optional)"
+            placeholder="E.g., Downtown Park, Main Street Corner"
+            value={locationName}
+            onChange={(e) => {
+              setLocationName(e.target.value);
+              if (location) {
+                onLocationSelect({
+                  ...location,
+                  locationName: e.target.value
+                });
+              }
+            }}
+            margin="normal"
+            variant="outlined"
+            sx={{ 
+              mt: 2,
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: '#444',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#666',
+                },
+              },
+              '& .MuiInputLabel-root': {
+                color: '#aaa',
+              },
+              '& .MuiInputBase-input': {
+                color: '#fff',
+              },
+            }}
+          />
+        </Box>
       )}
     </Box>
   );

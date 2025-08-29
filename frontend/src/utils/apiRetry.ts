@@ -27,11 +27,11 @@ export interface RetryConfig {
  * Default retry configuration
  */
 export const defaultRetryConfig: RetryConfig = {
-  maxRetries: 5,
-  initialDelayMs: 1000, // 1 second
-  backoffFactor: 1.5, // Reduced from 2 to 1.5 for more gradual backoff
-  maxDelayMs: 30000, // 30 seconds
-  retryStatusCodes: [408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524], // Added Cloudflare error codes
+  maxRetries: 8, // Increased from 5 to 8
+  initialDelayMs: 500, // Reduced from 1000ms to 500ms for faster initial retry
+  backoffFactor: 1.3, // Reduced from 1.5 to 1.3 for more gradual backoff
+  maxDelayMs: 15000, // Reduced from 30s to 15s to prevent long waits
+  retryStatusCodes: [401, 408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524], // Added 401 for auth retries
   retryNetworkErrors: true
 };
 

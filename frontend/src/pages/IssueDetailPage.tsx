@@ -81,13 +81,24 @@ const IssueDetailPage: React.FC = () => {
         message: 'Issue has been flagged for review',
         severity: 'success'
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error flagging issue:', err);
-      setSnackbar({
-        open: true,
-        message: 'Failed to flag issue',
-        severity: 'error'
-      });
+      
+      // Handle validation errors specifically
+      if (err.isValidationError) {
+        const errorMessage = err.validationErrors?.join(', ') || 'Invalid input provided';
+        setSnackbar({
+          open: true,
+          message: `Validation error: ${errorMessage}`,
+          severity: 'error'
+        });
+      } else {
+        setSnackbar({
+          open: true,
+          message: 'Failed to flag issue',
+          severity: 'error'
+        });
+      }
       throw err; // Re-throw to be caught by the component
     }
   };

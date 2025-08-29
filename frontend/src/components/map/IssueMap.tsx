@@ -41,7 +41,12 @@ interface IssueMapProps {
 // Component to recenter map when center prop changes
 const ChangeMapView: React.FC<{ center: LatLngExpression }> = ({ center }) => {
   const map = useMap();
-  map.setView(center, map.getZoom());
+  
+  // Use useEffect to avoid state updates during render
+  useEffect(() => {
+    map.setView(center, map.getZoom());
+  }, [center, map]);
+  
   return null;
 };
 
@@ -72,8 +77,8 @@ const ClickSelectHandler: React.FC<{ enabled: boolean; onSelect?: (loc: Location
 
 const IssueMap: React.FC<IssueMapProps> = ({
   issues,
-  center = [51.505, -0.09], // Default to London
-  zoom = 13,
+  center = [39.8283, -98.5795], // Center of the US for wider view
+  zoom = 4, // Lower zoom level to show more of the map
   height = '500px',
   onMarkerClick,
   selectable = false,
@@ -82,6 +87,28 @@ const IssueMap: React.FC<IssueMapProps> = ({
 }) => {
   const navigate = useNavigate();
   const [isMapLoading, setIsMapLoading] = useState<boolean>(true);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [reportMode, setReportMode] = useState<boolean>(false);
+  
+  // Add timeout to ensure map loading state is properly handled
+  useEffect(() => {
+    // Set a shorter timeout to prevent infinite loading appearance
+    const loadingTimer = setTimeout(() => {
+      setIsMapLoading(false);
+    }, 1000); 
+    
+    return () => clearTimeout(loadingTimer);
+  }, []);
+  
+  // Handle map click for reporting at any location
+  const handleMapClick = (location: Location) => {
+    if (reportMode) {
+      setSelectedLocation(location);
+      if (onLocationSelect) {
+        onLocationSelect(location);
+      }
+    }
+  };
 
   // Status color mapping
   const getStatusColor = (status: IssueStatus): string => {
@@ -118,15 +145,7 @@ const IssueMap: React.FC<IssueMapProps> = ({
     }
   };
 
-  // Handle map load events
-  useEffect(() => {
-    // Simulate map loading
-    const timer = setTimeout(() => {
-      setIsMapLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  // Handle map load events - removed duplicate timer as we already added one above
 
   if (isMapLoading) {
     return (
@@ -141,6 +160,51 @@ const IssueMap: React.FC<IssueMapProps> = ({
 
   return (
     <Box sx={{ height, width: '100%', position: 'relative' }}>
+      {/* Report mode toggle button */}
+      <Box sx={{ 
+        position: 'absolute', 
+        top: 10, 
+        right: 10, 
+        zIndex: 1000 
+      }}>
+        <Button 
+          variant={reportMode ? "contained" : "outlined"} 
+          color="primary" 
+          onClick={() => setReportMode(!reportMode)}
+          size="small"
+        >
+          {reportMode ? "Cancel" : "Report Issue Here"}
+        </Button>
+      </Box>
+      
+      {/* Selected location indicator */}
+      {selectedLocation && reportMode && (
+        <Box sx={{ 
+          position: 'absolute', 
+          bottom: 10, 
+          left: 10, 
+          right: 10, 
+          zIndex: 1000,
+          backgroundColor: 'white',
+          padding: 2,
+          borderRadius: 1,
+          boxShadow: 3
+        }}>
+          <Typography variant="body2">
+            Selected location: {selectedLocation.latitude.toFixed(6)}, {selectedLocation.longitude.toFixed(6)}
+          </Typography>
+          <Button 
+            variant="contained" 
+            color="primary" 
+            size="small" 
+            sx={{ mt: 1 }}
+            onClick={() => navigate(`/report?lat=${selectedLocation.latitude}&lng=${selectedLocation.longitude}`)}
+          >
+            Report at this location
+          </Button>
+        </Box>
+      )}
+      
       <MapContainer 
         center={center as LatLngExpression} 
         zoom={zoom} 
@@ -154,14 +218,14 @@ const IssueMap: React.FC<IssueMapProps> = ({
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
           maxZoom={19}
           keepBuffer={8}
           updateWhenZooming={false}
           updateWhenIdle={true}
         />
         <MapMoveHandler onMoveEnd={onMoveEnd} />
-        <ClickSelectHandler enabled={!!selectable && !!onLocationSelect} onSelect={onLocationSelect} />
+        <ClickSelectHandler enabled={reportMode || (!!selectable && !!onLocationSelect)} onSelect={handleMapClick} />
         
         <ChangeMapView center={center as LatLngExpression} />
         

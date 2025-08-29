@@ -574,11 +574,21 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
           
           {issue.photos && issue.photos.length > 0 && (
             <Box sx={{ position: 'relative' }}>
-              <img 
-                src={issue.photos[currentPhotoIndex]} 
-                alt={`Issue photo ${currentPhotoIndex + 1}`} 
-                style={{ width: '100%', height: 'auto', display: 'block' }} 
-              />
+              <Box sx={{ position: 'relative', width: '100%', minHeight: '300px' }}>
+                <img 
+                  src={issue.photos[currentPhotoIndex]}
+                  alt={`Issue photo ${currentPhotoIndex + 1}`} 
+                  style={{ width: '100%', height: 'auto', display: 'block' }} 
+                  onError={(e) => {
+                    // Handle image loading errors
+                    const target = e.target as HTMLImageElement;
+                    target.onerror = null; // Prevent infinite error loop
+                    target.src = `${process.env.PUBLIC_URL}/assets/image-placeholder.png`; // Use absolute URL
+                    target.alt = 'Image failed to load';
+                    target.style.opacity = '0.7';
+                  }}
+                />
+              </Box>
               
               {issue.photos.length > 1 && (
                 <>

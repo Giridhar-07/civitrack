@@ -1,5 +1,6 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { Box, Typography, Button, Paper } from '@mui/material';
+import loggingService from '../../services/loggingService';
 
 interface Props {
   children: ReactNode;
@@ -102,8 +103,17 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log the error to an error reporting service
-    console.error('Error caught by ErrorBoundary:', error, errorInfo);
+    // Log the error using our logging service
+    loggingService.error(
+      'Error caught by ErrorBoundary', 
+      error, 
+      { 
+        componentStack: errorInfo.componentStack,
+        url: window.location.href,
+        userAgent: navigator.userAgent
+      }
+    );
+    
     this.setState({
       errorInfo
     });

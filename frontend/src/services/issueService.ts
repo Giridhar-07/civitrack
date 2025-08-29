@@ -22,13 +22,52 @@ export interface IssueFilterParams {
   userId?: string;
 }
 
+// Function for infinite scroll with pagination
+export const getIssuesNearby = async (
+  latitude: number, 
+  longitude: number, 
+  radius: number = 5, 
+  page: number = 1, 
+  limit: number = 20
+): Promise<{
+  data: Issue[];
+  pagination: {
+    total: number;
+    hasNextPage: boolean;
+  }
+}> => {
+  try {
+    const response = await api.get('/issues/nearby', {
+      params: { latitude, longitude, radius, page, limit }
+    });
+    return {
+      data: (response.data as { issues: Issue[] }).issues,
+      pagination: (response.data as { pagination: { total: number; hasNextPage: boolean } }).pagination
+    };
+  } catch (error) {
+    throw error;
+  }
+};
+
 const issueService = {
   getAllIssues: async (filters?: IssueFilterParams): Promise<Issue[]> => {
     try {
-      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { params: filters });
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { 
+        params: filters,
+        timeout: 15000 // Increase timeout for potentially slow queries
+      });
+      
+      // Validate response data structure
+      if (!response.data || !Array.isArray(response.data.issues)) {
+        console.error('Invalid response format from issues endpoint:', response.data);
+        return []; // Return empty array instead of throwing to prevent UI breakage
+      }
+      
       return response.data.issues;
     } catch (error) {
-      throw error;
+      console.error('Error fetching issues:', error);
+      // Return empty array instead of throwing to prevent UI breakage
+      return [];
     }
   },
 
@@ -37,10 +76,29 @@ const issueService = {
     filters?: IssueFilterParams
   ): Promise<{ issues: Issue[]; pagination: any }> => {
     try {
-      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { params: filters });
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { 
+        params: filters,
+        timeout: 15000 // Increase timeout for potentially slow queries
+      });
+      
+      // Validate response data structure
+      if (!response.data || !Array.isArray(response.data.issues)) {
+        console.error('Invalid response format from issues endpoint:', response.data);
+        // Return valid empty structure instead of throwing
+        return { 
+          issues: [], 
+          pagination: { total: 0, page: 1, limit: filters?.limit || 20, pages: 0 } 
+        };
+      }
+      
       return response.data;
     } catch (error) {
-      throw error;
+      console.error('Error fetching issues with metadata:', error);
+      // Return valid empty structure instead of throwing
+      return { 
+        issues: [], 
+        pagination: { total: 0, page: 1, limit: filters?.limit || 20, pages: 0 } 
+      };
     }
   },
 
@@ -102,9 +160,31 @@ const issueService = {
 
   flagIssue: async (id: string, reason: string): Promise<Issue> => {
     try {
+      // Validate input before making API call
+      if (!reason || reason.trim() === '') {
+        throw {
+          response: {
+            data: {
+              message: 'Validation error',
+              statusCode: 400,
+              errors: ['Reason is required']
+            }
+          }
+        };
+      }
+      
       const response = await api.post<Issue>(`/issues/${id}/flag`, { reason });
       return response.data;
-    } catch (error) {
+    } catch (error: any) {
+      // Handle validation errors specifically
+      if (error.response?.data?.statusCode === 400) {
+        console.error('Validation error when flagging issue:', error.response.data);
+        throw {
+          ...error,
+          isValidationError: true,
+          validationErrors: error.response?.data?.errors || ['Invalid input provided']
+        };
+      }
       throw error;
     }
   },
@@ -120,8 +200,65 @@ const issueService = {
 
   getIssuesByUser: async (): Promise<Issue[]> => {
     try {
+      // Check if we're online before making the request
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        console.warn('Device is offline, returning empty user issues array');
+        return [];
+      }
+      
       const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues\/user\/me');
-      return response.data.issues;
+      return response.data.issues || [];
+    } catch (error: any) {
+      // Log the error with more details
+      console.error('Error fetching user issues:', error);
+      
+      // Return empty array for network errors instead of throwing
+      if (error.message?.includes('Network') || error.code === 'ECONNABORTED' || !navigator.onLine || error.isNetworkError) {
+        console.warn('Network error when fetching user issues, returning empty array');
+        return [];
+      }
+      throw error;
+    }
+  },
+  
+  getSavedIssues: async (): Promise<Issue[]> => {
+    try {
+      // Check if we're online before making the request
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        console.warn('Device is offline, returning empty saved issues array');
+        return [];
+      }
+      
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues\/saved');
+      return response.data.issues || [];
+    } catch (error: any) {
+      // Log the error with more details
+      console.error('Error fetching saved issues:', error);
+      
+      // Return empty array for network errors instead of throwing
+      if (error.message?.includes('Network') || error.code === 'ECONNABORTED' || !navigator.onLine || error.isNetworkError) {
+        console.warn('Network error when fetching saved issues, returning empty array');
+        return [];
+      }
+      
+      // For other errors, return empty array to prevent UI breakage
+      return [];
+    }
+  },
+  
+  saveIssue: async (issueId: string): Promise<any> => {
+    try {
+      const response = await api.post(`/issues/${issueId}/save`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+  
+  unsaveIssue: async (issueId: string): Promise<any> => {
+    try {
+      const response = await api.delete(`/issues/${issueId}/save`);
+      return response.data;
     } catch (error) {
       throw error;
     }
@@ -129,10 +266,49 @@ const issueService = {
 
   getNearbyIssues: async (latitude: number, longitude: number, radius: number = 5): Promise<Issue[]> => {
     try {
-      const response = await api.get<Issue[]>('\/issues\/nearby', {
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues\/nearby', {
         params: { latitude, longitude, radius }
       });
-      return response.data;
+      return response.data.issues;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // New method with pagination support for infinite scroll
+  getIssuesNearby: async (
+    latitude: number, 
+    longitude: number, 
+    radius: number = 5, 
+    page: number = 1, 
+    limit: number = 20
+  ): Promise<{
+    data: Issue[];
+    pagination: {
+      total: number;
+      hasNextPage: boolean;
+    };
+  }> => {
+    try {
+      const response = await api.get<{
+        issues: Issue[];
+        pagination: {
+          total: number;
+          page: number;
+          limit: number;
+          pages: number;
+        };
+      }>('\/issues\/nearby', {
+        params: { latitude, longitude, radius, page, limit }
+      });
+      
+      return {
+        data: response.data.issues,
+        pagination: {
+          total: response.data.pagination.total,
+          hasNextPage: page < response.data.pagination.pages
+        }
+      };
     } catch (error) {
       throw error;
     }

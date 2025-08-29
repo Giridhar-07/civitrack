@@ -1,20 +1,11 @@
-import React, { useEffect } from 'react';
-import { Container, Paper, Box, Typography, CircularProgress, Alert, Button } from '@mui/material';
+import React from 'react';
+import { Container, Paper, Box, Typography, Button } from '@mui/material';
 import Layout from '../components/layout/Layout';
-import IssueMap from '../components/map/IssueMap';
-import issueService from '../services/issueService';
-import { Issue } from '../types';
-import { useApi } from '../hooks';
+import InfiniteScrollMap from '../components/map/InfiniteScrollMap';
 import { useNavigate } from 'react-router-dom';
 
 const MapPage: React.FC = () => {
   const navigate = useNavigate();
-  const { data: issues = [], loading, error, execute } = useApi<Issue[]>(issueService.getAllIssues, { immediate: true });
-
-  useEffect(() => {
-    // Optionally re-fetch on mount (useApi already did with immediate: true)
-    // execute();
-  }, [execute]);
 
   return (
     <Layout>
@@ -26,19 +17,9 @@ const MapPage: React.FC = () => {
           <Button variant="outlined" onClick={() => navigate('/')}>Back to Home</Button>
         </Box>
 
-        {loading ? (
-          <Box sx={{ display: 'flex', justifyContent: 'center', my: 8 }}>
-            <CircularProgress size={60} />
-          </Box>
-        ) : error ? (
-          <Alert severity="error" sx={{ mb: 3 }}>
-            {error?.message || 'Failed to load issues'}
-          </Alert>
-        ) : (
-          <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden', height: 'calc(100vh - 240px)', minHeight: '500px' }}>
-            <IssueMap issues={Array.isArray(issues) ? issues : []} center={[40.7128, -74.0060]} zoom={12} height="100%" />
-          </Paper>
-        )}
+        <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden', height: 'calc(100vh - 240px)', minHeight: '500px' }}>
+          <InfiniteScrollMap center={[40.7128, -74.0060]} initialZoom={12} height="100%" />
+        </Paper>
       </Container>
     </Layout>
   );

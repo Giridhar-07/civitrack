@@ -6,13 +6,19 @@ import { successResponse, errorResponse, badRequestResponse, notFoundResponse } 
 import { calculateBoundingBox, calculateDistance } from '../utils/geospatial';
 import { IssueStatus, IssueCategory } from '../types/enums';
 import sequelize from '../config/database';
+import { cacheUtils, cacheKeys, cacheTTL } from '../services/redisService';
+import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
 
 // Create a new issue
 export const createIssue = async (req: Request, res: Response): Promise<Response> => {
   try {
+    console.log('createIssue: Request body:', req.body);
+    console.log('createIssue: Request files:', req.files);
+
     // Validate request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.error('createIssue: Validation errors:', errors.array());
       return badRequestResponse(res, 'Validation error', errors.array().map(err => err.msg));
     }
 
@@ -34,7 +40,7 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
       status: IssueStatus.REPORTED,
       reportedBy: user.id,
       locationId: location.id,
-      photos: req.files ? (req.files as Express.Multer.File[]).map(file => file.filename) : []
+      photos: req.body.photos || [] // Assume req.body.photos contains Firebase URLs
     });
 
     // Create initial status log
@@ -53,6 +59,12 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
         { model: Location, as: 'location' }
       ]
     });
+    
+    // Emit real-time update via WebSocket
+    emitNewIssue(createdIssue);
+    
+    // Clear nearby issues cache
+    await cacheUtils.clearByPattern(cacheKeys.NEARBY_ISSUES_PATTERN);
 
     return successResponse(res, createdIssue, 'Issue created successfully', 201);
   } catch (error) {
@@ -136,7 +148,7 @@ export const getIssues = async (req: Request, res: Response): Promise<Response> 
 // Get issues near a location
 export const getNearbyIssues = async (req: Request, res: Response): Promise<Response> => {
   try {
-    const { latitude, longitude, radius = 5 } = req.query; // radius in km, default 5km
+    const { latitude, longitude, radius = 5, page = 1, limit = 20 } = req.query; // radius in km, default 5km
     
     if (!latitude || !longitude) {
       return badRequestResponse(res, 'Latitude and longitude are required');
@@ -145,44 +157,72 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
     const lat = parseFloat(latitude as string);
     const lng = parseFloat(longitude as string);
     const radiusKm = parseFloat(radius as string);
+    const pageNum = parseInt(page as string, 10);
+    const limitNum = parseInt(limit as string, 10);
     
-    // Calculate bounding box for initial filtering
-    const [minLat, minLng, maxLat, maxLng] = calculateBoundingBox(lat, lng, radiusKm);
+    // Generate cache key for this query
+    const cacheKey = cacheKeys.nearbyIssues(lat, lng, radiusKm, pageNum, limitNum);
     
-    // Find locations within the bounding box
-    const locations = await Location.findAll({
-      where: {
-        latitude: { [Op.between]: [minLat, maxLat] },
-        longitude: { [Op.between]: [minLng, maxLng] }
-      }
-    });
-    
-    // Filter locations by actual distance using Haversine formula
-    const locationIdsInRadius = locations
-      .filter(location => {
-        const distance = calculateDistance(
-          lat, 
-          lng, 
-          location.latitude, 
-          location.longitude
-        );
-        return distance <= radiusKm;
-      })
-      .map(location => location.id);
-    
-    // Get issues for these locations
-    const issues = await Issue.findAll({
-      where: {
-        locationId: { [Op.in]: locationIdsInRadius }
+    // Try to get from cache first
+    const result = await cacheUtils.getOrSet(
+      cacheKey,
+      async () => {
+        const offset = (pageNum - 1) * limitNum;
+        
+        // Use a single optimized spatial query with ST_DWithin
+        // Get total count for pagination
+        const { count } = await Issue.findAndCountAll({
+          include: [{ 
+            model: Location, 
+            as: 'location',
+            where: sequelize.literal(`ST_DWithin(
+              "location"."geom"::geography,
+              ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326)::geography,
+              ${radiusKm * 1000}
+            )`)
+          }]
+        });
+        
+        // Get paginated issues
+        const issues = await Issue.findAll({
+          include: [
+            { model: User, as: 'user', attributes: ['id', 'username', 'name'] },
+            { 
+              model: Location, 
+              as: 'location',
+              where: sequelize.literal(`ST_DWithin(
+                "location"."geom"::geography,
+                ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326)::geography,
+                ${radiusKm * 1000}
+              )`)
+            }
+          ],
+          order: [['reportedAt', 'DESC']],
+          limit: limitNum,
+          offset: offset
+        });
+        
+        // Calculate pagination metadata
+        const totalPages = Math.ceil(count / limitNum);
+        const hasNextPage = pageNum < totalPages;
+        const hasPrevPage = pageNum > 1;
+        
+        return {
+          issues,
+          pagination: {
+            total: count,
+            page: pageNum,
+            limit: limitNum,
+            totalPages,
+            hasNextPage,
+            hasPrevPage
+          }
+        };
       },
-      include: [
-        { model: User, as: 'user', attributes: ['id', 'username', 'name'] },
-        { model: Location, as: 'location' }
-      ],
-      order: [['reportedAt', 'DESC']]
-    });
+      cacheTTL.NEARBY_ISSUES
+    );
     
-    return successResponse(res, issues, 'Nearby issues retrieved successfully');
+    return successResponse(res, result, 'Nearby issues retrieved successfully');
   } catch (error) {
     console.error('Get nearby issues error:', error);
     return errorResponse(res, 'Error retrieving nearby issues');
@@ -556,5 +596,44 @@ export const resolveFlag = async (req: Request, res: Response): Promise<Response
   } catch (error) {
     console.error('Resolve flag error:', error);
     return errorResponse(res, 'Error resolving flag');
+  }
+};
+
+// Get saved issues (placeholder: currently returns user's own issues)
+export const getSavedIssues = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const user = (req as any).user;
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const offset = (page - 1) * limit;
+
+    const { count, rows: issues } = await Issue.findAndCountAll({
+      where: { reportedBy: user.id }, // Placeholder: assuming "saved" means "reported by user"
+      include: [
+        { model: Location, as: 'location' }
+      ],
+      order: [['reportedAt', 'DESC']],
+      limit,
+      offset
+    });
+
+    const totalPages = Math.ceil(count / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    return successResponse(res, {
+      issues,
+      pagination: {
+        total: count,
+        page,
+        limit,
+        totalPages,
+        hasNextPage,
+        hasPrevPage
+      }
+    }, 'Saved issues retrieved successfully');
+  } catch (error) {
+    console.error('Get saved issues error:', error);
+    return errorResponse(res, 'Error retrieving saved issues');
   }
 };

@@ -34,6 +34,7 @@ const IssueForm: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
   const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   
   // Initialize form with useApiForm hook
   const form = useApiForm<IssueFormData, void>(
@@ -84,16 +85,34 @@ const IssueForm: React.FC = () => {
       
       // Limit to 3 photos
       if (photoFiles.length + files.length > 3) {
-        // Use form's error state through setFields for consistency
-        form.setFields({ ...formData });
+        setUploadError('Maximum 3 photos allowed');
         return;
       }
       
-      const newPhotoFiles = [...photoFiles, ...files];
+      // Validate file types and sizes
+      const validFiles = files.filter(file => {
+        // Check if file is an image
+        if (!file.type.startsWith('image/')) {
+          setUploadError(`File "${file.name}" is not an image`);
+          return false;
+        }
+        
+        // Check file size (5MB max)
+        if (file.size > 5 * 1024 * 1024) {
+          setUploadError(`File "${file.name}" exceeds 5MB size limit`);
+          return false;
+        }
+        
+        return true;
+      });
+      
+      if (validFiles.length === 0) return;
+      
+      const newPhotoFiles = [...photoFiles, ...validFiles];
       setPhotoFiles(newPhotoFiles);
       
       // Create preview URLs
-      const newPreviewUrls = files.map(file => URL.createObjectURL(file));
+      const newPreviewUrls = validFiles.map(file => URL.createObjectURL(file));
       setPhotoPreviewUrls(prev => [...prev, ...newPreviewUrls]);
       
       // Update form data with new photos
@@ -300,6 +319,12 @@ const IssueForm: React.FC = () => {
               />
             </Button>
             
+            {uploadError && (
+              <Alert severity="error" sx={{ mb: 2, width: '100%' }} onClose={() => setUploadError(null)}>
+                {uploadError}
+              </Alert>
+            )}
+            
             <Grid container spacing={2}>
               {photoPreviewUrls.map((url, index) => (
                 <Grid item xs={12} sm={4} key={index}>
@@ -406,6 +431,23 @@ const IssueForm: React.FC = () => {
             <Typography variant="body2" sx={{ mb: 3, color: '#aaa' }}>
               Please review your report carefully before submitting. Once submitted, you can track the status of your report in your profile.
             </Typography>
+            
+            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+              <Button
+                variant="contained"
+                onClick={handleSubmit}
+                disabled={submitting}
+                sx={{ 
+                  backgroundColor: '#4CAF50',
+                  '&:hover': {
+                    backgroundColor: '#388E3C',
+                  },
+                  px: 4
+                }}
+              >
+                {submitting ? <CircularProgress size={24} color="inherit" /> : 'Confirm & Submit Report'}
+              </Button>
+            </Box>
           </Box>
         );
         
@@ -473,17 +515,12 @@ const IssueForm: React.FC = () => {
           <Box>
             {activeStep === steps.length - 1 ? (
               <Button
-                variant="contained"
-                type="submit"
-                disabled={submitting}
-                sx={{ 
-                  backgroundColor: '#4CAF50',
-                  '&:hover': {
-                    backgroundColor: '#388E3C',
-                  },
-                }}
+                variant="outlined"
+                onClick={handleBack}
+                startIcon={<BackIcon />}
+                sx={{ ml: 1 }}
               >
-                {submitting ? <CircularProgress size={24} color="inherit" /> : 'Submit Report'}
+                Edit Report
               </Button>
             ) : (
               <Button

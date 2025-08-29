@@ -59,6 +59,15 @@ Create a `netlify.toml` file in the root of your repository:
 
 ## Backend Deployment (Vercel)
 
+### Database Migrations
+
+Before deploying new versions, ensure all database migrations are applied:
+
+1. **Profile Image Column Migration**
+   - When deploying version 1.3.4 or later, ensure the `profileImage` column is added to the `users` table
+   - Run the migration script: `node src/scripts/add-profile-image-column.js`
+   - This adds the required column for profile image functionality
+
 ### Setup Instructions
 
 1. **Create a Vercel Account**
