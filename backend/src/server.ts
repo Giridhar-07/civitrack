@@ -157,21 +157,27 @@ export const startServer = async () => {
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
     
-    // Start server
-    const server = app.listen(PORT, async () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`WebSocket server initialized`);
-      console.log(`Performance monitoring enabled`);
-    });
-    
-    // Initialize Socket.IO
-    initializeSocketIO(server);
+    // Only start the server if not in Vercel serverless environment
+    if (process.env.NODE_ENV !== 'production') {
+      server.listen(PORT, async () => {
+        console.log(`Server running on port ${PORT}`);
+        console.log(`WebSocket server initialized`);
+        console.log(`Performance monitoring enabled`);
+      });
+    } else {
+      console.log('Running in serverless mode');
+    }
   } catch (error) {
     console.error('Unable to connect to the database or start server:', error);
-    process.exit(1);
+    if (process.env.NODE_ENV !== 'production') {
+      process.exit(1);
+    }
   }
 };
 
-startServer();
+// Don't auto-start in production (Vercel serverless)
+if (process.env.NODE_ENV !== 'production') {
+  startServer();
+}
 
 export default app;
