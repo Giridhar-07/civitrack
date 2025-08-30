@@ -4,13 +4,17 @@ import { logger } from '../utils/logger';
 
 dotenv.config();
 
+// Check if we're in a serverless environment
+const isServerless = process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME;
+
 // Redis configuration
 const redisConfig = {
   host: process.env.REDIS_HOST || 'localhost',
   port: parseInt(process.env.REDIS_PORT || '6379'),
   password: process.env.REDIS_PASSWORD,
   maxRetriesPerRequest: 1,
-  retryStrategy: (times: number) => {
+  // Disable retries in serverless environment
+  retryStrategy: isServerless ? () => null : (times: number) => {
     if (times > 3) {
       // Stop retrying after 3 attempts
       return null;
@@ -55,6 +59,12 @@ const RECOVERY_TIMEOUT = 30000; // 30 seconds
 
 // Initialize Redis client with circuit breaker pattern
 export const initRedis = (): Redis | null => {
+  // Skip Redis initialization in serverless environments unless explicitly configured
+  if (isServerless && !process.env.REDIS_HOST) {
+    logger.info('Skipping Redis initialization in serverless environment');
+    return null;
+  }
+
   // If circuit is open and recovery timeout hasn't elapsed, return null
   if (circuitState === 'open') {
     const now = Date.now();

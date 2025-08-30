@@ -19,6 +19,12 @@ dotenv.config();
 // Create Express app
 const app = express();
 
+// Trust proxy in production/serverless environments (Vercel, AWS Lambda)
+if (process.env.NODE_ENV === 'production' || process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  app.set('trust proxy', 1);
+  console.log('Express trust proxy enabled for serverless environment');
+}
+
 // Set up security middleware
 // Enhanced Helmet configuration for security headers
 app.use(helmet({
@@ -109,6 +115,16 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // API routes
 app.use('/api', routes);
+
+// Root health check route for Vercel deployments
+app.get('/', (req: Request, res: Response) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    message: 'CiviTrack API is running',
+    environment: process.env.NODE_ENV,
+    serverless: Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME)
+  });
+});
 
 // 404 handler
 app.use((req: Request, res: Response) => {

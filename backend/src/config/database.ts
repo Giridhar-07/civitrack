@@ -13,24 +13,36 @@ const dbPort = parseInt(process.env.DB_PORT || '5432', 10);
 const dbSSL = process.env.DB_SSL === 'true';
 
 // Create Sequelize instance
-const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
-  host: dbHost,
-  port: dbPort,
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: dbSSL ? {
-      require: true,
-      rejectUnauthorized: false
-    } : false
-  },
-  logging: process.env.NODE_ENV === 'development' ? console.log : false,
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  }
-});
+let sequelize: Sequelize;
+
+try {
+  sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+    host: dbHost,
+    port: dbPort,
+    dialect: 'postgres',
+    dialectModule: require('pg'),
+    dialectOptions: {
+      ssl: dbSSL ? {
+        require: true,
+        rejectUnauthorized: false
+      } : false
+    },
+    logging: process.env.NODE_ENV === 'development' ? console.log : false,
+    pool: {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    }
+  });
+} catch (error) {
+  console.error('Error initializing database connection:', error);
+  // Provide a fallback for serverless environment
+  sequelize = new Sequelize({
+    dialect: 'postgres',
+    dialectModule: require('pg')
+  });
+}
 
 // Test database connection
 export const testConnection = async (): Promise<void> => {
