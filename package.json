@@ -6,6 +6,6 @@
     "winston": "^3.17.0"
   },
   "scripts": {
-    "build": "cd frontend && npm install && npm run build"
+    "build": "npm --prefix frontend install && npm --prefix frontend run build"
   }
 }

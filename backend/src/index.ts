@@ -1,12 +1,9 @@
-import { startServer } from './server';
 import app from './server';
+import { startServer } from './server';
 
-// Start the server in non-serverless environments
+// Start the server only if not in a serverless environment
 if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
-  startServer().catch(err => {
-    console.error('Failed to start server:', err);
-    process.exit(1);
-  });
+  startServer();
 }
 
 // Export for serverless environments

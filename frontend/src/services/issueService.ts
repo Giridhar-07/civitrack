@@ -52,6 +52,12 @@ export const getIssuesNearby = async (
 const issueService = {
   getAllIssues: async (filters?: IssueFilterParams): Promise<Issue[]> => {
     try {
+      // Check for network connectivity before making the request
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        console.warn('Network offline, returning empty issues array');
+        return [];
+      }
+      
       const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { 
         params: filters,
         timeout: 15000 // Increase timeout for potentially slow queries
@@ -64,8 +70,16 @@ const issueService = {
       }
       
       return response.data.issues;
-    } catch (error) {
-      console.error('Error fetching issues:', error);
+    } catch (error: any) {
+      // Enhanced error handling for network issues
+      if (error.isNetworkError || 
+          error.errorCode === 'NETWORK_ERROR' || 
+          error.message?.includes('Network connection issue') ||
+          error.code === 'ECONNABORTED') {
+        console.warn('Network error when fetching issues:', error.message || 'Connection failed');
+      } else {
+        console.error('Error fetching issues:', error);
+      }
       // Return empty array instead of throwing to prevent UI breakage
       return [];
     }
@@ -76,6 +90,15 @@ const issueService = {
     filters?: IssueFilterParams
   ): Promise<{ issues: Issue[]; pagination: any }> => {
     try {
+      // Check for network connectivity before making the request
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        console.warn('Network offline, returning empty issues with metadata');
+        return { 
+          issues: [], 
+          pagination: { total: 0, page: 1, limit: filters?.limit || 20, pages: 0 } 
+        };
+      }
+      
       const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { 
         params: filters,
         timeout: 15000 // Increase timeout for potentially slow queries
@@ -92,8 +115,16 @@ const issueService = {
       }
       
       return response.data;
-    } catch (error) {
-      console.error('Error fetching issues with metadata:', error);
+    } catch (error: any) {
+      // Enhanced error handling for network issues
+      if (error.isNetworkError || 
+          error.errorCode === 'NETWORK_ERROR' || 
+          error.message?.includes('Network connection issue') ||
+          error.code === 'ECONNABORTED') {
+        console.warn('Network error when fetching issues with metadata:', error.message || 'Connection failed');
+      } else {
+        console.error('Error fetching issues with metadata:', error);
+      }
       // Return valid empty structure instead of throwing
       return { 
         issues: [], 

@@ -4,7 +4,7 @@ import IssueMap from './IssueMap';
 import useInfiniteScroll from '../../hooks/useInfiniteScroll';
 import { Issue, Location } from '../../types';
 import { getIssuesNearby } from '../../services/issueService';
-import { joinNearbyIssuesRoom, leaveNearbyIssuesRoom, addEventListener, removeEventListener } from '../../services/socketService';
+
 
 interface InfiniteScrollMapProps {
   center?: [number, number];
@@ -19,13 +19,13 @@ const InfiniteScrollMap: React.FC<InfiniteScrollMapProps> = ({
   initialZoom = 13,
   height = '70vh'
 }) => {
-  const [mapCenter, setMapCenter] = useState<[number, number]>(center || initialCenter);
+
   const [currentLocation, setCurrentLocation] = useState<Location>({
     latitude: (center || initialCenter)[0],
     longitude: (center || initialCenter)[1]
   });
-  const [radius, setRadius] = useState<number>(5); // 5km radius
-  const [roomId, setRoomId] = useState<string>('');
+  const [radius] = useState<number>(5); // 5km radius
+
 
   // Fetch issues with infinite scroll
   const fetchIssuesNearby = useCallback(async (page: number, limit: number) => {
@@ -60,78 +60,26 @@ const InfiniteScrollMap: React.FC<InfiniteScrollMapProps> = ({
     
     if (hasMoved) {
       setCurrentLocation(newLocation);
-      setMapCenter([newLocation.latitude, newLocation.longitude]);
+
       resetScroll();
       
       // Leave previous room and join new one
-      if (roomId) {
-        leaveNearbyIssuesRoom(roomId);
-      }
-      
-      const newRoomId = `nearby:${newLocation.latitude.toFixed(4)}:${newLocation.longitude.toFixed(4)}:${radius}`;
-      setRoomId(newRoomId);
-      joinNearbyIssuesRoom(newLocation.latitude, newLocation.longitude, radius);
+
+
+
     }
-  }, [currentLocation, radius, resetScroll, roomId]);
+  }, [currentLocation, resetScroll]);
 
   // Handle real-time updates
   useEffect(() => {
     // Join room for real-time updates
-    try {
-      const roomId = `nearby:${currentLocation.latitude.toFixed(4)}:${currentLocation.longitude.toFixed(4)}:${radius}`;
-      setRoomId(roomId);
-      joinNearbyIssuesRoom(currentLocation.latitude, currentLocation.longitude, radius);
-      
-      console.log('Successfully joined room for real-time updates:', roomId);
-    } catch (error) {
-      console.error('Failed to join room for real-time updates:', error);
-      // Continue without real-time updates - don't block map functionality
-    }
+
     
     // Set up event listeners for real-time updates
-    const handleNewIssue = (newIssue: Issue) => {
-      try {
-        // Check if issue is within our current data
-        const issueExists = issues.some(issue => issue.id === newIssue.id);
-        if (!issueExists) {
-          // Add to our list if it's new
-          resetScroll();
-        }
-      } catch (error) {
-        console.error('Error handling new issue:', error);
-      }
-    };
-    
-    const handleIssueUpdate = (updatedIssue: Issue) => {
-      try {
-        resetScroll();
-      } catch (error) {
-        console.error('Error handling issue update:', error);
-      }
-    };
-    
-    const handleIssueDelete = (issueId: string) => {
-      try {
-        resetScroll();
-      } catch (error) {
-        console.error('Error handling issue delete:', error);
-      }
-    };
-    
-    // Add event listeners
-    addEventListener('newIssue', handleNewIssue);
-    addEventListener('issueUpdate', handleIssueUpdate);
-    addEventListener('issueDelete', handleIssueDelete);
+
     
     // Clean up
-    return () => {
-      if (roomId) {
-        leaveNearbyIssuesRoom(roomId);
-      }
-      removeEventListener('newIssue', handleNewIssue);
-      removeEventListener('issueUpdate', handleIssueUpdate);
-      removeEventListener('issueDelete', handleIssueDelete);
-    };
+    return () => {};
   }, [currentLocation, radius, issues, resetScroll]);
 
   return (

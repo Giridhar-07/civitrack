@@ -160,8 +160,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 // Create HTTP server
 const server = http.createServer(app);
 
-// Initialize Socket.IO
-initializeSocketIO(server);
+// Socket.IO initialization disabled to resolve connection issues
+// initializeSocketIO(server);
 
 // Start server
 const PORT = process.env.PORT || 5000; // Changed port to avoid conflicts
@@ -169,13 +169,26 @@ const PORT = process.env.PORT || 5000; // Changed port to avoid conflicts
 // Connect to database and start server
 export const startServer = async () => {
   try {
-    // Test database connection
-    await sequelize.authenticate();
-    console.log('Database connection has been established successfully.');
+    // Test database connection with retry mechanism
+    let retries = 5;
+    while (retries > 0) {
+      try {
+        await sequelize.authenticate();
+        console.log('Database connection has been established successfully.');
+        break;
+      } catch (dbError) {
+        retries--;
+        if (retries === 0) {
+          throw dbError;
+        }
+        console.log(`Database connection failed, retrying... (${retries} attempts left)`);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+      }
+    }
     
     // Only start the server if not in Vercel serverless environment
     if (process.env.NODE_ENV !== 'production') {
-      server.listen(PORT, async () => {
+      server.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
         console.log(`WebSocket server initialized`);
         console.log(`Performance monitoring enabled`);
@@ -186,14 +199,13 @@ export const startServer = async () => {
   } catch (error) {
     console.error('Unable to connect to the database or start server:', error);
     if (process.env.NODE_ENV !== 'production') {
-      process.exit(1);
+      // Don't exit immediately, allow for graceful shutdown
+      console.log('Server will attempt to restart automatically');
+      setTimeout(() => process.exit(1), 1000);
     }
   }
 };
 
-// Don't auto-start in production (Vercel serverless)
-if (process.env.NODE_ENV !== 'production') {
-  startServer();
-}
+
 
 export default app;

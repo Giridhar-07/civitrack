@@ -20,9 +20,67 @@ export interface AuthResponse {
 }
 
 const authService = {
+  // Robust health check function that tries multiple endpoints
+  checkBackendHealth: async (): Promise<boolean> => {
+    try {
+      // Get the base URL from the API configuration
+      const baseUrl = (api as any).defaults?.baseURL || '';
+      
+      // Try the explicit health endpoint with the base URL
+      try {
+        const response = await fetch(`${baseUrl}/health`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          cache: 'no-store',
+          signal: AbortSignal.timeout(5000) // 5 second timeout
+        });
+        
+        if (response.ok) {
+          console.log('Health check successful via /health endpoint');
+          return true;
+        }
+        console.warn(`Health check failed with status: ${response.status}`);
+      } catch (error) {
+        console.warn('Health check failed for /health endpoint:', error);
+      }
+      
+      // Fallback to /api/health if the first attempt fails
+      try {
+        const response = await fetch(`${baseUrl}/api/health`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+          cache: 'no-store',
+          signal: AbortSignal.timeout(5000) // 5 second timeout
+        });
+        
+        if (response.ok) {
+          console.log('Health check successful via /api/health endpoint');
+          return true;
+        }
+        console.warn(`Health check failed with status: ${response.status}`);
+      } catch (error) {
+        console.warn('Health check failed for /api/health endpoint:', error);
+      }
+      
+      // If both attempts fail, throw an error
+      throw new Error('All health check attempts failed');
+    } catch (error) {
+      console.error('Backend health check failed:', error);
+      return false;
+    }
+  },
+  
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     try {
       console.log('Attempting login with credentials:', { email: credentials.email, passwordLength: credentials.password.length });
+      
+      // Check if we're online before attempting login
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        const offlineError = new Error('You are currently offline. Please check your internet connection and try again.');
+        (offlineError as any).errorCode = 'OFFLINE_ERROR';
+        (offlineError as any).isNetworkError = true;
+        throw offlineError;
+      }
       
       // Use mock service if enabled
       if (USE_MOCK_SERVICE) {
@@ -51,6 +109,19 @@ const authService = {
         return { user, token };
       }
       
+      // Verify backend availability before attempting login
+      try {
+        // Use the explicit health check endpoint with the base URL
+        await authService.checkBackendHealth();
+      } catch (healthError: any) {
+        // If health check fails, throw a clear network error
+        console.warn('Backend health check failed before login attempt:', healthError);
+        const serverError = new Error('Unable to reach the server. Please try again later.');
+        (serverError as any).errorCode = 'SERVER_UNAVAILABLE';
+        (serverError as any).isNetworkError = true;
+        throw serverError;
+      }
+      
       // Use real API
       const response = await api.post<AuthResponse>('/auth/login', credentials);
       
@@ -61,6 +132,9 @@ const authService = {
       if (response.data && response.data.token) {
         localStorage.setItem('token', response.data.token);
         console.log('Token stored in localStorage');
+        
+        // Set flag to indicate successful connection to backend
+        localStorage.setItem('use_local_backend', 'false');
         
         // Dispatch a storage event to notify other components about the token change
         if (typeof window !== 'undefined') {
@@ -77,17 +151,22 @@ const authService = {
       
       return response.data;
     } catch (error: any) {
-      // Enhanced error logging with specific handling for timeout errors
-      if (error.code === 'ECONNABORTED' || (error.message && error.message.includes('timeout'))) {
-        console.error('Login API timeout error:', error.message);
-        // Throw a more user-friendly error for network issues
-        const networkError = new Error('Network connection issue. Please check your internet connection and try again.');
-        networkError.errorCode = 'TIMEOUT_ERROR';
-        throw networkError;
-      } else if (!error.response) {
-        console.error('Login API network error:', error.message);
+      // Enhanced error logging with specific handling for network errors
+      if (error.errorCode === 'SERVER_UNAVAILABLE' || error.errorCode === 'OFFLINE_ERROR') {
+        // Re-throw pre-identified network errors
+        throw error;
+      } else if (error.code === 'ECONNABORTED' || (error.message && error.message.toLowerCase().includes('timeout'))) {
+        console.warn('Login API timeout error:', error.message);
+        // Throw a more user-friendly error for timeout issues
+        const timeoutError = new Error('Connection timed out. The server is taking too long to respond.');
+        (timeoutError as any).errorCode = 'TIMEOUT_ERROR';
+        (timeoutError as any).isNetworkError = true;
+        throw timeoutError;
+      } else if (!error.response || error.message?.toLowerCase().includes('network') || error.name === 'NetworkError') {
+        console.warn('Login API network error:', error.message);
         const networkError = new Error('Unable to connect to the server. Please try again later.');
-        networkError.errorCode = 'NETWORK_ERROR';
+        (networkError as any).errorCode = 'NETWORK_ERROR';
+        (networkError as any).isNetworkError = true;
         throw networkError;
       } else if (error.response?.status === 401 || error.statusCode === 401 || error.status === 401) {
         // Handle authentication errors properly with consistent 401 response
@@ -113,6 +192,24 @@ const authService = {
 
   register: async (userData: RegisterData): Promise<AuthResponse> => {
     try {
+      // Check if we're online before attempting registration
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        const offlineError = new Error('You are currently offline. Please check your internet connection and try again.');
+        (offlineError as any).errorCode = 'OFFLINE_ERROR';
+        (offlineError as any).isNetworkError = true;
+        throw offlineError;
+      }
+      
+      // Use mock service if enabled
+      if (USE_MOCK_SERVICE) {
+        console.log('Using mock service for registration');
+        const mockResponse = await mockService.register(userData.username, userData.email, userData.password);
+        const { token, user } = mockResponse;
+        
+        localStorage.setItem('token', token);
+        return { user, token };
+      }
+      
       const response = await api.post<AuthResponse>('/auth/register', userData);
       // Store token in localStorage
       localStorage.setItem('token', response.data.token);
@@ -123,12 +220,12 @@ const authService = {
         console.error('Register API timeout error:', error.message);
         // Throw a more user-friendly error for network issues
         const networkError = new Error('Network connection issue. Please check your internet connection and try again.');
-        networkError.errorCode = 'NETWORK_ERROR';
+        (networkError as any).errorCode = 'NETWORK_ERROR';
         throw networkError;
       } else if (!error.response) {
         console.error('Register API network error:', error.message);
         const networkError = new Error('Unable to connect to the server. Please try again later.');
-        networkError.errorCode = 'NETWORK_ERROR';
+        (networkError as any).errorCode = 'NETWORK_ERROR';
         throw networkError;
       } else {
         console.error('Register API error:', error.response?.data || error.message);
@@ -183,10 +280,26 @@ const authService = {
         return mockUser;
       }
       
-      // Use real API
-      const response = await api.get<User>('/auth/me');
-      console.log('Current user data received:', response.data);
-      return response.data;
+      // Check if backend is reachable
+      try {
+        // Use the health check function
+        await authService.checkBackendHealth();
+      } catch (healthError) {
+        console.warn('Backend health check failed before user fetch attempt', healthError);
+      }
+      
+      // Try both endpoints to ensure compatibility
+      try {
+        // Use real API with new endpoint
+        const response = await api.get<User>('/api/auth/me');
+        console.log('Current user data received:', response.data);
+        return response.data;
+      } catch (firstError) {
+        // Fallback to original endpoint if new one fails
+        const response = await api.get<User>('/auth/me');
+        console.log('Current user data received from fallback endpoint:', response.data);
+        return response.data;
+      }
     } catch (error: any) {
       // Check for offline status first
       if (!navigator.onLine) {
