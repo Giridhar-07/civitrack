@@ -7,6 +7,7 @@ import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import http from 'http';
+import { URL } from 'url';
 import routes from './routes';
 import sequelize from './config/database';
 import { syncModels } from './models';
@@ -73,17 +74,46 @@ app.use('/api/auth/login', authLimiter);
 app.use('/api/auth/register', authLimiter);
 
 // Enhanced CORS configuration
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',');
+// const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000').split(',');
+// app.use(cors({
+//   origin: (origin, callback) => {
+//     // Allow requests with no origin (like mobile apps or curl requests)
+//     if (!origin) return callback(null, true);
+//     
+//     if (allowedOrigins.indexOf(origin) === -1) {
+//       const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   },
+//   credentials: true,
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+// }));
+const defaultAllowed = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+const envAllowed = (process.env.CORS_ORIGIN || '').split(',').map(o => o.trim()).filter(Boolean);
+const allowedOrigins = Array.from(new Set([...defaultAllowed, ...envAllowed]));
+
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+
+    try {
+      const url = new URL(origin);
+      const hostname = url.hostname;
+      const isExplicitlyAllowed = allowedOrigins.includes(origin);
+      const isNetlifyAllowed = process.env.NODE_ENV === 'production' && hostname.endsWith('.netlify.app');
+
+      if (isExplicitlyAllowed || isNetlifyAllowed) {
+        return callback(null, true);
+      }
+    } catch (e) {
+      // If origin is malformed, reject
     }
-    return callback(null, true);
+
+    const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+    return callback(new Error(msg), false);
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],

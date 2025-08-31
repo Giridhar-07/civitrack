@@ -13,7 +13,7 @@ router.use('/status-requests', statusRequestRoutes);
 router.use('/ai', aiRoutes);
 
 // Health check endpoint - accessible both with and without /api prefix
-router.get('/api/health', (req, res) => {
+router.get('/health', (req, res) => {
   res.status(200).json({ 
     status: 'ok', 
     message: 'Server is running',
