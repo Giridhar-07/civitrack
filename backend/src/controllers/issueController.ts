@@ -6,8 +6,9 @@ import { successResponse, errorResponse, badRequestResponse, notFoundResponse } 
 import { calculateBoundingBox, calculateDistance } from '../utils/geospatial';
 import { IssueStatus, IssueCategory } from '../types/enums';
 import sequelize from '../config/database';
-import { cacheUtils, cacheKeys, cacheTTL } from '../services/redisService';
-import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
+// Redis and Socket services disabled to resolve connection issues
+// import { cacheUtils, cacheKeys, cacheTTL } from '../services/redisService';
+// import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
 
 // Create a new issue
 export const createIssue = async (req: Request, res: Response): Promise<Response> => {
@@ -60,11 +61,11 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
       ]
     });
     
-    // Emit real-time update via WebSocket
-    emitNewIssue(createdIssue);
+    // Socket and Redis operations disabled to resolve connection issues
+    // emitNewIssue(createdIssue);
     
     // Clear nearby issues cache
-    await cacheUtils.clearByPattern(cacheKeys.NEARBY_ISSUES_PATTERN);
+    // await cacheUtils.clearByPattern(cacheKeys.NEARBY_ISSUES_PATTERN);
 
     return successResponse(res, createdIssue, 'Issue created successfully', 201);
   } catch (error) {
@@ -160,13 +161,11 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
     const pageNum = parseInt(page as string, 10);
     const limitNum = parseInt(limit as string, 10);
     
-    // Generate cache key for this query
-    const cacheKey = cacheKeys.nearbyIssues(lat, lng, radiusKm, pageNum, limitNum);
+    // Redis caching disabled to resolve connection issues
+    // const cacheKey = cacheKeys.nearbyIssues(lat, lng, radiusKm, pageNum, limitNum);
     
-    // Try to get from cache first
-    const result = await cacheUtils.getOrSet(
-      cacheKey,
-      async () => {
+    // Direct database query without Redis caching
+    const result = async () => {
         const offset = (pageNum - 1) * limitNum;
         
         // Use a single optimized spatial query with ST_DWithin
@@ -217,12 +216,13 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
             hasNextPage,
             hasPrevPage
           }
-        };
-      },
-      cacheTTL.NEARBY_ISSUES
-    );
-    
-    return successResponse(res, result, 'Nearby issues retrieved successfully');
+        }
+    };
+
+    // Execute the function directly instead of using Redis
+    const resultData = await result();
+
+    return successResponse(res, resultData, 'Nearby issues retrieved successfully');
   } catch (error) {
     console.error('Get nearby issues error:', error);
     return errorResponse(res, 'Error retrieving nearby issues');
@@ -348,6 +348,12 @@ export const updateIssue = async (req: Request, res: Response): Promise<Response
         ]
       });
       
+      // Socket and Redis operations disabled to resolve connection issues
+      // emitIssueUpdate(updatedIssue);
+      
+      // Clear nearby issues cache
+      // await cacheUtils.clearByPattern(cacheKeys.NEARBY_ISSUES_PATTERN);
+      
       return successResponse(res, updatedIssue, 'Issue updated successfully');
     } catch (error) {
       // Rollback transaction on error
@@ -409,6 +415,12 @@ export const deleteIssue = async (req: Request, res: Response): Promise<Response
       
       // Commit transaction
       await transaction.commit();
+      
+      // Socket and Redis operations disabled to resolve connection issues
+      // emitIssueDelete(id);
+      
+      // Clear nearby issues cache
+      // await cacheUtils.clearByPattern(cacheKeys.NEARBY_ISSUES_PATTERN);
       
       return successResponse(res, null, 'Issue deleted successfully');
     } catch (error) {

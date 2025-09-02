@@ -1,7 +1,10 @@
+import app from './server';
 import { startServer } from './server';
 
-// Start the server
-startServer().catch(err => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+// Start the server only if not in a serverless environment
+if (!process.env.VERCEL && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  startServer();
+}
+
+// Export for serverless environments
+export default app;

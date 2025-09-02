@@ -1,5 +1,38 @@
 import { Request, Response, NextFunction } from 'express';
 import { createLogger, format, transports } from 'winston';
+import fs from 'fs';
+import path from 'path';
+
+// Create logger transports based on environment
+const loggerTransports = [
+  new transports.Console({
+    format: format.combine(
+      format.colorize(),
+      format.simple()
+    )
+  })
+];
+
+// Only add file transport in non-serverless environments
+if (process.env.NODE_ENV !== 'production') {
+  try {
+    // Create logs directory if it doesn't exist
+    const logsDir = path.join(process.cwd(), 'logs');
+    if (!fs.existsSync(logsDir)) {
+      fs.mkdirSync(logsDir);
+    }
+    
+    // Add file transport
+    loggerTransports.push(
+      new transports.File({ 
+        filename: 'logs/performance.log' 
+      }) as any // Type assertion to fix TypeScript error
+    );
+  } catch (error) {
+    console.error('Failed to setup file logging:', error);
+    // Continue without file logging
+  }
+}
 
 // Create a performance logger
 const performanceLogger = createLogger({
@@ -9,15 +42,7 @@ const performanceLogger = createLogger({
     format.json()
   ),
   defaultMeta: { service: 'performance-monitor' },
-  transports: [
-    new transports.File({ filename: 'logs/performance.log' }),
-    new transports.Console({
-      format: format.combine(
-        format.colorize(),
-        format.simple()
-      )
-    })
-  ]
+  transports: loggerTransports
 });
 
 // Performance thresholds in milliseconds

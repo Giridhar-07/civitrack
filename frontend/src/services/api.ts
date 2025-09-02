@@ -10,22 +10,49 @@ console.log('Using mock service:', USE_MOCK_SERVICE);
 
 // Resolve API base URL securely across environments
 const resolveApiBaseUrl = (): string => {
+  // First priority: Use environment variable if available
   const envUrl = process.env.REACT_APP_API_URL?.trim();
   if (envUrl) {
+    console.log('Using API URL from environment:', envUrl);
     return envUrl;
   }
+  
+  // For Netlify deployment or any production environment, use the stable Vercel backend URL
+  if (typeof window !== 'undefined' && 
+      (window.location.hostname.includes('netlify.app') || 
+       process.env.NODE_ENV === 'production')) {
+    // Use HTTPS for secure connection
+    return 'https://backend-tau-inky-24.vercel.app/api';
+  }
+  
   // In local dev, frontend runs on :3000 and backend on :5000 by default
   if (typeof window !== 'undefined') {
     const origin = window.location.origin;
     const isLocal3000 = origin.includes('localhost:3000') || origin.includes('127.0.0.1:3000');
     if (isLocal3000) {
-      return 'http://localhost:5000/api';
+      // Prioritize the Vercel backend for TestSprite testing
+      try {
+        // Force use of Vercel backend for TestSprite
+        localStorage.setItem('use_local_backend', 'false');
+        return 'https://backend-tau-inky-24.vercel.app/api';
+        
+        // Uncomment below to use local backend when needed
+        /*
+        const localBackendAvailable = localStorage.getItem('use_local_backend') === 'true';
+        if (localBackendAvailable) {
+          return 'http://localhost:5000/api';
+        }
+        */
+      } catch (e) {
+        return 'https://backend-tau-inky-24.vercel.app/api'; // Fallback to production
+      }
     }
     // Same-origin fallback (use reverse proxy or server-side /api)
     return `${origin.replace(/\/$/, '')}/api`;
   }
-  // SSR or unknown environment fallback
-  return 'http://localhost:5000/api';
+  
+  // SSR or unknown environment fallback - always use the stable production URL
+  return 'https://backend-tau-inky-24.vercel.app/api';
 };
 
 export const BASE_URL = resolveApiBaseUrl();
@@ -38,15 +65,15 @@ const axiosInstance: AxiosInstance = createRetryableAxiosInstance({
     'Content-Type': 'application/json'
   },
   withCredentials: true,
-  timeout: 15000, // 15 seconds timeout
+  timeout: 20000, // 20 seconds timeout for slower connections
   timeoutErrorMessage: 'Request timed out. Please try again.'
 }, {
-  // Custom retry configuration
-  maxRetries: 3,
+  // Enhanced retry configuration
+  maxRetries: 5,
   initialDelayMs: 1000,
-  backoffFactor: 1.5,
-  maxDelayMs: 10000,
-  retryStatusCodes: [408, 429, 500, 502, 503, 504],
+  backoffFactor: 2,
+  maxDelayMs: 15000,
+  retryStatusCodes: [408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524],
   retryNetworkErrors: true
 });
 
@@ -119,6 +146,10 @@ interface ApiInterface {
 // Create the API instance with performance optimizations
 // API endpoint validation map to prevent 404 errors
 const VALID_API_ENDPOINTS = {
+  // Health check endpoints
+  '/health': ['GET'],
+  '/api/health': ['GET'],
+  
   // Auth endpoints
   '/auth/login': ['POST'],
   '/auth/register': ['POST'],
@@ -169,6 +200,7 @@ const VALID_API_ENDPOINTS = {
   '/ai/analyze': ['POST'],
   '/ai/health': ['GET'],
   '/ai/quick-help': ['GET']
+  
 };
 
 // Validate if an endpoint exists in our API
@@ -364,6 +396,17 @@ if (!USE_MOCK_SERVICE) {
       if (isNetworkError) {
         errorResponse.message = 'Network connection issue. Please check your internet connection and try again.';
         errorResponse.errorCode = 'NETWORK_ERROR';
+        errorResponse.isNetworkError = true;
+        
+        // Log network errors but don't flood the console
+        console.warn('Network error detected:', {
+          url: error.config?.url,
+          method: error.config?.method,
+          errorType: 'NETWORK_ERROR'
+        });
+        
+        // Return a rejected promise with our standardized error
+        return Promise.reject(errorResponse);
       }
       
       // Handle authentication errors (401) specially
@@ -411,11 +454,27 @@ if (!USE_MOCK_SERVICE) {
         }
       }
       
-      // Enhanced network error detection
-      if (!error.response || error.code === 'ECONNABORTED' || error.message?.includes('Network') || !navigator.onLine) {
+      // Enhanced network error detection with improved patterns
+      if (!error.response || 
+          error.code === 'ECONNABORTED' || 
+          error.message?.includes('Network') || 
+          error.message?.includes('network') ||
+          error.message?.includes('timeout') || 
+          error.message?.includes('Timeout') ||
+          error.message?.includes('connection') ||
+          error.message?.includes('Connection') ||
+          !navigator.onLine) {
         errorResponse.message = 'Network connection issue. Please check your internet connection and try again.';
         errorResponse.errorCode = 'NETWORK_ERROR';
         errorResponse.isNetworkError = true;
+        
+        // Log network errors as warnings instead of errors to avoid console flooding
+        if (process.env.NODE_ENV === 'development') {
+          console.warn('Network connectivity issue detected:', {
+            message: error.message,
+            code: error.code
+          });
+        }
       }
       
       // Log all errors in development environment with readable message

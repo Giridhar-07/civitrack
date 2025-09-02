@@ -1,4 +1,11 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, InternalAxiosRequestConfig } from 'axios';
+
+/**
+ * Extended request config with retry properties
+ */
+export interface RetryableRequestConfig extends InternalAxiosRequestConfig {
+  __retryCount?: number;
+}
 
 /**
  * Configuration options for the retry mechanism
@@ -21,6 +28,9 @@ export interface RetryConfig {
   
   /** Whether to retry on network errors */
   retryNetworkErrors: boolean;
+  
+  /** Custom retry condition function */
+  retryCondition?: (error: AxiosError) => boolean;
 }
 
 /**
@@ -41,80 +51,83 @@ export const defaultRetryConfig: RetryConfig = {
  * @param retryConfig - Retry mechanism configuration
  * @returns Axios instance with retry capability
  */
-export const createRetryableAxiosInstance = (
+export function createRetryableAxiosInstance(
   config: AxiosRequestConfig = {},
   retryConfig: Partial<RetryConfig> = {}
-) => {
-  // Merge default retry config with provided config
-  const finalRetryConfig: RetryConfig = {
-    ...defaultRetryConfig,
-    ...retryConfig
-  };
+): ReturnType<typeof axios.create> {
+  // Merge with default retry configuration
+  const finalRetryConfig = { ...defaultRetryConfig, ...retryConfig };
   
-  // Create axios instance
+  // Create axios instance with provided config
   const instance = axios.create(config);
   
   // Add response interceptor for retry logic
   instance.interceptors.response.use(
-    // Return successful responses as-is
-    (response: AxiosResponse) => response,
-    
-    // Handle errors with retry logic
+    (response) => response,
     async (error: AxiosError) => {
-      const { config, response } = error;
-      
-      // If no config object is available, we can't retry
-      if (!config) {
+      if (!error.config) {
         return Promise.reject(error);
       }
       
-      // Initialize retry count if not already set
-      const retryCount = config.headers?.['x-retry-count'] ? 
-        Number(config.headers['x-retry-count']) : 0;
+      // Cast to our extended config type
+      const retryableConfig = error.config as RetryableRequestConfig;
       
-      // Check if we should retry based on status code or network error
-      const shouldRetryStatusCode = response && 
-        finalRetryConfig.retryStatusCodes.includes(response.status);
+      // Skip retry if explicitly disabled
+      if (retryableConfig.headers?.['x-no-retry']) {
+        return Promise.reject(error);
+      }
       
-      // Include ECONNABORTED (timeout) errors in retry logic
-      const isNetworkError = !response && 
-        (error.code === 'ECONNABORTED' || (error.code !== 'ECONNABORTED' && finalRetryConfig.retryNetworkErrors));
+      // Initialize retry count
+      retryableConfig.__retryCount = retryableConfig.__retryCount || 0;
       
-      const shouldRetry = (shouldRetryStatusCode || isNetworkError) && 
-        retryCount < finalRetryConfig.maxRetries;
+      // Check if we should retry based on custom condition or default logic
+      const shouldRetry = (
+        retryableConfig.__retryCount < finalRetryConfig.maxRetries &&
+        (
+          (finalRetryConfig.retryCondition && finalRetryConfig.retryCondition(error)) ||
+          (finalRetryConfig.retryNetworkErrors && !error.response) ||
+          (error.response && finalRetryConfig.retryStatusCodes.includes(error.response.status))
+        )
+      );
       
-      // If we shouldn't retry, reject with the original error
       if (!shouldRetry) {
         return Promise.reject(error);
       }
       
+      // Increment retry count
+      retryableConfig.__retryCount += 1;
+      
       // Calculate delay with exponential backoff
-      const delay = Math.min(
-        finalRetryConfig.initialDelayMs * Math.pow(finalRetryConfig.backoffFactor, retryCount),
-        finalRetryConfig.maxDelayMs
-      );
+      let delay = finalRetryConfig.initialDelayMs * 
+        Math.pow(finalRetryConfig.backoffFactor, retryableConfig.__retryCount - 1);
       
-      // Wait for the calculated delay
-      await new Promise(resolve => setTimeout(resolve, delay));
-      
-      // Update retry count in headers
-      if (!config.headers) {
-        config.headers = {} as AxiosRequestHeaders;
+      // Cap the maximum delay
+      if (finalRetryConfig.maxDelayMs) {
+        delay = Math.min(delay, finalRetryConfig.maxDelayMs);
       }
-      config.headers['x-retry-count'] = String(retryCount + 1);
       
       // Log retry attempt in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`Retrying request (${retryCount + 1}/${finalRetryConfig.maxRetries}): ${config.method?.toUpperCase()} ${config.url}`);
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn(`Retrying request (${retryableConfig.__retryCount}/${finalRetryConfig.maxRetries}) after ${delay}ms`);
+      }
+      
+      // Wait for the delay
+      await new Promise(resolve => setTimeout(resolve, delay));
+      
+      // Check online status before retry
+      if (typeof navigator !== 'undefined' && !navigator.onLine) {
+        const networkError = new Error('Network connection unavailable');
+        networkError.name = 'NetworkError';
+        return Promise.reject(networkError);
       }
       
       // Retry the request
-      return instance(config);
+      return instance(retryableConfig);
     }
   );
   
   return instance;
-};
+}
 
 /**
  * Executes a function with retry capability
