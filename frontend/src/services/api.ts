@@ -200,6 +200,7 @@ const VALID_API_ENDPOINTS = {
   '/ai/analyze': ['POST'],
   '/ai/health': ['GET'],
   '/ai/quick-help': ['GET']
+  
 };
 
 // Validate if an endpoint exists in our API
