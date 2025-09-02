@@ -359,6 +359,14 @@ const ProfilePage: React.FC = () => {
                     mb: 2
                   }}
                   src={user.profileImage || profileImage || undefined}
++                 imgProps={{
++                   onError: (e: React.SyntheticEvent<HTMLImageElement>) => {
++                     const target = e.currentTarget as HTMLImageElement;
++                     target.onerror = null;
++                     target.src = `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`;
++                     target.alt = 'Avatar failed to load';
++                   }
++                 }}
                 >
                   {(user?.name?.[0] ?? user?.username?.[0] ?? '?').toUpperCase()}
                 </Avatar>

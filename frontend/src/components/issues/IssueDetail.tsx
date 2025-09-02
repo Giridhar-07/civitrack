@@ -333,6 +333,13 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
                           height="140"
                           image={photo}
                           alt={`Issue photo ${index + 1}`}
+                         onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                           const target = e.currentTarget as HTMLImageElement;
+                           target.onerror = null;
+                           target.src = `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`;
+                           target.alt = 'Image failed to load';
+                           (target.style as any).opacity = '0.7';
+                         }}
                         />
                       </Card>
                     </Grid>
@@ -583,7 +590,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
                     // Handle image loading errors
                     const target = e.target as HTMLImageElement;
                     target.onerror = null; // Prevent infinite error loop
-                    target.src = `${process.env.PUBLIC_URL}/assets/image-placeholder.png`; // Use absolute URL
+                    target.src = `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`; // Use absolute URL
                     target.alt = 'Image failed to load';
                     target.style.opacity = '0.7';
                   }}
