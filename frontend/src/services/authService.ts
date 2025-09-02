@@ -1,4 +1,4 @@
-import api, { USE_MOCK_SERVICE } from './api';
+import api, { USE_MOCK_SERVICE, BASE_URL } from './api';
 import { User } from '../types';
 import mockService from './mockService';
 
@@ -23,10 +23,10 @@ const authService = {
   // Robust health check function that tries multiple endpoints
   checkBackendHealth: async (): Promise<boolean> => {
     try {
-      // Get the base URL from the API configuration
-      const baseUrl = (api as any).defaults?.baseURL || '';
+      // Use resolved API base URL which typically ends with '/api'
+      const baseUrl = (BASE_URL || '').replace(/\/$/, '');
       
-      // Try the explicit health endpoint with the base URL
+      // Try the health endpoint relative to the API base URL
       try {
         const response = await fetch(`${baseUrl}/health`, {
           method: 'GET',
@@ -36,33 +36,15 @@ const authService = {
         });
         
         if (response.ok) {
-          console.log('Health check successful via /health endpoint');
+          console.log('Health check successful via API /health endpoint');
           return true;
         }
         console.warn(`Health check failed with status: ${response.status}`);
       } catch (error) {
-        console.warn('Health check failed for /health endpoint:', error);
+        console.warn('Health check failed for API /health endpoint:', error);
       }
       
-      // Fallback to /api/health if the first attempt fails
-      try {
-        const response = await fetch(`${baseUrl}/api/health`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          cache: 'no-store',
-          signal: AbortSignal.timeout(5000) // 5 second timeout
-        });
-        
-        if (response.ok) {
-          console.log('Health check successful via /api/health endpoint');
-          return true;
-        }
-        console.warn(`Health check failed with status: ${response.status}`);
-      } catch (error) {
-        console.warn('Health check failed for /api/health endpoint:', error);
-      }
-      
-      // If both attempts fail, throw an error
+      // If attempt fails, throw an error
       throw new Error('All health check attempts failed');
     } catch (error) {
       console.error('Backend health check failed:', error);
@@ -290,15 +272,13 @@ const authService = {
       
       // Try both endpoints to ensure compatibility
       try {
-        // Use real API with new endpoint
-        const response = await api.get<User>('/api/auth/me');
+        // Use real API with correct endpoint (baseURL already includes /api)
+        const response = await api.get<User>('/auth/me');
         console.log('Current user data received:', response.data);
         return response.data;
       } catch (firstError) {
-        // Fallback to original endpoint if new one fails
-        const response = await api.get<User>('/auth/me');
-        console.log('Current user data received from fallback endpoint:', response.data);
-        return response.data;
+        // If request fails due to auth, propagate handling below
+        throw firstError;
       }
     } catch (error: any) {
       // Check for offline status first
