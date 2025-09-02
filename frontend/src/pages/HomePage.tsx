@@ -239,6 +239,13 @@ const HomePage: React.FC = () => {
                       height="400"
                       image={item.image}
                       alt={item.title}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`;
+                        target.alt = 'Image not available';
+                        target.style.opacity = '0.6';
+                        (target.style as any).backgroundColor = '#f0f0f0';
+                      }}
                       sx={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                     <Box
