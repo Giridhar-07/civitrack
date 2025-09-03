@@ -1,0 +1,21 @@
+[build]
+  base = "frontend"
+  command = "npm ci && npm run build"
+  publish = "build"
+
+# Specific SPA redirects for known routes
+[[redirects]]
+  from = "/issues/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/profile/*"
+  to = "/index.html"
+  status = 200
+
+# Catch-all SPA redirect (must be last)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

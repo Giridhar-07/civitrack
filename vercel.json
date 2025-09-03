@@ -1,7 +1,10 @@
 {
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "outputDirectory": "dist",
-  "framework": "node",
-  "rootDirectory": "backend"
+  "version": 2,
+  "builds": [
+    { "src": "backend/dist/index.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "backend/dist/index.js" }
+  ],
+  "buildCommand": "npm --prefix backend ci && npm --prefix backend run build"
 }
