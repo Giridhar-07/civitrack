@@ -42,8 +42,6 @@ app.use(helmet({
       frameSrc: ["'none'"],
     },
   },
-  xssFilter: true,
-  noSniff: true,
   referrerPolicy: { policy: 'same-origin' },
 }));
 
