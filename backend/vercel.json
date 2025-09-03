@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "dist/index.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/dist/index.js" }
+  ],
+  "installCommand": "npm ci --include=dev",
+  "buildCommand": "npm run build",
+  "env": {
+    "NPM_CONFIG_PRODUCTION": "false"
+  }
+}
