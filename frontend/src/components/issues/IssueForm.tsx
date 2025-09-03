@@ -419,6 +419,12 @@ const IssueForm: React.FC = () => {
                             src={url} 
                             alt={`Photo ${index + 1}`} 
                             style={{ width: '100%', height: 'auto', borderRadius: '4px' }} 
+                            onError={(e) => {
+                              const target = e.currentTarget as HTMLImageElement;
+                              target.onerror = null;
+                              target.src = `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`;
+                              target.alt = 'Preview failed to load';
+                            }}
                           />
                         </Grid>
                       ))}

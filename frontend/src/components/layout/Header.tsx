@@ -275,6 +275,14 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
                 <Avatar 
                   sx={{ width: 32, height: 32, bgcolor: '#4CAF50' }}
                   src={user?.profileImage || undefined}
+                 imgProps={{
+                   onError: (e: React.SyntheticEvent<HTMLImageElement>) => {
+                     const target = e.currentTarget as HTMLImageElement;
+                     target.onerror = null;
+                     target.src = `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`;
+                     target.alt = 'Avatar failed to load';
+                   }
+                 }}
                 >
                   {(user?.username?.[0] ?? user?.name?.[0] ?? '?').toUpperCase()}
                 </Avatar>

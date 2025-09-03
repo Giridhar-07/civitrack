@@ -157,8 +157,10 @@ export const uploadProfileImage = async (req: Request, res: Response): Promise<R
       return unauthorizedResponse(res, 'User not found');
     }
     
-    // Get the file URL
-    const profileImage = getFileUrl(req.file.filename);
+    // Get the relative file URL and build an absolute URL with current host
+    const relativePath = getFileUrl(req.file.filename);
+    const origin = `${req.protocol}://${req.get('host')}`;
+    const profileImage = `${origin}${relativePath}`;
     
     // Update user with profile image URL
     await user.update({ profileImage });
