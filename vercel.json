@@ -6,5 +6,9 @@
   "routes": [
     { "src": "/(.*)", "dest": "backend/dist/index.js" }
   ],
-  "buildCommand": "npm --prefix backend ci && npm --prefix backend run build"
+  "installCommand": "npm --prefix backend ci --include=dev",
+  "buildCommand": "npm --prefix backend run build",
+  "env": {
+    "NPM_CONFIG_PRODUCTION": "false"
+  }
 }
