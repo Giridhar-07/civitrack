@@ -4,23 +4,42 @@ import fs from 'fs';
 import { Request } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, '../../uploads');
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
+// Resolve a writable uploads directory and export it
+let resolvedUploadsDir = process.env.UPLOADS_DIR || path.join(__dirname, '../../uploads');
+let useMemoryStorage = false;
+
+try {
+  if (!fs.existsSync(resolvedUploadsDir)) {
+    fs.mkdirSync(resolvedUploadsDir, { recursive: true });
+  }
+} catch (err) {
+  try {
+    // Fallback to serverless writable temp directory
+    resolvedUploadsDir = path.join(process.env.TMPDIR || '/tmp', 'uploads');
+    if (!fs.existsSync(resolvedUploadsDir)) {
+      fs.mkdirSync(resolvedUploadsDir, { recursive: true });
+    }
+  } catch (e) {
+    // Final fallback: use memory storage (no disk writes)
+    useMemoryStorage = true;
+  }
 }
 
+export const uploadsDir = resolvedUploadsDir;
+
 // Configure storage for multer
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsDir);
-  },
-  filename: (req, file, cb) => {
-    // Generate unique filename with original extension
-    const uniqueFilename = `${uuidv4()}${path.extname(file.originalname)}`;
-    cb(null, uniqueFilename);
-  },
-});
+const storage: multer.StorageEngine = useMemoryStorage
+  ? multer.memoryStorage()
+  : multer.diskStorage({
+      destination: (_req, _file, cb) => {
+        cb(null, uploadsDir);
+      },
+      filename: (_req, file, cb) => {
+        // Generate unique filename with original extension
+        const uniqueFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+        cb(null, uniqueFilename);
+      },
+    });
 
 // File filter to allow only images
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
@@ -51,7 +70,7 @@ export const getFileUrl = (filename: string): string => {
 // Helper function to delete file
 export const deleteFile = (filename: string): void => {
   const filePath = path.join(uploadsDir, filename);
-  if (fs.existsSync(filePath)) {
+  if (!useMemoryStorage && fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   }
 };

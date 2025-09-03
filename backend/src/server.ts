@@ -139,7 +139,8 @@ app.use('/uploads', (req, res, next) => {
 });
 
 // Serve static files from uploads directory
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+import { uploadsDir } from './utils/upload';
+app.use('/uploads', express.static(uploadsDir));
 
 // API routes
 app.use('/api', routes);
