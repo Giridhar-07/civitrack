@@ -9,6 +9,7 @@ import sequelize from '../config/database';
 // Redis and Socket services disabled to resolve connection issues
 // import { cacheUtils, cacheKeys, cacheTTL } from '../services/redisService';
 // import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
+import { getFileUrl } from '../utils/upload';
 
 // Create a new issue
 export const createIssue = async (req: Request, res: Response): Promise<Response> => {
@@ -33,6 +34,28 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
       address
     });
 
+    // Build photo URLs from uploaded files (preferred) or body (fallback)
+    const uploadedFiles = (req.files as Express.Multer.File[]) || [];
+    const origin = `${req.protocol}://${req.get('host')}`;
+    const filePhotoUrls = uploadedFiles.length > 0
+      ? uploadedFiles.map(f => `${origin}${getFileUrl(f.filename)}`)
+      : [];
+
+    let bodyPhotoUrls: string[] = [];
+    if (req.body.photos) {
+      if (Array.isArray(req.body.photos)) {
+        bodyPhotoUrls = req.body.photos as string[];
+      } else {
+        try {
+          const parsed = JSON.parse(req.body.photos);
+          if (Array.isArray(parsed)) bodyPhotoUrls = parsed;
+        } catch {
+          if (typeof req.body.photos === 'string') bodyPhotoUrls = [req.body.photos as string];
+        }
+      }
+    }
+    const photoUrls = filePhotoUrls.length > 0 ? filePhotoUrls : bodyPhotoUrls;
+
     // Create issue with the location
     const issue = await Issue.create({
       title,
@@ -41,7 +64,7 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
       status: IssueStatus.REPORTED,
       reportedBy: user.id,
       locationId: location.id,
-      photos: req.body.photos || [] // Assume req.body.photos contains Firebase URLs
+      photos: photoUrls
     });
 
     // Create initial status log
@@ -301,10 +324,13 @@ export const updateIssue = async (req: Request, res: Response): Promise<Response
         description: description || issue.description,
         category: category || issue.category,
         status: status || issue.status,
-        // If new images are uploaded, append them to existing ones
-        photos: req.files ? 
-          [...issue.photos, ...(req.files as Express.Multer.File[]).map(file => file.filename)] : 
-          issue.photos
+        // If new images are uploaded, append them to existing ones (as absolute URLs)
+        photos: req.files 
+          ? [
+              ...issue.photos,
+              ...(req.files as Express.Multer.File[]).map(file => `${req.protocol}://${req.get('host')}${getFileUrl(file.filename)}`)
+            ] 
+          : issue.photos
       }, { transaction });
       
       // If status is being updated, create a status log

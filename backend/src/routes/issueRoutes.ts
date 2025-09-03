@@ -1,4 +1,4 @@
-import { Router } from 'express';
+80import { Router } from 'express';
 import {
   createIssue,
   getIssues,
@@ -33,7 +33,7 @@ router.get('/nearby', getNearbyIssuesValidation, getNearbyIssues);
 // Protected routes (specific routes before dynamic :id)
 router.get('/user/me', authenticate, getUserIssues);
 router.get('/saved', authenticate, getSavedIssues); // New route for saved issues
-router.post('/', authenticate, createIssueValidation, createIssue); // Removed upload.array('photos')
+router.post('/', authenticate, upload.array('photos'), createIssueValidation, createIssue); // Re-added upload.array('photos') for multipart parsing
 router.post('/:id/flag', authenticate, flagIssueValidation, flagIssue);
 // Resolve a specific flag (admin only)
 router.put('/flags/:flagId/resolve', authenticate, authorizeAdmin, resolveFlag);
