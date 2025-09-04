@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import HomePage from './pages/HomePage';
@@ -16,6 +16,7 @@ import NotificationSystem from './components/common/NotificationSystem';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import MapPage from './pages/MapPage';
 import SearchPage from './pages/SearchPage';
+import testApiConnection from './utils/testApiConnection';
 
 // Protected route component that uses our useAuth hook
 interface ProtectedRouteProps {
@@ -50,6 +51,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, adminOnly = f
 
 // Main App component with all providers
 const App: React.FC = () => {
+  // Test API connection on app initialization
+  useEffect(() => {
+    // Run API connection test in production and development
+    testApiConnection().then(success => {
+      console.log('API connection test completed. Success:', success);
+    });
+  }, []);
+
   return (
     <ErrorBoundary>
       <ThemeProvider>

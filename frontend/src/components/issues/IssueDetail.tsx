@@ -132,12 +132,26 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
 
   const handleSubmitStatusRequest = async () => {
     if (!onRequestStatusChange) return;
+    
+    // Validate that requested status is different from current status
+    if (requestedStatus === issue.status) {
+      alert('Please select a different status than the current one');
+      return;
+    }
+    
+    // Validate reason length if provided
+    if (requestReason && (requestReason.length < 5 || requestReason.length > 500)) {
+      alert('Reason must be between 5 and 500 characters');
+      return;
+    }
+    
     setRequesting(true);
     try {
       await onRequestStatusChange(issue.id, requestedStatus, requestReason);
       handleRequestDialogClose();
     } catch (error) {
       console.error('Failed to submit status change request:', error);
+      alert(`Failed to submit status change request: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setRequesting(false);
     }

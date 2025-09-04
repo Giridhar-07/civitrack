@@ -104,6 +104,13 @@ const HomePage: React.FC = () => {
 
   // Request geolocation with graceful fallbacks and user feedback
   function requestGeolocation() {
+    // Set loading state immediately to show progress
+    setIssuesState(prev => ({
+      ...prev,
+      loading: true,
+      error: null
+    }));
+    
     // First, fetch all issues regardless of location to ensure we display all previously reported issues
     issueService.getAllIssues().then(allIssues => {
       if (allIssues && allIssues.length > 0) {
@@ -117,6 +124,7 @@ const HomePage: React.FC = () => {
       }
     }).catch(err => {
       console.error('Failed to fetch all issues:', err);
+      // Don't set error state here as we'll try geolocation next
     });
     
     if (!navigator.geolocation) {

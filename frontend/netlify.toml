@@ -1,5 +1,18 @@
 [build]
   publish = "build"
+  command = "CI=false npm run build"
+
+[build.environment]
+  CI = "false"
+  REACT_APP_API_URL = "https://backend-tau-inky-24.vercel.app/api"
+
+# API proxy redirect
+[[redirects]]
+  from = "/api/*"
+  to = "https://backend-tau-inky-24.vercel.app/api/:splat"
+  status = 200
+  force = true
+  headers = {Access-Control-Allow-Origin = "*"}
 
 # Specific SPA redirects for known routes
 [[redirects]]

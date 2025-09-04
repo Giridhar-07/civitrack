@@ -58,7 +58,7 @@ const issueService = {
         return [];
       }
       
-      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { 
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues', { 
         params: filters,
         timeout: 15000 // Increase timeout for potentially slow queries
       });
@@ -99,7 +99,7 @@ const issueService = {
         };
       }
       
-      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues', { 
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues', { 
         params: filters,
         timeout: 15000 // Increase timeout for potentially slow queries
       });
@@ -135,7 +135,7 @@ const issueService = {
 
   getIssueById: async (id: string): Promise<Issue> => {
     try {
-      const response = await api.get<Issue>(`\/issues\/${id}`);
+      const response = await api.get<Issue>(`/issues/${id}`);
       return response.data;
     } catch (error) {
       throw error;
@@ -166,9 +166,9 @@ const issueService = {
         });
       }
 
-      const response = await api.post<Issue>('\/issues', formData, {
+      const response = await api.post<Issue>('/issues', formData, {
         headers: {
-          'Content-Type': 'multipart\/form-data'
+          'Content-Type': 'multipart/form-data'
         }
       });
       return response.data;
@@ -179,7 +179,7 @@ const issueService = {
 
   updateIssueStatus: async (id: string, status: IssueStatus, comment?: string): Promise<Issue> => {
     try {
-      const response = await api.put<Issue>(`\/issues\/${id}`, { 
+      const response = await api.put<Issue>(`/issues/${id}`, { 
         status, 
         statusComment: comment 
       });
@@ -237,7 +237,7 @@ const issueService = {
         return [];
       }
       
-      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues\/user\/me');
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues/user/me');
       return response.data.issues || [];
     } catch (error: any) {
       // Log the error with more details
@@ -260,7 +260,7 @@ const issueService = {
         return [];
       }
       
-      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues\/saved');
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues/saved');
       return response.data.issues || [];
     } catch (error: any) {
       // Log the error with more details
@@ -297,7 +297,7 @@ const issueService = {
 
   getNearbyIssues: async (latitude: number, longitude: number, radius: number = 5): Promise<Issue[]> => {
     try {
-      const response = await api.get<{ issues: Issue[]; pagination: any }>('\/issues\/nearby', {
+      const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues/nearby', {
         params: { latitude, longitude, radius }
       });
       return response.data.issues;
@@ -329,7 +329,7 @@ const issueService = {
           limit: number;
           pages: number;
         };
-      }>('\/issues\/nearby', {
+      }>('/issues/nearby', {
         params: { latitude, longitude, radius, page, limit }
       });
       

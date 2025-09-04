@@ -2,6 +2,13 @@
 
 This document outlines the deployment architecture for the CiviTrack application, with the frontend deployed to Netlify and the backend deployed to Vercel.
 
+## Recent Updates
+
+- Added Netlify API proxy configuration for improved backend connectivity
+- Implemented better error handling in status request service
+- Added GitHub Actions workflow for automated deployment
+- Created verification scripts to test deployment connectivity
+
 ## Architecture Overview
 
 ```
@@ -31,23 +38,192 @@ This document outlines the deployment architecture for the CiviTrack application
 4. **Environment Variables**
    - Set the following environment variables in Netlify:
      ```
-     REACT_APP_API_URL=https://your-vercel-backend-url.vercel.app/api
-     REACT_APP_USE_MOCK_SERVICE=false
+     REACT_APP_API_URL=https://backend-tau-inky-24.vercel.app/api
+     CI=false
+     ```
+   - These are also configured in the `netlify.toml` file
+
+5. **Netlify Configuration**
+   - We've added a `netlify.toml` file with the following configuration:
+     ```toml
+     [build]
+       publish = "build"
+       command = "CI=false npm run build"
+     
+     [build.environment]
+       CI = "false"
+       REACT_APP_API_URL = "https://backend-tau-inky-24.vercel.app/api"
+     
+     # API proxy redirect
+     [[redirects]]
+       from = "/api/*"
+       to = "https://backend-tau-inky-24.vercel.app/api/:splat"
+       status = 200
+       force = true
+       headers = {Access-Control-Allow-Origin = "*"}
+     
+     # SPA redirects for client-side routing
+     [[redirects]]
+       from = "/*"
+       to = "/index.html"
+       status = 200
      ```
 
-5. **Deploy Triggers**
+6. **Deploy Triggers**
    - Configure Netlify to deploy automatically when changes are pushed to the main branch
+   - We've added a GitHub Actions workflow for automated deployment
 
-### Netlify Configuration File
+### Deployment Verification
 
-Create a `netlify.toml` file in the root of your repository:
+We've created a verification script at `frontend/scripts/verify-deployment.js` that tests connectivity to:
+
+1. Vercel backend API
+2. Netlify frontend
+3. Netlify API proxy
+4. Local API proxy
+
+To run the verification script:
+
+```bash
+cd frontend
+npm run verify-deployment
+```
+
+The script will output the status of each connection test, helping to diagnose any deployment issues.
+
+### GitHub Actions Workflow
+
+We've created a GitHub Actions workflow file at `.github/workflows/netlify-deploy.yml` that automates the deployment process:
+
+```yaml
+name: Deploy to Netlify
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'frontend/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        run: npm run build
+        env:
+          CI: false
+          REACT_APP_API_URL: https://backend-tau-inky-24.vercel.app/api
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2
+        with:
+          publish-dir: './frontend/build'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 5
+```
+
+To set up this workflow, you'll need to add the following secrets to your GitHub repository:
+
+- `NETLIFY_AUTH_TOKEN`: Your Netlify personal access token
+- `NETLIFY_SITE_ID`: The API ID of your Netlify site
+
+See `frontend/GITHUB_ACTIONS_SETUP.md` for detailed instructions on setting up these secrets.
+
+### Netlify Configuration Files
+
+We've created the following configuration files for Netlify deployment:
+
+1. **netlify.toml** in the frontend directory:
 
 ```toml
 [build]
-  base = "frontend/"
-  publish = "build/"
-  command = "npm run build"
+  publish = "build"
+  command = "CI=false npm run build"
 
+[build.environment]
+  CI = "false"
+  REACT_APP_API_URL = "https://civitrack-backend.vercel.app/api"
+
+# API proxy redirect
+[[redirects]]
+  from = "/api/*"
+  to = "https://civitrack-backend.vercel.app/api/:splat"
+  status = 200
+  force = true
+  headers = {Access-Control-Allow-Origin = "*"}
+
+# SPA redirects for known routes
+[[redirects]]
+  from = "/issues/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/profile/*"
+  to = "/index.html"
+  status = 200
+
+# Catch-all SPA redirect
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+### Deployment Verification
+
+We've created a verification script to test the deployment connectivity. The script checks:
+
+1. Connectivity to the Vercel backend API
+2. Connectivity to the Netlify frontend
+3. Functionality of the Netlify API proxy
+4. Local API proxy for development testing
+
+To run the verification script:
+
+```bash
+cd frontend
+npm run verify-deployment
+```
+
+The script is located at `frontend/scripts/verify-deployment.js` and has been added as an npm script in `package.json`.
+```
+
+2. **_redirects** file in the frontend/public directory:
+
+```
+# Netlify redirects file
+# Handle API requests
+/api/*  https://civitrack-backend.vercel.app/api/:splat  200
+
+# SPA fallback
+/*  /index.html  200
+```
 [[redirects]]
   from = "/*"
   to = "/index.html"
