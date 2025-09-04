@@ -172,6 +172,9 @@ const VALID_API_ENDPOINTS = {
    '/auth/admin/users/:id/roles/:roleId': ['DELETE'],
    '/auth/admin/roles/:id/users/:userId': ['DELETE'],
    '/auth/admin/users/status-requests': ['GET'],
+   '/auth/verify-email': ['POST'],
+   '/auth/forgot-password': ['POST'],
+   '/auth/reset-password': ['POST'],
    
   // User endpoints
   //'/users': ['GET'],

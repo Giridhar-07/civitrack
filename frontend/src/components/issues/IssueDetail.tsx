@@ -147,11 +147,30 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
     
     setRequesting(true);
     try {
+      // Log request details for debugging
+      console.debug('Submitting status request:', {
+        issueId: issue.id,
+        currentStatus: issue.status,
+        requestedStatus,
+        reasonLength: requestReason?.length
+      });
+      
       await onRequestStatusChange(issue.id, requestedStatus, requestReason);
       handleRequestDialogClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to submit status change request:', error);
-      alert(`Failed to submit status change request: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      
+      // Extract more meaningful error message
+      let errorMessage = 'Unknown error';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      
+      alert(`Failed to submit status change request: ${errorMessage}`);
     } finally {
       setRequesting(false);
     }

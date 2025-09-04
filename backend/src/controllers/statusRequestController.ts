@@ -11,6 +11,7 @@ export const createStatusRequest = async (req: Request, res: Response): Promise<
     // Validate request
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
+      console.log('Validation errors:', errors.array());
       return badRequestResponse(res, 'Validation error', errors.array().map(err => err.msg));
     }
 
@@ -18,10 +19,29 @@ export const createStatusRequest = async (req: Request, res: Response): Promise<
     const { id: issueId } = req.params; // Route param is :id, not :issueId
     const { requestedStatus, reason } = req.body;
 
+    // Log request details for debugging
+    console.debug('Status request details:', {
+      issueId,
+      userId: user.id,
+      requestedStatus,
+      reasonProvided: !!reason,
+      reasonLength: reason?.length
+    });
+
+    // Additional validation for reason
+    if (reason !== undefined && (reason === null || reason === '')) {
+      return badRequestResponse(res, 'Validation error', ['reason: Reason cannot be empty if provided']);
+    }
+
     // Check if issue exists
     const issue = await Issue.findByPk(issueId);
     if (!issue) {
       return notFoundResponse(res, 'Issue not found');
+    }
+
+    // Prevent requesting the same status
+    if (issue.status === requestedStatus) {
+      return badRequestResponse(res, 'Requested status is the same as current status');
     }
 
     // Check if there's already a pending request for this issue by this user
@@ -43,7 +63,7 @@ export const createStatusRequest = async (req: Request, res: Response): Promise<
       requestedBy: user.id,
       currentStatus: issue.status,
       requestedStatus,
-      reason,
+      reason: reason || null, // Ensure null is stored if reason is not provided
       status: 'pending'
     });
 

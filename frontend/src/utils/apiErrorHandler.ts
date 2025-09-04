@@ -158,11 +158,54 @@ export const isAxiosError = (error: any): error is AxiosError => {
  * @param fieldErrors - Object containing field validation errors
  * @returns An object with field names as keys and error messages as values
  */
-export const formatFieldErrors = (fieldErrors?: Record<string, string[]>): Record<string, string> => {
+export const formatFieldErrors = (fieldErrors?: Record<string, string[] | string>): Record<string, string> => {
   if (!fieldErrors) return {};
   
   return Object.entries(fieldErrors).reduce((acc, [field, errors]) => {
-    acc[field] = Array.isArray(errors) ? errors[0] : errors as unknown as string;
+    if (Array.isArray(errors)) {
+      acc[field] = errors[0];
+    } else if (typeof errors === 'string') {
+      acc[field] = errors;
+    } else {
+      acc[field] = 'Invalid input';
+    }
     return acc;
   }, {} as Record<string, string>);
+};
+
+/**
+ * Logs API errors with additional context for debugging
+ * @param functionName - The name of the function where the error occurred
+ * @param error - The error object
+ * @returns The original error for chaining
+ */
+export const logApiError = (functionName: string, error: unknown): Error => {
+  const errorDetails = extractErrorMessage(error);
+  
+  console.error(`API Error in ${functionName}:`, {
+    message: errorDetails.message,
+    statusCode: errorDetails.statusCode,
+    errorCode: errorDetails.errorCode,
+    fieldErrors: errorDetails.fieldErrors,
+    originalError: error
+  });
+  
+  // Convert to a proper Error object with validation details if needed
+  if (errorDetails.fieldErrors) {
+    const validationError = new Error(errorDetails.message);
+    (validationError as any).fieldErrors = errorDetails.fieldErrors;
+    (validationError as any).statusCode = errorDetails.statusCode;
+    (validationError as any).isValidationError = true;
+    return validationError;
+  }
+  
+  // If it's already an Error, add the extracted details
+  if (error instanceof Error) {
+    (error as any).statusCode = errorDetails.statusCode;
+    (error as any).errorCode = errorDetails.errorCode;
+    return error;
+  }
+  
+  // Create a new Error with the extracted message
+  return new Error(errorDetails.message);
 };

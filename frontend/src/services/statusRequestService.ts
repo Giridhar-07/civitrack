@@ -39,12 +39,29 @@ const statusRequestService = {
   ): Promise<StatusRequest> => {
     try {
       console.debug('Requesting status change:', { issueId, requestedStatus, reason });
+      // Validate inputs before sending to API
+      if (!issueId || !requestedStatus) {
+        throw new Error('Issue ID and requested status are required');
+      }
+      
+      // Ensure reason meets length requirements if provided
+      if (reason && (reason.length < 5 || reason.length > 500)) {
+        throw new Error('Reason must be between 5 and 500 characters');
+      }
+      
       const response = await api.post<StatusRequest>(`/status-requests/issue/${issueId}`, {
         requestedStatus,
-        reason
+        reason: reason || undefined // Only send reason if it has a value
       });
       return response.data as unknown as StatusRequest;
     } catch (error) {
+      // Enhanced error logging
+      console.error('Status request error details:', {
+        issueId,
+        requestedStatus,
+        reasonLength: reason?.length,
+        error
+      });
       throw logApiError('requestStatusChange', error);
     }
   },
