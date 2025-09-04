@@ -42,8 +42,6 @@ app.use(helmet({
       frameSrc: ["'none'"],
     },
   },
-  xssFilter: true,
-  noSniff: true,
   referrerPolicy: { policy: 'same-origin' },
 }));
 
@@ -90,7 +88,7 @@ app.use('/api/auth/register', authLimiter);
 //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 //   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 // }));
-const defaultAllowed = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+const defaultAllowed = ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5174', 'http://127.0.0.1:5174'];
 const envAllowed = (process.env.CORS_ORIGIN || '').split(',').map(o => o.trim()).filter(Boolean);
 const allowedOrigins = Array.from(new Set([...defaultAllowed, ...envAllowed]));
 
@@ -141,7 +139,8 @@ app.use('/uploads', (req, res, next) => {
 });
 
 // Serve static files from uploads directory
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+import { uploadsDir } from './utils/upload';
+app.use('/uploads', express.static(uploadsDir));
 
 // API routes
 app.use('/api', routes);

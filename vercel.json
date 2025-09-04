@@ -1,7 +1,15 @@
 {
-  "buildCommand": "npm run build",
-  "installCommand": "npm install",
-  "outputDirectory": "dist",
-  "framework": "node",
-  "rootDirectory": "backend"
+  "version": 2,
+  "builds": [
+    { "src": "backend/api/index.ts", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/backend/api/index.ts" },
+    { "src": "/(.*)", "dest": "/backend/api/index.ts" }
+  ],
+  "installCommand": "npm --prefix backend ci --include=dev",
+  "buildCommand": "npm --prefix backend run build",
+  "env": {
+    "NPM_CONFIG_PRODUCTION": "false"
+  }
 }

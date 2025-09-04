@@ -1,11 +1,7 @@
 {
-  "dependencies": {
-    "ioredis": "^5.7.0",
-    "socket.io": "^4.8.1",
-    "socket.io-client": "^4.8.1",
-    "winston": "^3.17.0"
-  },
+  "private": true,
+  "workspaces": ["frontend", "backend"],
   "scripts": {
-    "build": "npm --prefix frontend install && npm --prefix frontend run build"
+    "build": "npm --prefix frontend ci && npm --prefix frontend run build"
   }
 }

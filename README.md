@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# CiviTrack - Civic Issue Tracking Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern web application for tracking and managing civic issues. This project uses React for the frontend and Node.js for the backend.
 
 ## Available Scripts
 
