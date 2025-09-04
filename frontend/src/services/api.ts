@@ -141,6 +141,10 @@ interface ApiInterface {
   put: <T>(url: string, data?: any, config?: any) => Promise<{ data: T }>;
   patch: <T>(url: string, data?: any, config?: any) => Promise<{ data: T }>;
   delete: <T>(url: string, config?: any) => Promise<{ data: T }>;
+  defaults?: {
+    baseURL?: string;
+    [key: string]: any;
+  };
 }
 
 // Create the API instance with performance optimizations
@@ -243,6 +247,9 @@ const validateEndpoint = (url: string, method: string): boolean => {
 };
 
 const api: ApiInterface = USE_MOCK_SERVICE ? mockApi : {
+  defaults: {
+    baseURL: BASE_URL
+  },
   get: async <T>(url: string, config?: any) => {
     // Validate endpoint before making request
     if (!validateEndpoint(url, 'GET')) {
