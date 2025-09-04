@@ -1,7 +1,11 @@
 [build]
   base = "frontend"
-  command = "npm ci && npm run build"
+  command = "npm ci && CI=false npm run build"
   publish = "build"
+
+[build.environment]
+  REACT_APP_API_URL = "https://backend-tau-inky-24.vercel.app/api"
+  REACT_APP_SOCKET_URL = "https://backend-tau-inky-24.vercel.app"
 
 # Specific SPA redirects for known routes
 [[redirects]]
