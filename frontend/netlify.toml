@@ -1,6 +1,6 @@
 [build]
   publish = "build"
-  command = "npm install && cross-env CI=false npm run build"
+  command = "cd frontend && npm install && cross-env CI=false npm run build"
 
 [build.environment]
   CI = "false"
