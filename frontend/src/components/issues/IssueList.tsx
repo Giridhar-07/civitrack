@@ -110,102 +110,112 @@ const IssueList: React.FC<IssueListProps> = ({
   };
 
   return (
-    <Box>
-      {showToolbar && (
-        <Paper elevation={0} sx={{ p: 3, mb: 4, backgroundColor: (theme) => theme.palette.background.paper }}>
-          <Grid container spacing={2} alignItems="center">
-            <Grid item xs={12} md={6}>
-              <TextField
-                fullWidth
-                placeholder="Search issues..."
-                value={filters.searchTerm || ''}
-                onChange={handleSearchChange}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon sx={{ color: (theme) => theme.palette.text.secondary }} />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={{ 
-                  '& .MuiOutlinedInput-root': {
-                    '& fieldset': {
-                      borderColor: (theme) => theme.palette.divider,
-                    },
-                    '&:hover fieldset': {
-                      borderColor: (theme) => theme.palette.text.secondary,
-                    },
-                  },
-                  '& .MuiInputBase-input': {
-                    color: (theme) => theme.palette.text.primary,
-                  },
-                }}
-              />
-            </Grid>
-            
-            <Grid item xs={12} sm={6} md={3}>
-              <FormControl fullWidth>
-                <InputLabel id="status-filter-label" sx={{ color: (theme) => theme.palette.text.secondary }}>Status</InputLabel>
-                <Select
-                  labelId="status-filter-label"
-                  value={filters.status?.toString() || ''}
-                  label="Status"
-                  onChange={handleStatusFilterChange}
-                  sx={{ 
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: (theme) => theme.palette.divider,
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: (theme) => theme.palette.text.secondary,
-                    },
-                    '& .MuiInputBase-input': {
-                      color: (theme) => theme.palette.text.primary,
-                    },
-                  }}
-                >
-                  <MenuItem value="">All Statuses</MenuItem>
-                  {Object.values(IssueStatus).map((status) => (
-                    <MenuItem key={status} value={status}>
-                      {status && typeof status === 'string' ? status.charAt(0).toUpperCase() + status.slice(1).replace('_', ' ') : 'Unknown'}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={3}>
-              <FormControl fullWidth>
-                <InputLabel id="category-filter-label" sx={{ color: (theme) => theme.palette.text.secondary }}>Category</InputLabel>
-                <Select
-                  labelId="category-filter-label"
-                  value={filters.category?.toString() || ''}
-                  label="Category"
-                  onChange={handleCategoryFilterChange}
-                  sx={{ 
-                    '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: (theme) => theme.palette.divider,
-                    },
-                    '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: (theme) => theme.palette.text.secondary,
-                    },
-                    '& .MuiInputBase-input': {
-                      color: (theme) => theme.palette.text.primary,
-                    },
-                  }}
-                >
-                  <MenuItem value="">All Categories</MenuItem>
-                  {Object.values(IssueCategory).map((category) => (
-                    <MenuItem key={category} value={category}>
-                      {category && typeof category === 'string' ? category.charAt(0).toUpperCase() + category.slice(1).replace('_', ' ') : 'Unknown'}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Paper>
-      )}
-      
+    <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6}>
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Search Issues"
+            value={filters.searchTerm}
+            onChange={handleSearchChange}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(0, 0, 0, 0.23)'
+                },
+                '&:hover fieldset': {
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: theme => theme.palette.primary.main
+                }
+              },
+              '& .MuiInputBase-input': {
+                color: theme => theme.palette.text.primary
+              },
+              '& .MuiInputLabel-root': {
+                color: theme => theme.palette.text.secondary
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <FormControl fullWidth>
+            <InputLabel id="status-filter-label">Status</InputLabel>
+            <Select
+              labelId="status-filter-label"
+              id="status-filter"
+              value={String(filters.status ?? '')}
+              label="Status"
+              onChange={handleStatusFilterChange}
+              sx={{
+                color: theme => theme.palette.text.primary,
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(0, 0, 0, 0.23)'
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => theme.palette.primary.main
+                },
+                '& .MuiSvgIcon-root': {
+                  color: theme => theme.palette.text.secondary
+                }
+              }}
+            >
+              <MenuItem value="">All</MenuItem>
+              {Object.values(IssueStatus).map((status) => (
+                <MenuItem key={status} value={status}>
+                  {status.replace(/_/g, ' ')}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <FormControl fullWidth>
+            <InputLabel id="category-filter-label">Category</InputLabel>
+            <Select
+              labelId="category-filter-label"
+              id="category-filter"
+              value={String(filters.category ?? '')}
+              label="Category"
+              onChange={handleCategoryFilterChange}
+              sx={{
+                color: theme => theme.palette.text.primary,
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.23)' : 'rgba(0, 0, 0, 0.23)'
+                },
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'
+                },
+                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: theme => theme.palette.primary.main
+                },
+                '& .MuiSvgIcon-root': {
+                  color: theme => theme.palette.text.secondary
+                }
+              }}
+            >
+              <MenuItem value="">All</MenuItem>
+              {Object.values(IssueCategory).map((category) => (
+                <MenuItem key={category} value={category}>
+                  {category.replace(/_/g, ' ')}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+      </Grid>
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
           <CircularProgress />
@@ -223,11 +233,11 @@ const IssueList: React.FC<IssueListProps> = ({
         </Box>
       ) : (
         <>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{ mt: 2 }}>
             {currentIssues.map((issue) => (
               <Grid item xs={12} sm={6} md={4} key={issue.id}>
-                <IssueCard 
-                  issue={issue} 
+                <IssueCard
+                  issue={issue}
                   onFlag={onFlagIssue}
                   selectable={selectable}
                   selected={isIssueSelected(issue)}
@@ -239,18 +249,18 @@ const IssueList: React.FC<IssueListProps> = ({
           
           {totalPages > 1 && (
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-              <Pagination 
-                count={totalPages} 
-                page={page + 1} 
-                onChange={handlePageChange} 
-                color="primary" 
+              <Pagination
+                count={totalPages}
+                page={page + 1}
+                onChange={handlePageChange}
+                color="primary"
                 shape="rounded"
               />
             </Box>
           )}
         </>
       )}
-    </Box>
+    </Paper>
   );
 };
 

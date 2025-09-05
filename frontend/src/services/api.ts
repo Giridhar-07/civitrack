@@ -17,12 +17,12 @@ const resolveApiBaseUrl = (): string => {
     return envUrl;
   }
   
-  // For Netlify deployment or any production environment, use the stable Vercel backend URL
+  // For Netlify deployment or any production environment
   if (typeof window !== 'undefined' && 
       (window.location.hostname.includes('netlify.app') || 
        process.env.NODE_ENV === 'production')) {
-    // Use HTTPS for secure connection
-    return 'https://backend-tau-inky-24.vercel.app/api';
+    // Always use Render backend for all deployments
+    return 'https://civitrack-backend.onrender.com/api';
   }
   
   // In local dev, frontend runs on :3000 and backend on :5000 by default
@@ -30,29 +30,24 @@ const resolveApiBaseUrl = (): string => {
     const origin = window.location.origin;
     const isLocal3000 = origin.includes('localhost:3000') || origin.includes('127.0.0.1:3000');
     if (isLocal3000) {
-      // Prioritize the Vercel backend for TestSprite testing
       try {
-        // Force use of Vercel backend for TestSprite
-        localStorage.setItem('use_local_backend', 'false');
-        return 'https://backend-tau-inky-24.vercel.app/api';
-        
-        // Uncomment below to use local backend when needed
-        /*
-        const localBackendAvailable = localStorage.getItem('use_local_backend') === 'true';
-        if (localBackendAvailable) {
+        // Check if we should use local backend
+        const useLocalBackend = localStorage.getItem('use_local_backend') === 'true';
+        if (useLocalBackend) {
           return 'http://localhost:5000/api';
         }
-        */
+        // Default to Render backend for development
+        return 'https://civitrack-backend.onrender.com/api';
       } catch (e) {
-        return 'https://backend-tau-inky-24.vercel.app/api'; // Fallback to production
+        return 'https://civitrack-backend.onrender.com/api'; // Fallback to dev backend
       }
     }
     // Same-origin fallback (use reverse proxy or server-side /api)
     return `${origin.replace(/\/$/, '')}/api`;
   }
   
-  // SSR or unknown environment fallback - always use the stable production URL
-  return 'https://backend-tau-inky-24.vercel.app/api';
+  // SSR or unknown environment fallback - use the Render backend
+  return 'https://civitrack-backend.onrender.com/api';
 };
 
 export const BASE_URL = resolveApiBaseUrl();

@@ -172,18 +172,27 @@ export const useTheme = (): ThemeContextType => {
 const useThemeProvider = (): ThemeContextType => {
   // Get initial theme preference from localStorage or env default (fall back to light)
   const getInitialMode = (): PaletteMode => {
+    // First priority: Environment variable override
+    const envDefault = (process.env.REACT_APP_DEFAULT_THEME || '').toLowerCase();
+    if (envDefault === 'dark' || envDefault === 'light') {
+      console.log('Using theme from environment variable:', envDefault);
+      return envDefault as PaletteMode;
+    }
+    
+    // Second priority: Saved user preference
     try {
       const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
       if (savedMode === 'light' || savedMode === 'dark') {
+        console.log('Using saved theme preference:', savedMode);
         return savedMode;
       }
     } catch (e) {
-      // no-op: localStorage may be unavailable in some environments
+      console.warn('Could not access localStorage for theme preference');
     }
 
-    // Optional build-time default
-    const envDefault = (process.env.REACT_APP_DEFAULT_THEME || 'light').toLowerCase();
-    return envDefault === 'dark' ? 'dark' as PaletteMode : 'light';
+    // Default to light mode for consistency
+    console.log('Using default light theme');
+    return 'light';
   };
 
   const [mode, setMode] = useState<PaletteMode>(getInitialMode);
