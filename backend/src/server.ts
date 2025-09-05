@@ -152,7 +152,17 @@ app.get('/', (req: Request, res: Response) => {
     status: 'ok', 
     message: 'CiviTrack API is running',
     environment: process.env.NODE_ENV,
-    serverless: Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME)
+    serverless: Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.RENDER)
+  });
+});
+
+// Health check endpoint accessible without /api prefix
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ 
+    status: 'ok', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString(),
+    version: process.env.npm_package_version || '1.0.0'
   });
 });
 
@@ -216,16 +226,14 @@ export const startServer = async () => {
       }
     }
     
-    // Only start the server if not in Vercel serverless environment
-    if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
-      server.listen(PORT, () => {
-        console.log(`Server running on port ${PORT}`);
-        console.log(`WebSocket server initialized`);
-        console.log(`Performance monitoring enabled`);
-      });
-    } else {
-      console.log('Running in serverless mode');
-    }
+    // Always start the server in all environments
+    server.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+      console.log(`Render deployment: ${Boolean(process.env.RENDER)}`);
+      console.log(`WebSocket server initialized`);
+      console.log(`Performance monitoring enabled`);
+    });
   } catch (error) {
     console.error('Unable to connect to the database or start server:', error);
     if (process.env.NODE_ENV !== 'production') {

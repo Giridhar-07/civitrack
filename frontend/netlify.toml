@@ -1,11 +1,11 @@
 [build]
   publish = "build"
-  command = "npm install && CI=false npm run build"
+  command = "npm install && cross-env CI=false npm run build"
 
 [build.environment]
   CI = "false"
   REACT_APP_API_URL = "https://civitrack-backend.onrender.com/api"
-  REACT_APP_DEFAULT_THEME = "light"
+  REACT_APP_DEFAULT_THEME = "dark"
 
 # API proxy redirect
 [[redirects]]

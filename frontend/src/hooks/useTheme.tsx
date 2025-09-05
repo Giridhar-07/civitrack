@@ -170,29 +170,11 @@ export const useTheme = (): ThemeContextType => {
  * Implementation of the theme provider
  */
 const useThemeProvider = (): ThemeContextType => {
-  // Get initial theme preference from localStorage or env default (fall back to light)
+  // Get initial theme preference - always use dark mode
   const getInitialMode = (): PaletteMode => {
-    // First priority: Environment variable override
-    const envDefault = (process.env.REACT_APP_DEFAULT_THEME || '').toLowerCase();
-    if (envDefault === 'dark' || envDefault === 'light') {
-      console.log('Using theme from environment variable:', envDefault);
-      return envDefault as PaletteMode;
-    }
-    
-    // Second priority: Saved user preference
-    try {
-      const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
-      if (savedMode === 'light' || savedMode === 'dark') {
-        console.log('Using saved theme preference:', savedMode);
-        return savedMode;
-      }
-    } catch (e) {
-      console.warn('Could not access localStorage for theme preference');
-    }
-
-    // Default to light mode for consistency
-    console.log('Using default light theme');
-    return 'light';
+    // Always use dark mode as enforced by requirements
+    console.log('Using enforced dark theme');
+    return 'dark';
   };
 
   const [mode, setMode] = useState<PaletteMode>(getInitialMode);
@@ -200,30 +182,26 @@ const useThemeProvider = (): ThemeContextType => {
 
   // Update theme when mode changes
   useEffect(() => {
-    const newTheme = getTheme(mode);
-    setTheme(newTheme);
-    try {
-      localStorage.setItem('themeMode', mode);
-    } catch (e) {
-      // ignore write errors
-    }
+    setTheme(getTheme(mode));
   }, [mode]);
 
-  // Toggle between light and dark mode
+  // Toggle theme function (disabled - always returns to dark mode)
   const toggleTheme = useCallback(() => {
-    setMode(prevMode => (prevMode === 'light' ? 'dark' : 'light'));
+    console.log('Theme toggle attempted but disabled - enforcing dark mode');
+    setMode('dark');
   }, []);
 
-  // Set mode explicitly
-  const setThemeMode = useCallback((newMode: PaletteMode) => {
-    setMode(newMode);
+  // Set mode function (enforces dark mode)
+  const setModeWrapper = useCallback((newMode: PaletteMode) => {
+    console.log('Theme change attempted but disabled - enforcing dark mode');
+    setMode('dark');
   }, []);
 
   return {
     mode,
     theme,
     toggleTheme,
-    setMode: setThemeMode
+    setMode: setModeWrapper
   };
 };
 

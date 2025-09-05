@@ -5,8 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const FRONTEND_URL = 'https://civitrack-dev.netlify.app';
-const BACKEND_URL = 'https://civitrack-backend.onrender.com/api';
+const FRONTEND_URL = 'https://civictrac.netlify.app/';
+const BACKEND_URL = 'https://civitrack.onrender.com';
 
 // Test functions
 async function testFrontendDeployment() {
@@ -15,6 +15,7 @@ async function testFrontendDeployment() {
     console.log(`Checking frontend at ${FRONTEND_URL}...`);
     const response = await axios.get(FRONTEND_URL);
     console.log(`✅ Frontend is accessible (Status: ${response.status})`);
+    console.log(`Note: Ensure the frontend is deployed from the dev branch to a new Netlify project`);
     return true;
   } catch (error) {
     console.error(`❌ Frontend test failed: ${error.message}`);
@@ -32,6 +33,7 @@ async function testBackendDeployment() {
     return true;
   } catch (error) {
     console.error(`❌ Backend test failed: ${error.message}`);
+    console.log(`Action required: Verify backend deployment at ${BACKEND_URL}`);
     return false;
   }
 }
@@ -39,8 +41,8 @@ async function testBackendDeployment() {
 async function testAPIIntegration() {
   console.log('\n=== Testing API Integration ===');
   try {
-    console.log(`Testing API integration at ${BACKEND_URL}/issues...`);
-    const response = await axios.get(`${BACKEND_URL}/issues`, {
+    console.log(`Testing API integration at ${BACKEND_URL}/api/issues...`);
+    const response = await axios.get(`${BACKEND_URL}/api/issues`, {
       params: { limit: 1 }
     });
     console.log(`✅ API integration successful (Status: ${response.status})`);
@@ -48,16 +50,17 @@ async function testAPIIntegration() {
     return true;
   } catch (error) {
     console.error(`❌ API integration test failed: ${error.message}`);
+    console.log(`Action required: Check API endpoints and routing configuration`);
     return false;
   }
 }
 
 async function testThemeImplementation() {
   console.log('\n=== Testing Theme Implementation ===');
-  console.log('Theme implementation requires manual verification:');
-  console.log('1. Visit the frontend URL and check both light and dark themes');
-  console.log('2. Verify that UI elements render correctly in both themes');
-  console.log('3. Check that theme preference is saved between sessions');
+  console.log('Theme settings verification:');
+  console.log('1. Confirm dark theme is enforced as the default');
+  console.log('2. Verify theme toggle functionality is disabled');
+  console.log('3. Check UI elements render correctly in dark mode only');
   console.log('✅ Manual verification required');
   return true;
 }
