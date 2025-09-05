@@ -37,7 +37,7 @@ execSync('npm run build', { stdio: 'inherit' });
 console.log(`Deploying to Netlify site: ${NETLIFY_SITE_NAME} from ${BRANCH} branch...`);
 try {
   // Use --prod flag to deploy to production
-  execSync(`npx netlify deploy --dir=build --prod --site=${NETLIFY_SITE_NAME}`, { stdio: 'inherit' });
+  execSync(`npx netlify deploy --dir=build --prod`, { stdio: 'inherit' });
   console.log('Frontend deployed successfully!');
 } catch (error) {
   console.error('Deployment failed:', error.message);
