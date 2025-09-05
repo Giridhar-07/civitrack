@@ -217,7 +217,7 @@ export const startServer = async () => {
     }
     
     // Only start the server if not in Vercel serverless environment
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production' || process.env.RENDER) {
       server.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
         console.log(`WebSocket server initialized`);
