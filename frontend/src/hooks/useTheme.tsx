@@ -170,19 +170,20 @@ export const useTheme = (): ThemeContextType => {
  * Implementation of the theme provider
  */
 const useThemeProvider = (): ThemeContextType => {
-  // Get initial theme preference from localStorage or system preference
+  // Get initial theme preference from localStorage or env default (fall back to light)
   const getInitialMode = (): PaletteMode => {
-    const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
-    if (savedMode && (savedMode === 'light' || savedMode === 'dark')) {
-      return savedMode;
+    try {
+      const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
+      if (savedMode === 'light' || savedMode === 'dark') {
+        return savedMode;
+      }
+    } catch (e) {
+      // no-op: localStorage may be unavailable in some environments
     }
-    
-    // Check system preference
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    
-    return 'light';
+
+    // Optional build-time default
+    const envDefault = (process.env.REACT_APP_DEFAULT_THEME || 'light').toLowerCase();
+    return envDefault === 'dark' ? 'dark' as PaletteMode : 'light';
   };
 
   const [mode, setMode] = useState<PaletteMode>(getInitialMode);
@@ -192,7 +193,11 @@ const useThemeProvider = (): ThemeContextType => {
   useEffect(() => {
     const newTheme = getTheme(mode);
     setTheme(newTheme);
-    localStorage.setItem('themeMode', mode);
+    try {
+      localStorage.setItem('themeMode', mode);
+    } catch (e) {
+      // ignore write errors
+    }
   }, [mode]);
 
   // Toggle between light and dark mode

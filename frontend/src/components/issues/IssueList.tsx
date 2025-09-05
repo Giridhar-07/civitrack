@@ -112,7 +112,7 @@ const IssueList: React.FC<IssueListProps> = ({
   return (
     <Box>
       {showToolbar && (
-        <Paper elevation={0} sx={{ p: 3, mb: 4, backgroundColor: '#1e1e1e' }}>
+        <Paper elevation={0} sx={{ p: 3, mb: 4, backgroundColor: (theme) => theme.palette.background.paper }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} md={6}>
               <TextField
@@ -123,21 +123,21 @@ const IssueList: React.FC<IssueListProps> = ({
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon sx={{ color: '#aaa' }} />
+                      <SearchIcon sx={{ color: (theme) => theme.palette.text.secondary }} />
                     </InputAdornment>
                   ),
                 }}
                 sx={{ 
                   '& .MuiOutlinedInput-root': {
                     '& fieldset': {
-                      borderColor: '#444',
+                      borderColor: (theme) => theme.palette.divider,
                     },
                     '&:hover fieldset': {
-                      borderColor: '#666',
+                      borderColor: (theme) => theme.palette.text.secondary,
                     },
                   },
                   '& .MuiInputBase-input': {
-                    color: '#fff',
+                    color: (theme) => theme.palette.text.primary,
                   },
                 }}
               />
@@ -145,7 +145,7 @@ const IssueList: React.FC<IssueListProps> = ({
             
             <Grid item xs={12} sm={6} md={3}>
               <FormControl fullWidth>
-                <InputLabel id="status-filter-label" sx={{ color: '#aaa' }}>Status</InputLabel>
+                <InputLabel id="status-filter-label" sx={{ color: (theme) => theme.palette.text.secondary }}>Status</InputLabel>
                 <Select
                   labelId="status-filter-label"
                   value={filters.status?.toString() || ''}
@@ -153,13 +153,13 @@ const IssueList: React.FC<IssueListProps> = ({
                   onChange={handleStatusFilterChange}
                   sx={{ 
                     '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#444',
+                      borderColor: (theme) => theme.palette.divider,
                     },
                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#666',
+                      borderColor: (theme) => theme.palette.text.secondary,
                     },
                     '& .MuiInputBase-input': {
-                      color: '#fff',
+                      color: (theme) => theme.palette.text.primary,
                     },
                   }}
                 >
@@ -175,7 +175,7 @@ const IssueList: React.FC<IssueListProps> = ({
 
             <Grid item xs={12} sm={6} md={3}>
               <FormControl fullWidth>
-                <InputLabel id="category-filter-label" sx={{ color: '#aaa' }}>Category</InputLabel>
+                <InputLabel id="category-filter-label" sx={{ color: (theme) => theme.palette.text.secondary }}>Category</InputLabel>
                 <Select
                   labelId="category-filter-label"
                   value={filters.category?.toString() || ''}
@@ -183,13 +183,13 @@ const IssueList: React.FC<IssueListProps> = ({
                   onChange={handleCategoryFilterChange}
                   sx={{ 
                     '& .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#444',
+                      borderColor: (theme) => theme.palette.divider,
                     },
                     '&:hover .MuiOutlinedInput-notchedOutline': {
-                      borderColor: '#666',
+                      borderColor: (theme) => theme.palette.text.secondary,
                     },
                     '& .MuiInputBase-input': {
-                      color: '#fff',
+                      color: (theme) => theme.palette.text.primary,
                     },
                   }}
                 >

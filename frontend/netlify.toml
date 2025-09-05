@@ -5,6 +5,7 @@
 [build.environment]
   CI = "false"
   REACT_APP_API_URL = "https://backend-tau-inky-24.vercel.app/api"
+  REACT_APP_DEFAULT_THEME = "light"
 
 # API proxy redirect
 [[redirects]]
