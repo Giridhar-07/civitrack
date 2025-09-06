@@ -82,8 +82,22 @@ const MapReadyHandler: React.FC = () => {
     console.log('Map is ready');
     // Force a re-render to ensure markers are displayed
     setTimeout(() => {
-      map.invalidateSize();
-      console.log('Map invalidated to ensure markers display correctly');
+      if (map) {
+        map.invalidateSize();
+        console.log('Map invalidated to ensure markers display correctly');
+        
+        // Additional check to ensure map is fully initialized
+        if (map.getContainer()) {
+          console.log('Map container is available');
+          // Force another invalidation after a short delay
+          setTimeout(() => {
+            map.invalidateSize();
+            console.log('Map invalidated again for marker visibility');
+          }, 500);
+        }
+      } else {
+        console.warn('Map object is not available');
+      }
     }, 300); // Increased timeout for better reliability
   }, [map]);
 
@@ -114,6 +128,15 @@ const IssueMap: React.FC<IssueMapProps> = ({
     
     return () => clearTimeout(loadingTimer);
   }, []);
+  
+  // Log issues data to help debug map pin display issues
+  useEffect(() => {
+    if (issues && Array.isArray(issues)) {
+      console.log(`IssueMap: Received ${issues.length} issues`);
+    } else {
+      console.log('IssueMap: No issues received or issues is not an array', issues);
+    }
+  }, [issues]);
   
   // Handle map click for reporting at any location
   const handleMapClick = (location: Location) => {

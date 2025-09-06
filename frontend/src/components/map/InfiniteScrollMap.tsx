@@ -146,7 +146,7 @@ const InfiniteScrollMap: React.FC<InfiniteScrollMapProps> = ({
       )}
       
       <IssueMap
-        issues={issues}
+        issues={Array.isArray(issues) ? issues : []}
         center={userLocation || center || initialCenter}
         zoom={initialZoom}
         height={height}
