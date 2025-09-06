@@ -27,20 +27,35 @@ const authService = {
       const baseUrl = (BASE_URL || '').replace(/\/$/, '');
       console.log('Checking backend health at:', baseUrl);
       
-      // Try multiple endpoints with different approaches
-      const endpoints = [
-        { url: `${baseUrl}/health`, method: 'GET' },
-        { url: `${baseUrl}/`, method: 'GET' },
-        { url: `${baseUrl.replace('/api', '')}/api/health`, method: 'GET' },
-        // Add additional fallback endpoints
-        { url: `${baseUrl}/status`, method: 'GET' },
-        { url: `${baseUrl.replace('/api', '')}/health`, method: 'GET' }
+      // Define possible API URLs to try, including fallbacks
+      const possibleApiUrls = [
+        baseUrl,                                // Current API URL
+        baseUrl.replace('/api', ''),           // Root domain
+        'https://civitrack.onrender.com/api',  // Production URL
+        'https://civitrack.onrender.com',      // Production root
+        'http://localhost:5000/api',           // Local development
       ];
       
-      // Try each endpoint until one succeeds
+      // Try multiple endpoints with different approaches
+      const endpoints = [];
+      
+      // Generate endpoints for each possible API URL
+      for (const apiUrl of possibleApiUrls) {
+        endpoints.push(
+          { url: `${apiUrl}/health`, method: 'GET' },
+          { url: `${apiUrl}/api/health`, method: 'GET' },
+          { url: `${apiUrl}/`, method: 'GET' },
+          { url: `${apiUrl}/status`, method: 'GET' }
+        );
+      }
+      
+      // Try each endpoint until one succeeds with increased timeout
       for (const endpoint of endpoints) {
         try {
           console.log(`Trying health check at: ${endpoint.url}`);
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second timeout
+          
           const response = await fetch(endpoint.url, {
             method: endpoint.method,
             headers: { 
@@ -50,12 +65,18 @@ const authService = {
             },
             cache: 'no-store',
             mode: 'cors',
-            credentials: 'include', // Changed from same-origin to include for cross-domain cookies
-            signal: AbortSignal.timeout(8000) // Increased timeout to 8 seconds
+            credentials: 'include', // For cross-domain cookies
+            signal: controller.signal
           });
+          
+          clearTimeout(timeoutId);
           
           if (response.ok) {
             console.log(`Health check successful via ${endpoint.url}`);
+            // Store the successful URL for future use
+            if (typeof localStorage !== 'undefined') {
+              localStorage.setItem('last_successful_api_url', endpoint.url.replace('/health', '').replace('/api/health', ''));
+            }
             return true;
           }
           console.warn(`Health check failed for ${endpoint.url} with status: ${response.status}`);
@@ -66,20 +87,33 @@ const authService = {
       
       // If all attempts fail, try a direct ping to the domain without any path
       try {
-        const domainUrl = baseUrl.split('/api')[0];
-        console.log(`Trying direct domain ping at: ${domainUrl}`);
-        const response = await fetch(domainUrl, {
-          method: 'GET',
-          mode: 'no-cors', // Use no-cors as a last resort
-          cache: 'no-store',
-          signal: AbortSignal.timeout(5000)
-        });
+        // Try multiple domain URLs
+        const domainUrls = [
+          baseUrl.split('/api')[0],
+          'https://civitrack.onrender.com',
+          'http://localhost:5000'
+        ];
         
-        // With no-cors, we can't check response.ok, but if we get here without an error, the domain is reachable
-        console.log(`Domain ping completed with status: ${response.type}`);
-        return true;
+        for (const domainUrl of domainUrls) {
+          console.log(`Trying direct domain ping at: ${domainUrl}`);
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+          
+          const response = await fetch(domainUrl, {
+            method: 'GET',
+            mode: 'no-cors', // Use no-cors as a last resort
+            cache: 'no-store',
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          
+          // With no-cors, we can't check response.ok, but if we get here without an error, the domain is reachable
+          console.log(`Domain ping completed with status: ${response.type}`);
+          return true;
+        }
       } catch (error) {
-        console.warn('Domain ping failed:', error);
+        console.warn('All domain pings failed:', error);
       }
       
       // If all attempts fail, throw an error

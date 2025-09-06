@@ -17,6 +17,20 @@ const resolveApiBaseUrl = (): string => {
     return envUrl;
   }
   
+  // Check if we have a previously successful API URL stored
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    try {
+      const lastSuccessfulUrl = localStorage.getItem('last_successful_api_url');
+      if (lastSuccessfulUrl) {
+        console.log('Using last successful API URL:', lastSuccessfulUrl);
+        // Ensure it ends with /api
+        return lastSuccessfulUrl.endsWith('/api') ? lastSuccessfulUrl : `${lastSuccessfulUrl}/api`;
+      }
+    } catch (e) {
+      console.warn('Error accessing localStorage:', e);
+    }
+  }
+  
   // For Netlify deployment or any production environment
   if (typeof window !== 'undefined' && 
       (window.location.hostname.includes('netlify.app') || 
@@ -58,19 +72,16 @@ console.log('API base URL resolved to:', BASE_URL);
 const axiosInstance: AxiosInstance = createRetryableAxiosInstance({
   baseURL: BASE_URL,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache'
   },
   withCredentials: true,
-  timeout: 20000, // 20 seconds timeout for slower connections
+  timeout: 25000, // 25 seconds timeout for slower connections
   timeoutErrorMessage: 'Request timed out. Please try again.'
 }, {
-  // Enhanced retry configuration
-  maxRetries: 5,
-  initialDelayMs: 1000,
-  backoffFactor: 2,
-  maxDelayMs: 15000,
-  retryStatusCodes: [408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524],
-  retryNetworkErrors: true
+  // Use the default retry configuration from apiRetry.ts
+  // which has been optimized for better reliability
 });
 
 // Helper to normalize API responses (unwrap backend { success, message, data })
