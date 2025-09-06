@@ -5,7 +5,8 @@ const path = require('path');
 
 // Configuration
 const FRONTEND_DIR = path.join(__dirname, 'frontend');
-const NETLIFY_SITE_NAME = 'civitrack'; // Updated site name
+const NETLIFY_SITE_NAME = 'civitrak-dev'; // Updated site name from terminal output
+const NETLIFY_SITE_ID = '197d1569-0db7-4fdf-803b-82ef734f203d'; // Site ID from terminal output
 const BRANCH = 'dev'; // Deploy from dev branch
 
 // Ensure we're in the right directory
@@ -34,20 +35,10 @@ console.log('Building frontend...');
 execSync('npm run build', { stdio: 'inherit' });
 
 // Deploy to Netlify
-console.log(`Deploying to Netlify site: ${NETLIFY_SITE_NAME} from ${BRANCH} branch...`);
+console.log(`Deploying to Netlify site: ${NETLIFY_SITE_NAME} (${NETLIFY_SITE_ID}) from ${BRANCH} branch...`);
 try {
-  // Create a new site if it doesn't exist
-  console.log('Creating new site if needed...');
-  try {
-    execSync(`npx netlify sites:create --name=${NETLIFY_SITE_NAME}`, { stdio: 'pipe' });
-    console.log(`Created new site: ${NETLIFY_SITE_NAME}`);
-  } catch (error) {
-    // Site might already exist, continue with deployment
-    console.log('Site may already exist, continuing with deployment');
-  }
-
-  // Use --prod flag to deploy to production
-  execSync(`npx netlify deploy --dir=build --prod --site=${NETLIFY_SITE_NAME}`, { stdio: 'inherit' });
+  // Use --prod flag to deploy to production with site ID
+  execSync(`npx netlify deploy --dir=build --prod --site=${NETLIFY_SITE_ID}`, { stdio: 'inherit' });
   console.log('Frontend deployed successfully!');
 } catch (error) {
   console.error('Deployment failed:', error.message);

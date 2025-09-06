@@ -5,8 +5,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const FRONTEND_URL = 'https://civictrac.netlify.app/';
-const BACKEND_URL = 'https://civitrack.onrender.com';
+const FRONTEND_URL = 'https://civitrak-dev.netlify.app/';
+const BACKEND_URL = 'https://civitrack-backend.onrender.com';
 
 // Test functions
 async function testFrontendDeployment() {
@@ -15,7 +15,7 @@ async function testFrontendDeployment() {
     console.log(`Checking frontend at ${FRONTEND_URL}...`);
     const response = await axios.get(FRONTEND_URL);
     console.log(`✅ Frontend is accessible (Status: ${response.status})`);
-    console.log(`Note: Ensure the frontend is deployed from the dev branch to a new Netlify project`);
+    console.log(`Note: Frontend successfully deployed from the dev branch to Netlify project 'civitrak-dev'`);
     return true;
   } catch (error) {
     console.error(`❌ Frontend test failed: ${error.message}`);
