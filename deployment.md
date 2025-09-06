@@ -246,7 +246,7 @@ Before deploying new versions, ensure all database migrations are applied:
      NODE_ENV=production
      RENDER=true
      PORT=10000
-     API_URL=https://civitrack-backend.onrender.com
+     API_URL=https://civitrack.onrender.com
      
      # JWT Configuration
      JWT_SECRET=your_secure_random_string

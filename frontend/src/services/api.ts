@@ -22,7 +22,8 @@ const resolveApiBaseUrl = (): string => {
       (window.location.hostname.includes('netlify.app') || 
        process.env.NODE_ENV === 'production')) {
     // Always use Render backend for all deployments
-    return 'https://civitrack-backend.onrender.com/api';
+    console.log('Using production backend URL');
+    return 'https://civitrack.onrender.com/api';
   }
   
   // In local dev, frontend runs on :3000 and backend on :5000 by default
@@ -35,11 +36,11 @@ const resolveApiBaseUrl = (): string => {
         const useLocalBackend = localStorage.getItem('use_local_backend') === 'true';
         if (useLocalBackend) {
           return 'http://localhost:5000/api';
-        }
-        // Default to Render backend for development
-        return 'https://civitrack-backend.onrender.com/api';
+      }
+      // Default to Render backend for development
+      return 'https://civitrack.onrender.com/api';
       } catch (e) {
-        return 'https://civitrack-backend.onrender.com/api'; // Fallback to dev backend
+        return 'https://civitrack.onrender.com/api'; // Fallback to dev backend
       }
     }
     // Same-origin fallback (use reverse proxy or server-side /api)

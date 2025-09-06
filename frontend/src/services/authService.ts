@@ -25,26 +25,39 @@ const authService = {
     try {
       // Use resolved API base URL which typically ends with '/api'
       const baseUrl = (BASE_URL || '').replace(/\/$/, '');
+      console.log('Checking backend health at:', baseUrl);
       
-      // Try the health endpoint relative to the API base URL
-      try {
-        const response = await fetch(`${baseUrl}/health`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          cache: 'no-store',
-          signal: AbortSignal.timeout(5000) // 5 second timeout
-        });
-        
-        if (response.ok) {
-          console.log('Health check successful via API /health endpoint');
-          return true;
+      // Try multiple endpoints with different approaches
+      const endpoints = [
+        { url: `${baseUrl}/health`, method: 'GET' },
+        { url: `${baseUrl}/`, method: 'GET' },
+        { url: `${baseUrl.replace('/api', '')}/api/health`, method: 'GET' }
+      ];
+      
+      // Try each endpoint until one succeeds
+      for (const endpoint of endpoints) {
+        try {
+          console.log(`Trying health check at: ${endpoint.url}`);
+          const response = await fetch(endpoint.url, {
+            method: endpoint.method,
+            headers: { 'Content-Type': 'application/json' },
+            cache: 'no-store',
+            mode: 'cors',
+            credentials: 'same-origin',
+            signal: AbortSignal.timeout(5000) // 5 second timeout
+          });
+          
+          if (response.ok) {
+            console.log(`Health check successful via ${endpoint.url}`);
+            return true;
+          }
+          console.warn(`Health check failed for ${endpoint.url} with status: ${response.status}`);
+        } catch (error) {
+          console.warn(`Health check failed for ${endpoint.url}:`, error);
         }
-        console.warn(`Health check failed with status: ${response.status}`);
-      } catch (error) {
-        console.warn('Health check failed for API /health endpoint:', error);
       }
       
-      // If attempt fails, throw an error
+      // If all attempts fail, throw an error
       throw new Error('All health check attempts failed');
     } catch (error) {
       console.error('Backend health check failed:', error);

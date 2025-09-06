@@ -6,7 +6,7 @@ const path = require('path');
 
 // Configuration
 const FRONTEND_URL = 'https://civitrak-dev.netlify.app/';
-const BACKEND_URL = 'https://civitrack-backend.onrender.com';
+const BACKEND_URL = 'https://civitrack.onrender.com';
 
 // Test functions
 async function testFrontendDeployment() {
