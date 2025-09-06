@@ -54,14 +54,19 @@ const IssueList: React.FC<IssueListProps> = ({
       category: ''
     },
     filterFn: (issue, filters) => {
-      const matchesSearch = !filters.searchTerm || 
-        (typeof issue.title === 'string' && typeof filters.searchTerm === 'string' && 
-         issue.title.toLowerCase().includes(filters.searchTerm.toLowerCase())) || 
-        (typeof issue.description === 'string' && typeof filters.searchTerm === 'string' && 
-         issue.description.toLowerCase().includes(filters.searchTerm.toLowerCase()));
+      // Safely handle search term filtering with proper type checking
+      const searchTerm = typeof filters.searchTerm === 'string' ? filters.searchTerm.toLowerCase() : '';
+      const matchesSearch = !searchTerm || 
+        Boolean(issue.title && issue.title.toLowerCase().includes(searchTerm)) ||
+        Boolean(issue.description && issue.description.toLowerCase().includes(searchTerm));
       
-      const matchesStatus = !filters.status || issue.status === filters.status;
-      const matchesCategory = !filters.category || issue.category === filters.category;
+      // Safely handle status filtering
+      const status = typeof filters.status === 'string' ? filters.status : '';
+      const matchesStatus = !status || issue.status === status;
+      
+      // Safely handle category filtering
+      const category = typeof filters.category === 'string' ? filters.category : '';
+      const matchesCategory = !category || issue.category === category;
       
       return matchesSearch && matchesStatus && matchesCategory;
     }

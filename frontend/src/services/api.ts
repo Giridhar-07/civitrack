@@ -48,7 +48,7 @@ const resolveApiBaseUrl = (): string => {
   }
   
   // SSR or unknown environment fallback - use the Render backend
-  return 'https://civitrack-backend.onrender.com/api';
+  return 'https://civitrack.onrender.com/api';
 };
 
 export const BASE_URL = resolveApiBaseUrl();

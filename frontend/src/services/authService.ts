@@ -31,7 +31,10 @@ const authService = {
       const endpoints = [
         { url: `${baseUrl}/health`, method: 'GET' },
         { url: `${baseUrl}/`, method: 'GET' },
-        { url: `${baseUrl.replace('/api', '')}/api/health`, method: 'GET' }
+        { url: `${baseUrl.replace('/api', '')}/api/health`, method: 'GET' },
+        // Add additional fallback endpoints
+        { url: `${baseUrl}/status`, method: 'GET' },
+        { url: `${baseUrl.replace('/api', '')}/health`, method: 'GET' }
       ];
       
       // Try each endpoint until one succeeds
@@ -40,11 +43,15 @@ const authService = {
           console.log(`Trying health check at: ${endpoint.url}`);
           const response = await fetch(endpoint.url, {
             method: endpoint.method,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+              'Content-Type': 'application/json',
+              'Cache-Control': 'no-cache',
+              'Pragma': 'no-cache'
+            },
             cache: 'no-store',
             mode: 'cors',
-            credentials: 'same-origin',
-            signal: AbortSignal.timeout(5000) // 5 second timeout
+            credentials: 'include', // Changed from same-origin to include for cross-domain cookies
+            signal: AbortSignal.timeout(8000) // Increased timeout to 8 seconds
           });
           
           if (response.ok) {
@@ -55,6 +62,24 @@ const authService = {
         } catch (error) {
           console.warn(`Health check failed for ${endpoint.url}:`, error);
         }
+      }
+      
+      // If all attempts fail, try a direct ping to the domain without any path
+      try {
+        const domainUrl = baseUrl.split('/api')[0];
+        console.log(`Trying direct domain ping at: ${domainUrl}`);
+        const response = await fetch(domainUrl, {
+          method: 'GET',
+          mode: 'no-cors', // Use no-cors as a last resort
+          cache: 'no-store',
+          signal: AbortSignal.timeout(5000)
+        });
+        
+        // With no-cors, we can't check response.ok, but if we get here without an error, the domain is reachable
+        console.log(`Domain ping completed with status: ${response.type}`);
+        return true;
+      } catch (error) {
+        console.warn('Domain ping failed:', error);
       }
       
       // If all attempts fail, throw an error

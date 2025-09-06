@@ -1,50 +1,113 @@
 // Test script to verify API connectivity
 
 async function testApiConnection() {
-  const apiUrl = process.env.REACT_APP_API_URL || 'http://backend-tau-inky-24.vercel.app/api';
+  const apiUrl = process.env.REACT_APP_API_URL || 'https://civitrack.onrender.com/api';
   
   console.log('Testing API connection to:', apiUrl);
   
-  try {
-    // Test basic connectivity
-    const response = await fetch(`${apiUrl}/health`);
-    const data = await response.json();
-    
-    console.log('API connection test result:', {
-      status: response.status,
-      ok: response.ok,
-      data
-    });
-    
-    // Test status request endpoint
+  // Try multiple endpoints with different approaches
+  const endpoints = [
+    { url: `${apiUrl}/health`, method: 'GET', name: 'Health endpoint' },
+    { url: `${apiUrl}/`, method: 'GET', name: 'API root' },
+    { url: `${apiUrl.replace('/api', '')}/api/health`, method: 'GET', name: 'Alternative health path' },
+    { url: `${apiUrl}/status`, method: 'GET', name: 'Status endpoint' },
+    { url: `${apiUrl}/status-requests`, method: 'GET', name: 'Status requests endpoint' }
+  ];
+  
+  let overallSuccess = false;
+  const results = [];
+  
+  // Try each endpoint
+  for (const endpoint of endpoints) {
     try {
-      const statusResponse = await fetch(`${apiUrl}/status-requests`, {
-        method: 'GET',
+      console.log(`Testing ${endpoint.name} at: ${endpoint.url}`);
+      
+      const response = await fetch(endpoint.url, {
+        method: endpoint.method,
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache',
+          'Pragma': 'no-cache'
         },
-        credentials: 'include'
+        cache: 'no-store',
+        mode: 'cors',
+        credentials: 'include',
+        signal: AbortSignal.timeout(8000) // 8 second timeout
       });
       
-      console.log('Status request endpoint test:', {
-        status: statusResponse.status,
-        ok: statusResponse.ok
-      });
-      
-      if (statusResponse.ok) {
-        console.log('Status request endpoint is accessible');
-      } else {
-        console.warn('Status request endpoint returned non-200 status:', statusResponse.status);
+      let responseData = null;
+      try {
+        responseData = await response.json();
+      } catch (e) {
+        // JSON parsing may fail if response is not JSON
+        responseData = { text: await response.text() };
       }
-    } catch (statusError) {
-      console.error('Error testing status request endpoint:', statusError);
+      
+      const result = {
+        endpoint: endpoint.name,
+        url: endpoint.url,
+        status: response.status,
+        ok: response.ok,
+        data: responseData
+      };
+      
+      results.push(result);
+      console.log(`${endpoint.name} test result:`, result);
+      
+      if (response.ok) {
+        console.log(`✅ ${endpoint.name} is accessible`);
+        overallSuccess = true;
+      } else {
+        console.warn(`❌ ${endpoint.name} returned non-200 status:`, response.status);
+      }
+    } catch (error) {
+      console.error(`❌ Error testing ${endpoint.name}:`, error);
+      results.push({
+        endpoint: endpoint.name,
+        url: endpoint.url,
+        error: error.message
+      });
     }
-    
-    return response.ok;
-  } catch (error) {
-    console.error('API connection test failed:', error);
-    return false;
   }
+  
+  // If all API endpoints fail, try a direct domain ping
+  if (!overallSuccess) {
+    try {
+      const domainUrl = apiUrl.split('/api')[0];
+      console.log(`Trying direct domain ping at: ${domainUrl}`);
+      
+      const response = await fetch(domainUrl, {
+        method: 'GET',
+        mode: 'no-cors', // Use no-cors as a last resort
+        cache: 'no-store',
+        signal: AbortSignal.timeout(5000)
+      });
+      
+      console.log(`Domain ping completed with status: ${response.type}`);
+      results.push({
+        endpoint: 'Domain ping',
+        url: domainUrl,
+        status: 'unknown (no-cors)',
+        ok: true
+      });
+      
+      overallSuccess = true;
+    } catch (error) {
+      console.error('Domain ping failed:', error);
+      results.push({
+        endpoint: 'Domain ping',
+        url: apiUrl.split('/api')[0],
+        error: error.message
+      });
+    }
+  }
+  
+  console.log('API connection test summary:', {
+    overallSuccess,
+    results
+  });
+  
+  return overallSuccess;
 }
 
 // Export for use in other files

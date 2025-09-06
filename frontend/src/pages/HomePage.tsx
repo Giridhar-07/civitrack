@@ -64,17 +64,19 @@ const HomePage: React.FC = () => {
   
   // Filtered issues based on search term and category
   const filteredIssues = React.useMemo(() => {
+    if (!issues) return [];
     if (!searchTerm && searchCategory === 'all') return issues;
     
-    return issues?.filter(issue => {
-      const matchesTerm = searchTerm ? 
-        issue.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        issue.description.toLowerCase().includes(searchTerm.toLowerCase()) : 
-        true;
+    return issues.filter(issue => {
+      // Safely handle search term with proper type checking
+      const term = typeof searchTerm === 'string' ? searchTerm.toLowerCase() : '';
+      const matchesTerm = !term || 
+        (issue.title && issue.title.toLowerCase().includes(term)) || 
+        (issue.description && issue.description.toLowerCase().includes(term));
         
-      const matchesCategory = searchCategory !== 'all' ? 
-        issue.category === searchCategory : 
-        true;
+      // Safely handle category filtering
+      const category = typeof searchCategory === 'string' ? searchCategory : 'all';
+      const matchesCategory = category === 'all' || issue.category === category;
         
       return matchesTerm && matchesCategory;
     });

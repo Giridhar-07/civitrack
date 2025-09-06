@@ -50,10 +50,11 @@ app.use(helmet({
 // Rate limiting middleware for API routes
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 300, // Increased from 100 to 300 requests per windowMs
+  max: 600, // Increased from 300 to 600 requests per windowMs
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-  skipSuccessfulRequests: true // Only count failed requests
+  skipSuccessfulRequests: true, // Only count failed requests
+  message: 'Too many requests, please try again later.'
 });
 
 // Apply rate limiting to all requests
@@ -62,7 +63,7 @@ app.use(apiLimiter);
 // Stricter rate limiting for authentication routes
 const authLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 30, // Increased from 10 to 30 attempts per hour
+  max: 60, // Increased from 30 to 60 attempts per hour
   standardHeaders: true,
   legacyHeaders: false,
   message: 'Too many login/register attempts from this IP, please try again after an hour',

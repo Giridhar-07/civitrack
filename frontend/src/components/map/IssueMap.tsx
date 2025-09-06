@@ -75,6 +75,21 @@ const ClickSelectHandler: React.FC<{ enabled: boolean; onSelect?: (loc: Location
   return null;
 };
 
+const MapReadyHandler: React.FC = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    console.log('Map is ready');
+    // Force a re-render to ensure markers are displayed
+    setTimeout(() => {
+      map.invalidateSize();
+      console.log('Map invalidated to ensure markers display correctly');
+    }, 300); // Increased timeout for better reliability
+  }, [map]);
+
+  return null;
+};
+
 const IssueMap: React.FC<IssueMapProps> = ({
   issues,
   center = [39.8283, -98.5795], // Center of the US for wider view
@@ -225,21 +240,6 @@ const IssueMap: React.FC<IssueMapProps> = ({
         style={{ height: '100%', width: '100%', borderRadius: '8px' }}
         attributionControl={false} /* Move attribution to a better position for mobile */
         zoomControl={false} /* We'll add zoom control in a better position */
-        ref={(map) => {
-          console.log('Map created successfully');
-        }}
-        whenReady={() => {
-          console.log('Map is ready');
-          // Force a re-render to ensure markers are displayed
-          setTimeout(() => {
-            if (Map) {
-              const mapInstance = Map as any;
-              if (mapInstance._leaflet_id) {
-                mapInstance.invalidateSize();
-              }
-            }
-          }, 100);
-        }}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -269,6 +269,7 @@ const IssueMap: React.FC<IssueMapProps> = ({
         <ClickSelectHandler enabled={reportMode || (!!selectable && !!onLocationSelect)} onSelect={handleMapClick} />
         
         <ChangeMapView center={center as LatLngExpression} />
+        <MapReadyHandler />
         
         {(Array.isArray(issues) ? issues : []).map((issue) => (
           <Marker 
