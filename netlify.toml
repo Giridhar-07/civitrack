@@ -14,7 +14,7 @@
   to = "https://civitrack.onrender.com/api/:splat"
   status = 200
   force = true
-  headers = {Access-Control-Allow-Origin = "*", Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS", Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization", Access-Control-Allow-Credentials = "true", Access-Control-Max-Age = "86400"}
+  headers = {Access-Control-Allow-Origin = "*", Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS", Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma", Access-Control-Allow-Credentials = "true", Access-Control-Max-Age = "86400"}
 
 # Handle OPTIONS preflight requests for CORS
 [[redirects]]
@@ -23,7 +23,7 @@
   status = 200
   force = true
   conditions = {Method = ["OPTIONS"]}
-  headers = {Access-Control-Allow-Origin = "*", Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS", Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization", Access-Control-Allow-Credentials = "true", Access-Control-Max-Age = "86400"}
+  headers = {Access-Control-Allow-Origin = "*", Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS", Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma", Access-Control-Allow-Credentials = "true", Access-Control-Max-Age = "86400"}
 
 # Specific SPA redirects for known routes
 [[redirects]]

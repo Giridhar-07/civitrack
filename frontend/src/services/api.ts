@@ -72,9 +72,7 @@ console.log('API base URL resolved to:', BASE_URL);
 const axiosInstance: AxiosInstance = createRetryableAxiosInstance({
   baseURL: BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache',
-    'Pragma': 'no-cache'
+    'Content-Type': 'application/json'
   },
   withCredentials: true,
   timeout: 25000, // 25 seconds timeout for slower connections

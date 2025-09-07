@@ -59,9 +59,7 @@ const authService = {
           const response = await fetch(endpoint.url, {
             method: endpoint.method,
             headers: { 
-              'Content-Type': 'application/json',
-              'Cache-Control': 'no-cache',
-              'Pragma': 'no-cache'
+              'Content-Type': 'application/json'
             },
             cache: 'no-store',
             mode: 'cors',
