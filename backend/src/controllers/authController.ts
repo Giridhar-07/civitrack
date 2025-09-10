@@ -6,6 +6,7 @@ import { Op } from 'sequelize';
 import { generateToken } from '../utils/auth';
 import { successResponse, errorResponse, badRequestResponse, unauthorizedResponse } from '../utils/response';
 import { getFileUrl } from '../utils/upload';
+import { sendVerificationEmail, verifyEmailToken, sendPasswordResetEmail, verifyResetToken } from '../utils/email';
 
 // Register a new user
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -39,7 +40,16 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       email,
       password,
       role: 'user',
+      isEmailVerified: false,
     });
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(user);
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError);
+      // Continue with registration even if email fails
+    }
 
     // Generate JWT token
     const token = generateToken(user);
@@ -51,10 +61,11 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       name: user.name,
       email: user.email,
       role: user.role,
+      isEmailVerified: user.isEmailVerified,
       createdAt: user.createdAt,
     };
 
-    return successResponse(res, { user: userData, token }, 'User registered successfully', 201);
+    return successResponse(res, { user: userData, token }, 'User registered successfully. Please check your email to verify your account.', 201);
   } catch (error) {
     console.error('Registration error:', error);
     return errorResponse(res, 'Error registering user');
@@ -70,7 +81,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
       return badRequestResponse(res, 'Validation error', errors.array().map(err => err.msg));
     }
 
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body;
 
     // Find user by email
     const user = await User.findOne({ where: { email } });
@@ -86,8 +97,8 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
       return unauthorizedResponse(res, 'Invalid credentials');
     }
 
-    // Generate JWT token
-    const token = generateToken(user);
+    // Generate JWT token with remember me option
+    const token = generateToken(user, rememberMe === true);
 
     // Return user data (excluding password) and token
     const userData = {
@@ -100,7 +111,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
       createdAt: user.createdAt,
     };
 
-    return successResponse(res, { user: userData, token }, 'Login successful');
+    return successResponse(res, { user: userData, token, tokenExpiry: rememberMe ? '30 days' : '12 hours' }, 'Login successful');
   } catch (error) {
     console.error('Login error:', error);
     
@@ -407,6 +418,7 @@ export const deleteUserByAdmin = async (req: Request, res: Response): Promise<Re
 
     // Optional: prevent deleting self
     const currentUser = (req as any).user;
+    
     if (currentUser && currentUser.id === id) {
       return badRequestResponse(res, 'You cannot delete your own account');
     }
@@ -416,5 +428,119 @@ export const deleteUserByAdmin = async (req: Request, res: Response): Promise<Re
   } catch (error) {
     console.error('Admin delete user error:', error);
     return errorResponse(res, 'Error deleting user');
+  }
+};
+
+// Verify email
+export const verifyEmail = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { token } = req.body;
+    
+    if (!token) {
+      return badRequestResponse(res, 'Verification token is required');
+    }
+    
+    // Verify token
+    const user = await verifyEmailToken(token);
+    
+    if (!user) {
+      return badRequestResponse(res, 'Invalid or expired verification token');
+    }
+    
+    return successResponse(res, { verified: true }, 'Email verified successfully');
+  } catch (error) {
+    console.error('Email verification error:', error);
+    return errorResponse(res, 'Error verifying email');
+  }
+};
+
+// Request password reset
+export const requestPasswordReset = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return badRequestResponse(res, 'Email is required');
+    }
+    
+    // Find user by email
+    const user = await User.findOne({ where: { email } });
+    
+    // Always return success even if user not found (security best practice)
+    if (!user) {
+      return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
+    }
+    
+    // Send password reset email
+    await sendPasswordResetEmail(user);
+    
+    return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
+  } catch (error) {
+    console.error('Password reset request error:', error);
+    // Still return success to prevent email enumeration
+    return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
+  }
+};
+
+// Reset password
+export const resetPassword = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { token, password } = req.body;
+    
+    if (!token || !password) {
+      return badRequestResponse(res, 'Token and new password are required');
+    }
+    
+    // Validate password
+    if (password.length < 6) {
+      return badRequestResponse(res, 'Password must be at least 6 characters long');
+    }
+    
+    // Verify token
+    const user = await verifyResetToken(token);
+    
+    if (!user) {
+      return badRequestResponse(res, 'Invalid or expired reset token');
+    }
+    
+    // Update password
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    
+    await user.save();
+    
+    return successResponse(res, {}, 'Password reset successfully');
+  } catch (error) {
+    console.error('Password reset error:', error);
+    return errorResponse(res, 'Error resetting password');
+  }
+};
+
+// Resend verification email
+export const resendVerificationEmail = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return badRequestResponse(res, 'Email is required');
+    }
+    
+    // Find user by email
+    const user = await User.findOne({ where: { email } });
+    
+    // Always return success even if user not found (security best practice)
+    if (!user || user.isEmailVerified) {
+      return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
+    }
+    
+    // Send verification email
+    await sendVerificationEmail(user);
+    
+    return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
+  } catch (error) {
+    console.error('Resend verification email error:', error);
+    // Still return success to prevent email enumeration
+    return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
   }
 };

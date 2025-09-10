@@ -10,8 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/nodemailer": "^7.0.1",
     "axios": "^1.11.0",
-    "dotenv": "^17.2.2"
+    "dotenv": "^17.2.2",
+    "nodemailer": "^7.0.6"
   },
   "devDependencies": {
     "cross-env": "^10.0.0"

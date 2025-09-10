@@ -10,6 +10,7 @@ const JWT_SECRET = process.env.JWT_SECRET || (process.env.NODE_ENV === 'producti
 
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '12h';
 const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
+const JWT_REMEMBER_ME_EXPIRES_IN = process.env.JWT_REMEMBER_ME_EXPIRES_IN || '30d';
 
 // Interface for JWT payload with enhanced security
 interface JwtPayload {
@@ -21,7 +22,7 @@ interface JwtPayload {
 }
 
 // Generate JWT token for a user with enhanced security
-export const generateToken = (user: User): string => {
+export const generateToken = (user: User, rememberMe: boolean = false): string => {
   const payload: JwtPayload = {
     id: user.id,
     role: user.role,
@@ -29,7 +30,7 @@ export const generateToken = (user: User): string => {
   };
 
   const signOptions: SignOptions = {
-    expiresIn: JWT_EXPIRES_IN as jwt.SignOptions['expiresIn'],
+    expiresIn: (rememberMe ? JWT_REMEMBER_ME_EXPIRES_IN : JWT_EXPIRES_IN) as jwt.SignOptions['expiresIn'],
     algorithm: 'HS256' as jwt.Algorithm, // Explicitly set algorithm
     audience: process.env.JWT_AUDIENCE || 'civitrack-api',
     issuer: process.env.JWT_ISSUER || 'civitrack-auth',

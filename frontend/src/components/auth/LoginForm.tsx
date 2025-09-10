@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
-import { TextField, Button, Typography, Box, Paper, Link, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Typography, Box, Paper, Link, CircularProgress, FormControlLabel, Checkbox, Alert } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import authService, { LoginCredentials } from '../../services/authService';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [credentials, setCredentials] = useState<LoginCredentials>({
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [verificationMessage, setVerificationMessage] = useState<string | null>(null);
+  const [resendLoading, setResendLoading] = useState<boolean>(false);
+  
+  useEffect(() => {
+    // Check if redirected from registration or email verification
+    const state = location.state as any;
+    if (state?.showVerificationMessage) {
+      setVerificationMessage('Please check your email to verify your account before logging in.');
+      if (state.email) {
+        setCredentials(prev => ({
+          ...prev,
+          email: state.email
+        }));
+      }
+    } else if (state?.emailVerified && state?.justVerified) {
+      setVerificationMessage('Your email has been successfully verified! You can now log in.');
+    }
+  }, [location]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value, checked, type } = e.target;
     setCredentials(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -70,11 +90,49 @@ const LoginForm: React.FC = () => {
     }
   };
 
+  const handleResendVerification = async () => {
+    if (!credentials.email) {
+      setError('Please enter your email address to resend verification');
+      return;
+    }
+    
+    setResendLoading(true);
+    try {
+      await authService.resendVerificationEmail(credentials.email);
+      setVerificationMessage('Verification email has been sent. Please check your inbox.');
+      setError(null);
+    } catch (err: any) {
+      console.error('Resend verification error:', err);
+      setError(err.response?.data?.message || 'Failed to resend verification email. Please try again.');
+    } finally {
+      setResendLoading(false);
+    }
+  };
+
   return (
     <Paper elevation={3} sx={{ p: 4, maxWidth: 400, mx: 'auto', mt: 4, backgroundColor: '#000', color: '#fff', borderRadius: 2 }}>
       <Typography variant="h5" component="h1" gutterBottom align="center">
         Sign In
       </Typography>
+      
+      {verificationMessage && (
+        <Alert 
+          severity="info" 
+          sx={{ mb: 3 }}
+          action={
+            <Button 
+              color="inherit" 
+              size="small" 
+              onClick={handleResendVerification}
+              disabled={resendLoading}
+            >
+              {resendLoading ? 'Sending...' : 'Resend'}
+            </Button>
+          }
+        >
+          {verificationMessage}
+        </Alert>
+      )}
       
       {error && (
         <Box sx={{ mb: 2, p: 2, backgroundColor: 'rgba(244, 67, 54, 0.1)', borderRadius: 1 }}>
@@ -119,6 +177,19 @@ const LoginForm: React.FC = () => {
               color: '#fff',
             },
           }}
+        />
+        
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="rememberMe"
+              checked={credentials.rememberMe}
+              onChange={handleChange}
+              color="primary"
+            />
+          }
+          label="Remember me"
+          sx={{ mt: 1, mb: 2, color: '#fff' }}
         />
         
         <TextField
@@ -174,6 +245,21 @@ const LoginForm: React.FC = () => {
         </Button>
         
         <Box sx={{ textAlign: 'center', mt: 2 }}>
+          <Typography variant="body2" sx={{ color: '#aaa', mb: 1 }}>
+            <Link 
+              onClick={() => navigate('/forgot-password')} 
+              sx={{ 
+                cursor: 'pointer', 
+                color: '#4CAF50',
+                textDecoration: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                }
+              }}
+            >
+              Forgot password?
+            </Link>
+          </Typography>
           <Typography variant="body2" sx={{ color: '#aaa' }}>
             Don't have an account?{' '}
             <Link 

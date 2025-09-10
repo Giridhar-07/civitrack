@@ -13,6 +13,11 @@ interface UserAttributes {
   profileImage?: string;
   isAdmin?: boolean;
   isLocked?: boolean;
+  isEmailVerified?: boolean;
+  emailVerificationToken?: string;
+  emailVerificationExpires?: Date;
+  resetPasswordToken?: string;
+  resetPasswordExpires?: Date;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,8 +33,14 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public email!: string;
   public password!: string;
   public role!: string;
+  public profileImage?: string;
   public isAdmin?: boolean;
   public isLocked?: boolean;
+  public isEmailVerified?: boolean;
+  public emailVerificationToken?: string;
+  public emailVerificationExpires?: Date;
+  public resetPasswordToken?: string;
+  public resetPasswordExpires?: Date;
   public createdAt!: Date;
   public updatedAt!: Date;
 
@@ -95,6 +106,27 @@ User.init(
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
+    },
+    isEmailVerified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    emailVerificationToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    emailVerificationExpires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    resetPasswordToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resetPasswordExpires: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
     createdAt: {
       type: DataTypes.DATE,

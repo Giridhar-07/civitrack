@@ -40,25 +40,30 @@ const resolveApiBaseUrl = (): string => {
     return 'https://civitrack.onrender.com/api';
   }
   
-  // In local dev, frontend runs on :3000 and backend on :5000 by default
+  // In local dev or unknown environments
   if (typeof window !== 'undefined') {
-    const origin = window.location.origin;
-    const isLocal3000 = origin.includes('localhost:3000') || origin.includes('127.0.0.1:3000');
-    if (isLocal3000) {
-      try {
-        // Check if we should use local backend
-        const useLocalBackend = localStorage.getItem('use_local_backend') === 'true';
-        if (useLocalBackend) {
-          return 'http://localhost:5000/api';
+    const { origin, hostname } = window.location;
+
+    try {
+      const useLocalBackend = localStorage.getItem('use_local_backend') === 'true';
+      const useSameOriginApi = localStorage.getItem('use_same_origin_api') === 'true';
+
+      // If explicitly opting into local backend for development
+      if (useLocalBackend) {
+        return 'http://localhost:5000/api';
       }
-      // Default to Render backend for development
-      return 'https://civitrack.onrender.com/api';
-      } catch (e) {
-        return 'https://civitrack.onrender.com/api'; // Fallback to dev backend
+
+      // If explicitly opting into same-origin API (for setups with a reverse proxy)
+      if (useSameOriginApi) {
+        return `${origin.replace(/\/$/, '')}/api`;
       }
+    } catch (e) {
+      // Ignore localStorage errors and continue with safe defaults
     }
-    // Same-origin fallback (use reverse proxy or server-side /api)
-    return `${origin.replace(/\/$/, '')}/api`;
+
+    // Default safe choice for most environments (including Vite dev on 5173, etc.)
+    // Use the hosted backend unless explicitly overridden via flags above.
+    return 'https://civitrack.onrender.com/api';
   }
   
   // SSR or unknown environment fallback - use the Render backend
@@ -118,11 +123,6 @@ const mockApi = {
       // mockService returns { token, user }
       return { data: (response as any) as T };
     }
-    if (url.startsWith('/issues/') && url.endsWith('/flag')) {
-      const id = url.split('/')[2];
-      const response = await mockService.flagIssue(id, data.reason);
-      return { data: response as T };
-    }
     throw new Error(`Unhandled mock POST request to ${url}`);
   },
   put: async <T>(url: string, data?: any, config?: any): Promise<{ data: T }> => {
@@ -139,7 +139,6 @@ const mockApi = {
   }
 };
 
-// Define the API interface
 interface ApiInterface {
   get: <T>(url: string, config?: any) => Promise<{ data: T }>;
   post: <T>(url: string, data?: any, config?: any) => Promise<{ data: T }>;
@@ -178,7 +177,13 @@ const VALID_API_ENDPOINTS = {
    '/auth/admin/roles/:id/users/:userId': ['DELETE'],
    '/auth/admin/users/status-requests': ['GET'],
    '/auth/verify-email': ['POST'],
-   '/auth/forgot-password': ['POST'],
+   '/auth/resend-verification': ['POST'], // This endpoint is correctly defined in backend routes
+   // Alias endpoints for resilience across deployments
+   '/auth/resend-verify': ['POST'],
+   '/auth/resend-verification-email': ['POST'],
+   '/auth/send-verification-email': ['POST'],
+   '/auth/verify-email/resend': ['POST'],
+   '/auth/request-password-reset': ['POST'],
    '/auth/reset-password': ['POST'],
    
   // User endpoints

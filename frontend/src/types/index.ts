@@ -9,6 +9,7 @@ export interface User {
   createdAt: Date;
   isAdmin?: boolean;
   profileImage?: string;
+  isEmailVerified?: boolean;
 }
 
 export interface Issue {

@@ -5,18 +5,20 @@ import mockService from './mockService';
 export interface LoginCredentials {
   email: string;
   password: string;
+  rememberMe?: boolean;
 }
 
 export interface RegisterData {
   username: string;
-  name: string;
   email: string;
   password: string;
+  name?: string;
 }
 
 export interface AuthResponse {
   user: User;
   token: string;
+  tokenExpiry?: string;
 }
 
 const authService = {
@@ -185,6 +187,14 @@ const authService = {
         localStorage.setItem('token', response.data.token);
         console.log('Token stored in localStorage');
         
+        // Store remember me preference if enabled
+        if (credentials.rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
+          console.log('Remember me preference stored');
+        } else {
+          localStorage.removeItem('rememberMe');
+        }
+        
         // Set flag to indicate successful connection to backend
         localStorage.setItem('use_local_backend', 'false');
         
@@ -258,13 +268,20 @@ const authService = {
         const mockResponse = await mockService.register(userData.username, userData.email, userData.password);
         const { token, user } = mockResponse;
         
-        localStorage.setItem('token', token);
+        // Don't store token in localStorage to prevent automatic login
+        // User needs to verify email first
         return { user, token };
       }
       
       const response = await api.post<AuthResponse>('/auth/register', userData);
-      // Store token in localStorage
-      localStorage.setItem('token', response.data.token);
+      // Don't store token in localStorage to prevent automatic login
+      // User needs to verify email first
+      
+      // Display email verification message if user is not verified
+      if (response.data.user && response.data.user.isEmailVerified === false) {
+        console.log('User registered successfully. Email verification required.');
+      }
+      
       return response.data;
     } catch (error: any) {
       // Enhanced error logging with specific handling for timeout errors
@@ -286,7 +303,71 @@ const authService = {
     }
   },
 
+  verifyEmail: async (token: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>('/auth/verify-email', { token });
+      return response.data;
+    } catch (error: any) {
+      console.error('Email verification error:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
+  resendVerificationEmail: async (email: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>(
+        '/auth/resend-verification',
+        { email }
+      );
+      return response.data;
+    } catch (error: any) {
+      // If endpoint validation or 404 occurs, try alias routes as fallback
+      const isNotFound = (error?.statusCode === 404) || (typeof error?.message === 'string' && error.message.includes('Invalid API endpoint'));
+      if (isNotFound) {
+        const aliases = [
+          '/auth/resend-verify',
+          '/auth/resend-verification-email',
+          '/auth/send-verification-email',
+          '/auth/verify-email/resend'
+        ];
+        for (const alias of aliases) {
+          try {
+            const alt = await api.post<{ message: string }>(alias, { email });
+            return alt.data;
+          } catch (e) {
+            // continue trying next alias
+          }
+        }
+      }
+      console.error('Resend verification email error:', error?.response?.data || error?.message);
+      throw error;
+    }
+  },
+
+  requestPasswordReset: async (email: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>('/auth/request-password-reset', { email });
+      return response.data;
+    } catch (error: any) {
+      console.error('Password reset request error:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
+  resetPassword: async (token: string, password: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>('/auth/reset-password', { token, password });
+      return response.data;
+    } catch (error: any) {
+      console.error('Password reset error:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
   logout: (): void => {
+    // Get the current token before removing it
+    const currentToken = localStorage.getItem('token');
+    
     // Remove token from localStorage
     console.log('Logging out user, removing token');
     localStorage.removeItem('token');
@@ -298,7 +379,7 @@ const authService = {
       window.dispatchEvent(new StorageEvent('storage', {
         key: 'token',
         newValue: null,
-        oldValue: 'removed-token',
+        oldValue: currentToken, // Use the actual previous token value
         storageArea: localStorage
       }));
     }
