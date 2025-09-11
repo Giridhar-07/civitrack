@@ -14,10 +14,10 @@ interface UserAttributes {
   isAdmin?: boolean;
   isLocked?: boolean;
   isEmailVerified?: boolean;
-  emailVerificationToken?: string;
-  emailVerificationExpires?: Date;
-  resetPasswordToken?: string;
-  resetPasswordExpires?: Date;
+  emailVerificationToken?: string | null;
+  emailVerificationExpires?: Date | null;
+  resetPasswordToken?: string | null;
+  resetPasswordExpires?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -37,10 +37,10 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public isAdmin?: boolean;
   public isLocked?: boolean;
   public isEmailVerified?: boolean;
-  public emailVerificationToken?: string;
-  public emailVerificationExpires?: Date;
-  public resetPasswordToken?: string;
-  public resetPasswordExpires?: Date;
+  public emailVerificationToken?: string | null;
+  public emailVerificationExpires?: Date | null;
+  public resetPasswordToken?: string | null;
+  public resetPasswordExpires?: Date | null;
   public createdAt!: Date;
   public updatedAt!: Date;
 

@@ -505,8 +505,8 @@ export const resetPassword = async (req: Request, res: Response): Promise<Respon
     
     // Update password
     user.password = password;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
+    user.resetPasswordToken = null as any;
+    user.resetPasswordExpires = null as any;
     
     await user.save();
     

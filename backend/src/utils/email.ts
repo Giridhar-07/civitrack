@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import { User } from '../models';
 import crypto from 'crypto';
+import { Op } from 'sequelize';
 
 // Email configuration
 const EMAIL_HOST = process.env.EMAIL_HOST || 'smtp.example.com';
@@ -50,8 +51,9 @@ export const generateVerificationToken = async (user: User): Promise<string> => 
 // Send verification email
 export const sendVerificationEmail = async (user: User): Promise<void> => {
   try {
-    // Generate verification token if not exists
-    const token = user.emailVerificationToken || await generateVerificationToken(user);
+    // Generate verification token if missing or expired
+    const needsNewToken = !user.emailVerificationToken || !user.emailVerificationExpires || user.emailVerificationExpires <= new Date();
+    const token = needsNewToken ? await generateVerificationToken(user) : (user.emailVerificationToken as string);
     
     // Create verification URL
     const verificationUrl = `${APP_URL}/verify-email?token=${token}`;
@@ -139,7 +141,7 @@ export const verifyEmailToken = async (token: string): Promise<User | null> => {
     const user = await User.findOne({
       where: {
         emailVerificationToken: token,
-        emailVerificationExpires: { $gt: new Date() },
+        emailVerificationExpires: { [Op.gt]: new Date() },
       },
     });
     
@@ -149,8 +151,8 @@ export const verifyEmailToken = async (token: string): Promise<User | null> => {
     
     // Mark email as verified and clear token
     user.isEmailVerified = true;
-    user.emailVerificationToken = undefined;
-    user.emailVerificationExpires = undefined;
+    user.emailVerificationToken = null;
+    user.emailVerificationExpires = null;
     
     // Save user
     await user.save();
@@ -169,7 +171,7 @@ export const verifyResetToken = async (token: string): Promise<User | null> => {
     const user = await User.findOne({
       where: {
         resetPasswordToken: token,
-        resetPasswordExpires: { $gt: new Date() },
+        resetPasswordExpires: { [Op.gt]: new Date() },
       },
     });
     

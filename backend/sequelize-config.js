@@ -1,5 +1,5 @@
 require('ts-node/register');
-const sequelize = require('../src/config/database.ts').default;
+const sequelize = require('./src/config/database.ts').default;
 
 module.exports = {
   development: {
