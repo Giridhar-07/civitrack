@@ -63,10 +63,10 @@ export const performanceMonitor = (req: Request, res: Response, next: NextFuncti
     const duration = Date.now() - start;
     const status = res.statusCode;
     
-    // Determine severity level based on duration
-    let level = 'info';
+    // Determine severity level based on duration and status
+    let level: 'info' | 'warn' | 'error' = 'info';
     if (duration > THRESHOLDS.CRITICAL) {
-      level = 'error';
+      level = status >= 500 ? 'error' : 'warn'; // don't mark successful responses as error
     } else if (duration > THRESHOLDS.WARNING) {
       level = 'warn';
     }
@@ -77,6 +77,7 @@ export const performanceMonitor = (req: Request, res: Response, next: NextFuncti
       method,
       status,
       duration,
+      route: (req.route && req.route.path) || undefined,
       userAgent: req.headers['user-agent'],
       ip: req.ip
     });
@@ -97,9 +98,9 @@ export const trackPerformance = async <T>(
     const duration = Date.now() - start;
     
     // Determine severity level based on duration
-    let level = 'info';
+    let level: 'info' | 'warn' | 'error' = 'info';
     if (duration > THRESHOLDS.CRITICAL) {
-      level = 'error';
+      level = 'warn';
     } else if (duration > THRESHOLDS.WARNING) {
       level = 'warn';
     }

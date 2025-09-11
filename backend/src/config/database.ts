@@ -29,10 +29,14 @@ try {
     },
     logging: process.env.NODE_ENV === 'development' ? console.log : false,
     pool: {
-      max: 5,
+      max: 10, // increase pool to reduce acquire contention under load
       min: 0,
-      acquire: 30000,
-      idle: 10000
+      acquire: 20000, // lower than 30s to fail faster if saturated
+      idle: 10000,
+      evict: 15000 // evict idle connections more aggressively
+    },
+    retry: {
+      max: 3
     }
   });
 } catch (error) {

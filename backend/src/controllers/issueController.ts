@@ -187,41 +187,48 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
     // Redis caching disabled to resolve connection issues
     // const cacheKey = cacheKeys.nearbyIssues(lat, lng, radiusKm, pageNum, limitNum);
     
+    // Build spatial where using Sequelize.fn to avoid string literals and enable parameterization
+    const geoPoint: any = sequelize.fn('ST_SetSRID', sequelize.fn('ST_MakePoint', lng, lat), 4326);
+    const locationCondition: any = sequelize.where(
+      sequelize.fn(
+        'ST_DWithin',
+        sequelize.cast(sequelize.col('location.geom') as any, 'geography') as any,
+        sequelize.cast(geoPoint as any, 'geography') as any,
+        radiusKm * 1000
+      ) as any,
+      true
+    );
+
     // Direct database query without Redis caching
     const result = async () => {
         const offset = (pageNum - 1) * limitNum;
         
-        // Use a single optimized spatial query with ST_DWithin
-        // Get total count for pagination
-        const { count } = await Issue.findAndCountAll({
-          include: [{ 
-            model: Location, 
+        // Get total count for pagination using a lighter COUNT DISTINCT over joined table
+        const count = await Issue.count({
+          include: [{
+            model: Location,
             as: 'location',
-            where: sequelize.literal(`ST_DWithin(
-              "location"."geom"::geography,
-              ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326)::geography,
-              ${radiusKm * 1000}
-            )`)
-          }]
+            required: true,
+            where: locationCondition
+          }],
+          distinct: true,
+          col: 'id'
         });
         
-        // Get paginated issues
+        // Get paginated issues with the same spatial filter
         const issues = await Issue.findAll({
           include: [
             { model: User, as: 'user', attributes: ['id', 'username', 'name'] },
-            { 
-              model: Location, 
+            {
+              model: Location,
               as: 'location',
-              where: sequelize.literal(`ST_DWithin(
-                "location"."geom"::geography,
-                ST_SetSRID(ST_MakePoint(${lng}, ${lat}), 4326)::geography,
-                ${radiusKm * 1000}
-              )`)
+              required: true,
+              where: locationCondition
             }
           ],
           order: [['reportedAt', 'DESC']],
           limit: limitNum,
-          offset: offset
+          offset
         });
         
         // Calculate pagination metadata

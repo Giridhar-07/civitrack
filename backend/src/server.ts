@@ -134,8 +134,41 @@ import { performanceMonitor } from './utils/performanceMonitor';
 app.use(performanceMonitor);
 
 // JSON body parser with size limits
-app.use(express.json({ limit: '1mb' })); // Limit JSON body size
+app.use(express.json({ 
+  limit: '1mb',
+  verify: (req: any, _res, buf, encoding) => {
+    try {
+      req.rawBody = buf?.toString(encoding as BufferEncoding || 'utf8');
+    } catch {
+      req.rawBody = undefined;
+    }
+  }
+})); // Limit JSON body size
 app.use(express.urlencoded({ extended: true, limit: '1mb' })); // Limit URL-encoded body size
+
+// Handle JSON parse errors gracefully
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+  if (err && err.type === 'entity.parse.failed') {
+    // Log raw body and headers for debugging malformed JSON
+    try {
+      console.error('JSON parse error:', {
+        path: req.path,
+        contentType: req.headers['content-type'],
+        rawBody: (req as any).rawBody
+      });
+    } catch {}
+    // For resend verification endpoints, always return generic success
+    if (req.path.includes('/api/auth/resend-verification') ||
+        req.path.includes('/api/auth/resend-verify') ||
+        req.path.includes('/api/auth/resend-verification-email') ||
+        req.path.includes('/api/auth/send-verification-email') ||
+        req.path.includes('/api/auth/verify-email/resend')) {
+      return res.status(200).json({ success: true, message: 'If your email exists and is not verified, you will receive a verification email', data: {} });
+    }
+    return res.status(400).json({ success: false, message: 'Invalid JSON payload', error: 'Bad Request' });
+  }
+  next(err);
+});
 
 // Custom middleware to log static file requests
 app.use('/uploads', (req, res, next) => {
@@ -197,13 +230,26 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (res.headersSent) {
     return next(err);
   }
+
+  // Ensure JSON parse errors never bubble as 500
+  if ((err as any)?.type === 'entity.parse.failed') {
+    // Mirror the earlier special-case behavior for resend verification endpoints
+    if (req.path.includes('/api/auth/resend-verification') ||
+        req.path.includes('/api/auth/resend-verify') ||
+        req.path.includes('/api/auth/resend-verification-email') ||
+        req.path.includes('/api/auth/send-verification-email') ||
+        req.path.includes('/api/auth/verify-email/resend')) {
+      return res.status(200).json({ success: true, message: 'If your email exists and is not verified, you will receive a verification email', data: {} });
+    }
+    return errorResponse(res, 'Invalid JSON payload', 400);
+  }
   
   // Handle specific error types
   if (err.name === 'UnauthorizedError') {
     return errorResponse(res, 'Invalid or expired authentication token', 401);
   }
   
-  if (err.message && err.message.includes('CORS')) {
+  if ((err as any).message && (err as any).message.includes('CORS')) {
     return errorResponse(res, 'CORS policy violation', 403);
   }
   
