@@ -35,6 +35,8 @@ class Issue extends Model<IssueAttributes, IssueCreationAttributes> implements I
   public updatedAt!: Date;
 }
 
+const isSqlite = typeof (sequelize as any).getDialect === 'function' && (sequelize as any).getDialect() === 'sqlite';
+
 // Initialize Issue model
 Issue.init(
   {
@@ -91,9 +93,27 @@ Issue.init(
       },
     },
     photos: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      // SQLite doesn't support ARRAY; store as TEXT with JSON serialization in tests
+      type: isSqlite ? DataTypes.TEXT : (DataTypes as any).ARRAY(DataTypes.STRING),
       allowNull: false,
-      defaultValue: [],
+      defaultValue: isSqlite ? '[]' : [],
+      ...(isSqlite
+        ? {
+            get(this: Issue) {
+              const raw = this.getDataValue('photos') as any;
+              if (!raw) return [] as any;
+              try { return typeof raw === 'string' ? JSON.parse(raw) : raw; } catch { return []; }
+            },
+            set(this: Issue, val: any) {
+              try {
+                const toStore = typeof val === 'string' ? val : JSON.stringify(val);
+                (this as any).setDataValue('photos', toStore as any);
+              } catch {
+                (this as any).setDataValue('photos', val as any);
+              }
+            }
+          }
+        : {})
     },
     reportedBy: {
       type: DataTypes.UUID,

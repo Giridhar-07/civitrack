@@ -1,4 +1,4 @@
-import nodemailer from 'nodemailer';
+import nodemailer, { Transporter } from 'nodemailer';
 import { User } from '../models';
 import crypto from 'crypto';
 import { Op } from 'sequelize';
@@ -11,38 +11,50 @@ const EMAIL_PASS = process.env.EMAIL_PASS || 'password';
 const EMAIL_FROM = process.env.EMAIL_FROM || 'CiviTrack <noreply@civitrack.com>';
 const APP_URL = process.env.FRONTEND_URL || 'https://civitrack-dev.netlify.app';
 
-// Create nodemailer transporter
-const transporter = nodemailer.createTransport({
-  host: EMAIL_HOST,
-  port: EMAIL_PORT,
-  secure: EMAIL_PORT === 465, // true for 465, false for other ports
-  auth: {
-    user: EMAIL_USER,
-    pass: EMAIL_PASS,
-  },
-});
+// Determine if email is properly configured
+const isPlaceholderValue = (v: string) => (
+  v === 'smtp.example.com' || v === 'user@example.com' || v === 'password' || v.trim() === ''
+);
+const EMAIL_CONFIGURED = !isPlaceholderValue(EMAIL_HOST) && !isPlaceholderValue(EMAIL_USER) && !isPlaceholderValue(EMAIL_PASS);
 
-// Test email configuration in development
-if (process.env.NODE_ENV !== 'production') {
-  transporter.verify((error: Error | null) => {
-    if (error) {
-      console.log('Email configuration error:', error);
-    } else {
-      console.log('Email server is ready to send messages');
-    }
+// Create nodemailer transporter (log-only mode when not configured)
+let transporter: Transporter;
+if (EMAIL_CONFIGURED) {
+  transporter = nodemailer.createTransport({
+    host: EMAIL_HOST,
+    port: EMAIL_PORT,
+    secure: EMAIL_PORT === 465, // true for 465, false for other ports
+    auth: {
+      user: EMAIL_USER,
+      pass: EMAIL_PASS,
+    },
   });
+} else {
+  // Use jsonTransport to avoid network calls; emails will be logged only
+  transporter = nodemailer.createTransport({ jsonTransport: true });
+  console.warn('Email service is not fully configured. Running in log-only mode. Set EMAIL_HOST/USER/PASS to enable SMTP sending.');
 }
 
-// Generate verification token
+// Verify email configuration in all environments, but do not crash
+transporter.verify((error: Error | null) => {
+  if (error) {
+    if (EMAIL_CONFIGURED) {
+      console.error('Email configuration error details:', error);
+    } else {
+      console.log('Email transport (log-only) is ready. No external SMTP connection will be made.');
+    }
+  } else {
+    console.log(EMAIL_CONFIGURED ? 'Email server is ready to send messages' : 'Email transport (log-only) verified');
+  }
+});
+
+// Generate a verification token for email verification
 export const generateVerificationToken = async (user: User): Promise<string> => {
-  // Generate a random token
-  const token = crypto.randomBytes(32).toString('hex');
+  const token = crypto.randomBytes(20).toString('hex');
+  const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
   
-  // Set token and expiration (24 hours)
   user.emailVerificationToken = token;
-  user.emailVerificationExpires = new Date(Date.now() + 24 * 60 * 60 * 1000);
-  
-  // Save user
+  user.emailVerificationExpires = expires;
   await user.save();
   
   return token;
@@ -80,25 +92,29 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
       `,
     };
     
-    // Send email
-    await transporter.sendMail(mailOptions);
+    // Send or log email
+    const info = await transporter.sendMail(mailOptions);
+    if (!EMAIL_CONFIGURED) {
+      console.log('Verification email generated (log-only mode):', info);
+    }
   } catch (error) {
     console.error('Error sending verification email:', error);
-    throw new Error('Failed to send verification email');
+    // In log-only mode, do not throw to avoid noisy logs
+    if (EMAIL_CONFIGURED) {
+      throw new Error('Failed to send verification email');
+    }
   }
 };
 
 // Send password reset email
 export const sendPasswordResetEmail = async (user: User): Promise<void> => {
   try {
-    // Generate reset token
-    const token = crypto.randomBytes(32).toString('hex');
+    // Generate password reset token
+    const token = crypto.randomBytes(20).toString('hex');
+    const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
     
-    // Set token and expiration (1 hour)
     user.resetPasswordToken = token;
-    user.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000);
-    
-    // Save user
+    user.resetPasswordExpires = expires;
     await user.save();
     
     // Create reset URL
@@ -108,11 +124,11 @@ export const sendPasswordResetEmail = async (user: User): Promise<void> => {
     const mailOptions = {
       from: EMAIL_FROM,
       to: user.email,
-      subject: 'CiviTrack - Password Reset',
+      subject: 'CiviTrack - Password Reset Request',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #4a6ee0;">Password Reset Request</h2>
-          <p>You requested a password reset. Click the button below to reset your password:</p>
+          <p>We received a request to reset your password. Click the button below to reset it:</p>
           <div style="text-align: center; margin: 30px 0;">
             <a href="${resetUrl}" style="background-color: #4a6ee0; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block;">Reset Password</a>
           </div>
@@ -126,11 +142,16 @@ export const sendPasswordResetEmail = async (user: User): Promise<void> => {
       `,
     };
     
-    // Send email
-    await transporter.sendMail(mailOptions);
+    // Send or log email
+    const info = await transporter.sendMail(mailOptions);
+    if (!EMAIL_CONFIGURED) {
+      console.log('Password reset email generated (log-only mode):', info);
+    }
   } catch (error) {
     console.error('Error sending password reset email:', error);
-    throw new Error('Failed to send password reset email');
+    if (EMAIL_CONFIGURED) {
+      throw new Error('Failed to send password reset email');
+    }
   }
 };
 
@@ -164,10 +185,9 @@ export const verifyEmailToken = async (token: string): Promise<User | null> => {
   }
 };
 
-// Verify password reset token
+// Verify reset token
 export const verifyResetToken = async (token: string): Promise<User | null> => {
   try {
-    // Find user with matching token that hasn't expired
     const user = await User.findOne({
       where: {
         resetPasswordToken: token,
@@ -179,5 +199,48 @@ export const verifyResetToken = async (token: string): Promise<User | null> => {
   } catch (error) {
     console.error('Error verifying reset token:', error);
     return null;
+  }
+};
+
+
+export interface EmailHealth {
+  smtpConfigured: boolean;
+  smtpReachable: boolean;
+  host: string;
+  port: number;
+  mode: 'smtp' | 'log-only';
+  error?: string;
+}
+
+export const checkEmailHealth = async (): Promise<EmailHealth> => {
+  try {
+    if (EMAIL_CONFIGURED) {
+      await transporter.verify();
+      return {
+        smtpConfigured: true,
+        smtpReachable: true,
+        host: EMAIL_HOST,
+        port: EMAIL_PORT,
+        mode: 'smtp'
+      };
+    } else {
+      // In log-only mode, we consider it reachable but not configured
+      return {
+        smtpConfigured: false,
+        smtpReachable: true,
+        host: EMAIL_HOST,
+        port: EMAIL_PORT,
+        mode: 'log-only'
+      };
+    }
+  } catch (err: any) {
+    return {
+      smtpConfigured: EMAIL_CONFIGURED,
+      smtpReachable: false,
+      host: EMAIL_HOST,
+      port: EMAIL_PORT,
+      mode: EMAIL_CONFIGURED ? 'smtp' : 'log-only',
+      error: err?.message || String(err)
+    };
   }
 };

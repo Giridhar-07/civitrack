@@ -4,6 +4,9 @@ import dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 
+// Use in-memory SQLite for tests
+const isTest = process.env.NODE_ENV === 'test';
+
 // Database configuration
 const dbName = process.env.DB_NAME || 'civitrack';
 const dbUser = process.env.DB_USER || 'postgres';
@@ -39,6 +42,37 @@ try {
       max: 3
     }
   });
+  if (isTest) {
+    sequelize = new Sequelize({
+      dialect: 'sqlite',
+      storage: ':memory:',
+      logging: false,
+    });
+  } else {
+    sequelize = new Sequelize(dbName, dbUser, dbPassword, {
+      host: dbHost,
+      port: dbPort,
+      dialect: 'postgres',
+      dialectModule: require('pg'),
+      dialectOptions: {
+        ssl: dbSSL ? {
+          require: true,
+          rejectUnauthorized: false
+        } : false
+      },
+      logging: process.env.NODE_ENV === 'development' ? console.log : false,
+      pool: {
+        max: 10, // increase pool to reduce acquire contention under load
+        min: 0,
+        acquire: 20000, // lower than 30s to fail faster if saturated
+        idle: 10000,
+        evict: 15000 // evict idle connections more aggressively
+      },
+      retry: {
+        max: 3
+      }
+   });
+  }
 } catch (error) {
   console.error('Error initializing database connection:', error);
   // Provide a fallback for serverless environment
@@ -46,6 +80,9 @@ try {
     dialect: 'postgres',
     dialectModule: require('pg')
   });
+  sequelize = isTest
+    ? new Sequelize({ dialect: 'sqlite', storage: ':memory:', logging: false })
+    : new Sequelize({ dialect: 'postgres', dialectModule: require('pg') });
 }
 
 // Test database connection

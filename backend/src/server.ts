@@ -13,6 +13,7 @@ import sequelize from './config/database';
 import { syncModels } from './models';
 import { errorResponse } from './utils/response';
 import { initializeSocketIO } from './services/socketService';
+import { checkEmailHealth } from './utils/email';
 
 // Load environment variables
 dotenv.config();
@@ -35,7 +36,16 @@ app.use(helmet({
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       imgSrc: ["'self'", "data:", "blob:"],
-      connectSrc: ["'self'", "https://civitrack-dev.netlify.app"],
+      connectSrc: [
+        "'self'",
+        "https://civitrack-dev.netlify.app",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "http://localhost:3001",
+        "http://127.0.0.1:3001"
+      ],
       fontSrc: ["'self'", "https://fonts.gstatic.com", "data:"],
       objectSrc: ["'none'"],
       mediaSrc: ["'self'"],
@@ -91,24 +101,32 @@ app.use('/api/auth/register', authLimiter);
 //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 //   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 // }));
-const defaultAllowed = ['http://localhost:3000', 'http://127.0.0.1:3000', 'https://civitrack-dev.netlify.app'];
+const defaultAllowed = [
+  'http://localhost:3000', 'http://127.0.0.1:3000',
+  'http://localhost:5173', 'http://127.0.0.1:5173',
+  'http://localhost:3001', 'http://127.0.0.1:3001',
+  'https://civitrack-dev.netlify.app'
+];
 const envAllowed = (process.env.CORS_ORIGIN || '').split(',').map(o => o.trim()).filter(Boolean);
 const allowedOrigins = Array.from(new Set([...defaultAllowed, ...envAllowed]));
+const isDev = (process.env.NODE_ENV || 'development') !== 'production';
 
 console.log('Allowed CORS origins:', allowedOrigins);
 
 app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
+    if (!origin) return callback(null, true); // Allow requests with no origin (like mobile apps or curl requests)
+    if (isDev) return callback(null, true); // Allow all origins in development
 
     try {
       const url = new URL(origin);
       const hostname = url.hostname;
       const isExplicitlyAllowed = allowedOrigins.includes(origin);
       const isNetlifyAllowed = process.env.NODE_ENV === 'production' && hostname.endsWith('.netlify.app');
+      const isLocalDev = process.env.NODE_ENV !== 'production' && (hostname === 'localhost' || hostname === '127.0.0.1');
 
-      if (isExplicitlyAllowed || isNetlifyAllowed) {
+      if (isExplicitlyAllowed || isNetlifyAllowed || isLocalDev) {
         return callback(null, true);
       }
     } catch (e) {
@@ -183,16 +201,8 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 app.use('/api', routes);
 
 // Root health check routes for all deployments
-app.get('/health', (req: Request, res: Response) => {
-  res.status(200).json({
-    status: 'ok',
-    message: 'Server is running',
-    timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '1.0.0',
-    environment: process.env.NODE_ENV || 'development'
-  });
-});
-
+// Removed legacy simple /health route to use unified health handler
+// Removed legacy simple /health route to use unified health handler
 // Root route for Vercel deployments
 app.get('/', (req: Request, res: Response) => {
   res.status(200).json({ 
@@ -203,15 +213,48 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
-// Health check endpoint accessible without /api prefix
-app.get('/health', (req: Request, res: Response) => {
-  res.status(200).json({ 
-    status: 'ok', 
-    message: 'Server is running',
-    timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '1.0.0'
+// Removed duplicate simple /health route to avoid shadowing unified health
+// Removed duplicate simple /health route to avoid shadowing unified health
+
+// Unified health check handler (DB + Email) mounted at /health and /api/health
+const healthHandler = async (_req: Request, res: Response) => {
+  const timestamp = new Date().toISOString();
+  const version = process.env.npm_package_version || '1.0.0';
+  const environment = process.env.NODE_ENV || 'development';
+
+  // Database health
+  let dbHealthy = false;
+  let dbError: string | undefined;
+  try {
+    await sequelize.authenticate();
+    dbHealthy = true;
+  } catch (err: any) {
+    dbHealthy = false;
+    dbError = err?.message || 'Database connection failed';
+  }
+
+  // Email health
+  const email = await checkEmailHealth().catch((e: any) => ({ ok: false, error: e?.message || 'Email check failed' }));
+  const emailHealthy = Boolean((email as any)?.ok);
+  const emailError = (email as any)?.error as string | undefined;
+
+  const overallStatus = dbHealthy && emailHealthy ? 'ok' : (dbHealthy || emailHealthy ? 'degraded' : 'unhealthy');
+
+  return res.status(overallStatus === 'ok' ? 200 : 503).json({
+    status: overallStatus,
+    timestamp,
+    version,
+    environment,
+    checks: {
+      database: { ok: dbHealthy, error: dbError },
+      email: { ok: emailHealthy, error: emailError }
+    }
   });
-});
+};
+
+// Mount health routes
+app.get('/health', healthHandler);
+app.get('/api/health', healthHandler);
 
 // 404 handler
 app.use((req: Request, res: Response) => {

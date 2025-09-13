@@ -18,12 +18,15 @@ interface UserAttributes {
   emailVerificationExpires?: Date | null;
   resetPasswordToken?: string | null;
   resetPasswordExpires?: Date | null;
+  failedLoginAttempts?: number;
+  lastFailedLoginAt?: Date | null;
+  lockoutUntil?: Date | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
 // User creation attributes interface (optional fields during creation)
-interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'isAdmin'> {}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'isAdmin' | 'failedLoginAttempts' | 'lastFailedLoginAt' | 'lockoutUntil'> {}
 
 // User model class
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
@@ -41,6 +44,9 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public emailVerificationExpires?: Date | null;
   public resetPasswordToken?: string | null;
   public resetPasswordExpires?: Date | null;
+  public failedLoginAttempts?: number;
+  public lastFailedLoginAt?: Date | null;
+  public lockoutUntil?: Date | null;
   public createdAt!: Date;
   public updatedAt!: Date;
 
@@ -125,6 +131,19 @@ User.init(
       allowNull: true,
     },
     resetPasswordExpires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    failedLoginAttempts: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    lastFailedLoginAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    lockoutUntil: {
       type: DataTypes.DATE,
       allowNull: true,
     },

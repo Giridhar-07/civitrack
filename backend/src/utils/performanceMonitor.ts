@@ -71,8 +71,8 @@ export const performanceMonitor = (req: Request, res: Response, next: NextFuncti
       level = 'warn';
     }
 
-    // Log performance data
-    performanceLogger.log(level, {
+    // Log performance data with an explicit message to avoid 'undefined'
+    performanceLogger.log(level, 'request', {
       url,
       method,
       status,
@@ -105,8 +105,8 @@ export const trackPerformance = async <T>(
       level = 'warn';
     }
     
-    // Log performance data
-    performanceLogger.log(level, {
+    // Log performance data with message
+    performanceLogger.log(level, 'operation', {
       operation: operationName,
       duration,
       success: true
@@ -116,8 +116,8 @@ export const trackPerformance = async <T>(
   } catch (error) {
     const duration = Date.now() - start;
     
-    // Log error with performance data
-    performanceLogger.error({
+    // Log error with performance data and message
+    performanceLogger.log('error', 'operation error', {
       operation: operationName,
       duration,
       success: false,
@@ -135,9 +135,10 @@ export const alertOnPerformanceIssue = (
   threshold: number = THRESHOLDS.CRITICAL
 ) => {
   if (duration > threshold) {
-    performanceLogger.error({
+    performanceLogger.log('error', 'performance threshold exceeded', {
       operation: operationName,
       duration,
+      threshold,
       message: `Performance threshold exceeded: ${operationName} took ${duration}ms (threshold: ${threshold}ms)`
     });
     

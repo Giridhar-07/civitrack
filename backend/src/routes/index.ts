@@ -12,14 +12,6 @@ router.use('/issues', issueRoutes);
 router.use('/status-requests', statusRequestRoutes);
 router.use('/ai', aiRoutes);
 
-// Health check endpoint - accessible both with and without /api prefix
-router.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'ok', 
-    message: 'Server is running',
-    timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '1.0.0'
-  });
-});
+
 
 export default router;

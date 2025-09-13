@@ -30,7 +30,10 @@ export const register = async (req: Request, res: Response): Promise<Response> =
     });
 
     if (existingUser) {
-      return badRequestResponse(res, 'User already exists with this email or username');
+      return badRequestResponse(
+        res,
+        'An account with this email or username already exists. Please use a different one or log in.'
+      );
     }
 
     // Create new user
@@ -86,15 +89,87 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     // Find user by email
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      // Consistent 401 response for invalid credentials
-      return unauthorizedResponse(res, 'Invalid credentials');
+      // Clearer message for unregistered email
+      return unauthorizedResponse(res, 'No account found with that email');
+    }
+
+    const now = new Date();
+
+    // If previously locked but lockout expired, clear lockout state
+    if (user.lockoutUntil && new Date(user.lockoutUntil).getTime() <= now.getTime()) {
+      user.failedLoginAttempts = 0;
+      user.lastFailedLoginAt = null as any;
+      user.lockoutUntil = null as any;
+      user.isLocked = false;
+      await user.save();
+    }
+
+    // If currently locked, block login
+    if (user.lockoutUntil && new Date(user.lockoutUntil).getTime() > now.getTime()) {
+      const msRemaining = new Date(user.lockoutUntil).getTime() - now.getTime();
+      const minutesRemaining = Math.ceil(msRemaining / 60000);
+      return errorResponse(
+        res,
+        `Your account is temporarily locked due to multiple failed login attempts. Please try again in about ${minutesRemaining} minute(s).`,
+        403
+      );
     }
 
     // Check password
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
-      // Consistent 401 response for invalid credentials
-      return unauthorizedResponse(res, 'Invalid credentials');
+      // Increment failed attempts within a rolling window
+      const windowMs = (parseInt(process.env.FAILED_ATTEMPTS_WINDOW_MINUTES || '15', 10)) * 60 * 1000;
+      const lastAt = user.lastFailedLoginAt ? new Date(user.lastFailedLoginAt).getTime() : 0;
+      const withinWindow = lastAt && (now.getTime() - lastAt) <= windowMs;
+
+      const currentAttempts = withinWindow ? (user.failedLoginAttempts || 0) + 1 : 1;
+      user.failedLoginAttempts = currentAttempts;
+      user.lastFailedLoginAt = now;
+
+      const maxAttempts = parseInt(process.env.MAX_FAILED_LOGIN_ATTEMPTS || '5', 10);
+      const lockoutMinutes = parseInt(process.env.LOCKOUT_DURATION_MINUTES || '15', 10);
+
+      if (currentAttempts >= maxAttempts) {
+        user.lockoutUntil = new Date(now.getTime() + lockoutMinutes * 60 * 1000);
+        user.isLocked = true;
+        await user.save();
+        return errorResponse(
+          res,
+          `Too many failed login attempts. Your account has been locked for ${lockoutMinutes} minute(s).`,
+          403
+        );
+      }
+
+      await user.save();
+      return unauthorizedResponse(res, 'Incorrect password');
+    }
+
+    // If password is valid but email not verified, block login with 403
+    if (!user.isEmailVerified) {
+      // Clear any failed attempts on correct password
+      if (user.failedLoginAttempts || user.lockoutUntil || user.isLocked) {
+        user.failedLoginAttempts = 0;
+        user.lastFailedLoginAt = null as any;
+        user.lockoutUntil = null as any;
+        user.isLocked = false;
+        await user.save();
+      }
+
+      return errorResponse(
+        res,
+        'Your email is not verified. Please check your inbox or request a new verification email.',
+        403
+      );
+    }
+
+    // Successful login: clear lockout state if any
+    if (user.failedLoginAttempts || user.lockoutUntil || user.isLocked) {
+      user.failedLoginAttempts = 0;
+      user.lastFailedLoginAt = null as any;
+      user.lockoutUntil = null as any;
+      user.isLocked = false;
+      await user.save();
     }
 
     // Generate JWT token with remember me option
