@@ -32,6 +32,7 @@ router.post('/sync', async (req, res) => {
         email,
         username: email.split('@')[0],
         name: name || email.split('@')[0],
+        password: require('crypto').randomBytes(16).toString('hex'), // Random password for Neon Auth users
         neonAuthId: id,
         neonAuthData: raw_json,
         role: 'user',

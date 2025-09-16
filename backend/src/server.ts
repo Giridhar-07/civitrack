@@ -303,8 +303,15 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 // Create HTTP server
 const server = http.createServer(app);
 
-// Socket.IO initialization disabled to resolve connection issues
-// initializeSocketIO(server);
+// Initialize Redis with fallback to no-cache mode
+import { initRedis } from './services/redisService';
+// Set Redis to disabled for local development
+process.env.DISABLE_REDIS = 'true';
+// Initialize Redis (will use no-cache mode due to DISABLE_REDIS)
+initRedis();
+
+// Initialize Socket.IO with Redis fallback
+initializeSocketIO(server);
 
 // Start server
 const PORT = process.env.PORT || 5000; // Changed port to avoid conflicts

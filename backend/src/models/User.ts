@@ -21,6 +21,8 @@ interface UserAttributes {
   failedLoginAttempts?: number;
   lastFailedLoginAt?: Date | null;
   lockoutUntil?: Date | null;
+  neonAuthId?: string | null;
+  neonAuthData?: any;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -47,6 +49,8 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public failedLoginAttempts?: number;
   public lastFailedLoginAt?: Date | null;
   public lockoutUntil?: Date | null;
+  public neonAuthId?: string | null;
+  public neonAuthData?: any;
   public createdAt!: Date;
   public updatedAt!: Date;
 
@@ -145,6 +149,14 @@ User.init(
     },
     lockoutUntil: {
       type: DataTypes.DATE,
+      allowNull: true,
+    },
+    neonAuthId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    neonAuthData: {
+      type: DataTypes.JSON,
       allowNull: true,
     },
     createdAt: {
