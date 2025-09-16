@@ -146,7 +146,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
     }
 
     // If password is valid but email not verified, block login with 403
-    if (!user.isEmailVerified) {
+    if (user.isEmailVerified === false) {
       // Clear any failed attempts on correct password
       if (user.failedLoginAttempts || user.lockoutUntil || user.isLocked) {
         user.failedLoginAttempts = 0;

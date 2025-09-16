@@ -1,7 +1,8 @@
 import express from 'express';
 import { User } from '../models';
 import sequelize from '../config/database';
-import { authenticateJWT } from '../middleware/auth';
+import { authenticate } from '../utils/auth';
+import { sendVerificationEmail } from '../utils/email';
 
 const router = express.Router();
 
@@ -34,8 +35,16 @@ router.post('/sync', async (req, res) => {
         neonAuthId: id,
         neonAuthData: raw_json,
         role: 'user',
-        isVerified: true, // Neon Auth users are pre-verified
+        isEmailVerified: false, // Require email verification
       });
+      
+      // Send verification email
+      try {
+        await sendVerificationEmail(user);
+      } catch (emailError) {
+        console.error('Failed to send verification email:', emailError);
+        // Continue with registration even if email fails
+      }
     }
     
     return res.status(200).json({ 
@@ -57,7 +66,7 @@ router.post('/sync', async (req, res) => {
 /**
  * Route to get current user's Neon Auth status
  */
-router.get('/status', authenticateJWT, async (req, res) => {
+router.get('/status', authenticate, async (req, res) => {
   try {
     const userId = (req as any).user?.id;
     
