@@ -1,465 +1,3888 @@
-warn: undefined {"duration":2989,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.174Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-Error sending password reset email: Error: getaddrinfo ENOTFOUND smtp.example.com
-    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
-  errno: -3008,
-  code: 'EDNS',
-  syscall: 'getaddrinfo',
-  hostname: 'smtp.example.com',
-  command: 'CONN'
-}
-Password reset request error: Error: Failed to send password reset email
-    at sendPasswordResetEmail (/opt/render/project/src/backend/dist/utils/email.js:127:15)
-    at async requestPasswordReset (/opt/render/project/src/backend/dist/controllers/authController.js:425:9)
-warn: undefined {"duration":3079,"ip":"10.229.98.4","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.198Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2990,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.217Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2997,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.228Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3007,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.240Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2924,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.248Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2965,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.378Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2942,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.389Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2942,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.390Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2941,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.392Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2933,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.416Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2993,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.498Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3030,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.538Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3032,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.550Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3024,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.553Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3048,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.587Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3036,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.590Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3062,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.635Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3124,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.712Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3105,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.714Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3115,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.725Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3129,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.758Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3151,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.797Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3156,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.798Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3159,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.806Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3225,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.873Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3096,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.887Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3183,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.927Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3172,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.964Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3173,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:00.966Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2938,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.035Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2845,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.035Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2843,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.036Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2854,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.049Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2904,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.096Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2936,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.131Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2939,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.135Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2950,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.147Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2950,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.148Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2982,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.180Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2906,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.196Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2906,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.197Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2906,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.298Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2914,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.303Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2812,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.309Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2818,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.320Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2814,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.359Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2982,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.688Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2971,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.689Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3094,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.889Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3137,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.890Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3128,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.891Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3138,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:01.951Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3219,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.049Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3217,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.050Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3099,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.058Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3140,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.112Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3146,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.115Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3193,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.211Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3139,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.214Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3257,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.370Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3232,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.373Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3225,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.374Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3225,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.376Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3148,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.391Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3253,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.530Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3240,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.535Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3238,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.538Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3244,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.557Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3223,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.691Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3224,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.695Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3217,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.696Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2981,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.733Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2937,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.758Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3056,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":304,"timestamp":"2025-09-12T16:59:02.891Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2966,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:02.920Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3061,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.017Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3056,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.018Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3053,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.023Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3096,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.069Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3064,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.084Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3110,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.091Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3153,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.173Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3153,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.185Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3032,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.225Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3038,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.237Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3038,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.238Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2954,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.242Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2956,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.246Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3062,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.263Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3101,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.333Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3074,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.340Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3217,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.509Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3189,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.559Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3144,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.565Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3121,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.570Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3167,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.575Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3150,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.576Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3144,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.606Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3189,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.654Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3075,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.663Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3074,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.663Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3078,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.671Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3131,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.726Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3129,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.727Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3118,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.732Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2994,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.744Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2993,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.744Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3016,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.778Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3045,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.815Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3043,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.824Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2988,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.825Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2989,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.888Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2950,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.894Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3000,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:03.950Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3133,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.089Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3159,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.121Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3095,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.147Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3025,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.148Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3049,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.188Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3020,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.226Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3073,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.293Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3076,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.311Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3074,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.313Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3111,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.351Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3134,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.376Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3165,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.458Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3168,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.464Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3129,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.472Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3128,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.474Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3162,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.514Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3170,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.560Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3214,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.617Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3155,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.635Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3182,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.636Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3189,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.676Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2835,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.727Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2884,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.777Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2903,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.797Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2911,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.807Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2944,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.838Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2965,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.860Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2974,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.871Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3041,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.938Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3059,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.958Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3067,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.965Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3080,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:04.979Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2588,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.134Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2622,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.183Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2630,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.195Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2657,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.228Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2725,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.302Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2724,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.303Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2742,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.322Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2742,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.325Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2857,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.442Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2879,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.471Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2885,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.472Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2899,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.493Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3014,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.640Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3046,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.788Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3043,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.789Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3141,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.890Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3233,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.987Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3102,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.988Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3229,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.990Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3121,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.992Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3111,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.993Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3088,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:05.993Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3111,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.150Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3083,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.155Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3123,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.155Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3036,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.156Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3084,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.163Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3051,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.316Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3022,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.322Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2947,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.327Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2953,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.327Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2960,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.335Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2966,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.375Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2938,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.388Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3004,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.477Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2956,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.479Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2995,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.537Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3026,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.640Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3045,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.665Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3034,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.666Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3014,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.690Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3004,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.700Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3001,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.710Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2932,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.800Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2917,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.802Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2937,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.861Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2917,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.872Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2998,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.954Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2959,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:06.963Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2988,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.003Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3001,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.023Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2995,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.033Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3073,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.115Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3035,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.125Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3034,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.125Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3071,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.162Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3063,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.173Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3062,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.185Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3067,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.194Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3080,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.204Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3087,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.276Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3092,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.287Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3066,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.287Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3117,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.341Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3113,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.342Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2877,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.346Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3066,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.356Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3067,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.376Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2978,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.510Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2985,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.520Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2951,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.549Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3044,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.597Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3123,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.688Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3038,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.689Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3006,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.689Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3004,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.690Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2996,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.691Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2937,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.691Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2760,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.719Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2789,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.757Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2840,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.850Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2838,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.851Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2836,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.852Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2835,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.852Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2838,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:07.860Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2989,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.015Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2993,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.023Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2997,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.028Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2990,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.029Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3087,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.234Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3086,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.238Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3113,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.335Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3096,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.336Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3093,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.337Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3112,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.387Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3104,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.388Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3096,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.389Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3027,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.399Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3055,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.406Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3014,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.500Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3122,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.502Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2981,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.523Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2911,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.557Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2769,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.558Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2586,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.577Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2667,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.659Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2666,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":304,"timestamp":"2025-09-12T16:59:08.660Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2666,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.661Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2668,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.664Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2669,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.665Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2692,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.690Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2631,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.982Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2512,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:08.983Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2593,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.144Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2640,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.145Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2599,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.146Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2646,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.234Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2670,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.262Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2809,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.402Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2840,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.434Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2873,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.468Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2871,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.469Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2811,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.469Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2808,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.472Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2935,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.606Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2942,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.630Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2868,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.630Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2940,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.631Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2871,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.634Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2871,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.635Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2917,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.691Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2963,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.739Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3048,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.908Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3054,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.909Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2936,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.953Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2827,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.958Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2907,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:09.959Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2662,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.004Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2831,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.390Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2967,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.488Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2955,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.489Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2901,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.490Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2900,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.491Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2899,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.492Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2898,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.492Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2905,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.493Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2958,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.553Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3055,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.650Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3053,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.651Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3054,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.652Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2961,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.654Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3058,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.657Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3057,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.659Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2967,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.660Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2969,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.664Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3117,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.812Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3041,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.813Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3034,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.813Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3038,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.814Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2971,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.815Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3015,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.876Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3110,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.974Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3100,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.975Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3095,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.976Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3095,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.977Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3052,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.991Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3048,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.997Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3044,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:10.997Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3052,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.006Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3080,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.037Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3168,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.135Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3171,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.136Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3153,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.137Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3033,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.137Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3029,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.138Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3054,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.159Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3049,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.166Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3048,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.167Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2984,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.178Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3000,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.199Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3093,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.296Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3092,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.297Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3089,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.298Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3082,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.299Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3071,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.300Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3078,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.326Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3007,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.335Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3002,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.336Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3010,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.350Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3006,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.360Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":3067,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.456Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2895,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.458Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2896,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.460Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2851,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.461Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2893,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.461Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2882,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.493Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2891,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.504Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2891,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.505Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2917,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.521Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2904,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.522Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2984,"ip":"10.229.94.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.617Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2982,"ip":"10.229.196.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.619Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2946,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.621Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2943,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.622Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2900,"ip":"10.229.93.129","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.623Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2872,"ip":"10.229.16.65","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.660Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2880,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.673Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2675,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.674Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2567,"ip":"10.229.98.4","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.683Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2669,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.693Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2657,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.777Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2660,"ip":"10.229.92.67","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.780Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2591,"ip":"10.229.92.193","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.783Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-warn: undefined {"duration":2660,"ip":"10.229.123.195","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-12T16:59:11.783Z","url":"/api/issues/nearby?latitude=40.71278477995827&longitude=-74.00596618652345&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-
-info: undefined {"duration":148,"ip":"10.229.92.67","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-12T17:21:14.440Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-Error sending verification email: Error: getaddrinfo ENOTFOUND smtp.example.com
-    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
-  errno: -3008,
-  code: 'EDNS',
-  syscall: 'getaddrinfo',
-  hostname: 'smtp.example.com',
-  command: 'CONN'
-}
-Failed to send verification email: Error: Failed to send verification email
-    at sendVerificationEmail (/opt/render/project/src/backend/dist/utils/email.js:85:15)
-    at async register (/opt/render/project/src/backend/dist/controllers/authController.js:43:13)
-warn: undefined {"duration":2049,"ip":"10.229.92.67","method":"POST","route":"/register","service":"performance-monitor","status":201,"timestamp":"2025-09-12T17:21:35.328Z","url":"/api/auth/register","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"21s"}]
+Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [503 Service Unavailable] The model is overloaded. Please try again later.
     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:149:32)
     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-  status: 429,
-  statusText: 'Too Many Requests',
-  errorDetails: [
-    {
-      '@type': 'type.googleapis.com/google.rpc.QuotaFailure',
-      violations: [Array]
-    },
-    { '@type': 'type.googleapis.com/google.rpc.Help', links: [Array] },
-    {
-      '@type': 'type.googleapis.com/google.rpc.RetryInfo',
-      retryDelay: '21s'
-    }
-  ]
+  status: 503,
+  statusText: 'Service Unavailable',
+  errorDetails: undefined
 }
-info: undefined {"duration":114,"ip":"10.229.92.67","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-12T17:21:38.947Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"model":"gemini-1.5-flash","location":"global"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"49s"}]
+info: request {"duration":193,"ip":"10.229.92.67","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-09-13T11:36:52.735Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [503 Service Unavailable] The model is overloaded. Please try again later.
     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:149:32)
     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-  status: 429,
-  statusText: 'Too Many Requests',
-  errorDetails: [
-    {
-      '@type': 'type.googleapis.com/google.rpc.QuotaFailure',
-      violations: [Array]
-    },
-    { '@type': 'type.googleapis.com/google.rpc.Help', links: [Array] },
-    {
-      '@type': 'type.googleapis.com/google.rpc.RetryInfo',
-      retryDelay: '49s'
-    }
-  ]
+  status: 503,
+  statusText: 'Service Unavailable',
+  errorDetails: undefined
 }
-info: undefined {"duration":120,"ip":"10.229.16.65","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-12T17:22:10.332Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. [{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-1.5-flash"},"quotaValue":"50"}]},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"19s"}]
+info: request {"duration":177,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:37:22.748Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":438,"ip":"10.229.92.193","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-09-13T11:38:27.418Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":364,"ip":"10.229.92.67","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:41:22.838Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":386,"ip":"10.229.92.67","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:41:53.031Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":374,"ip":"10.229.92.193","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:42:24.554Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+warn: request {"duration":1976,"ip":"10.229.92.193","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:43:28.551Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":385,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:51:40.664Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":586,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:51:46.125Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+warn: request {"duration":1355,"ip":"10.229.92.193","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:51:56.475Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.98.4","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:51:57.636Z","url":"/api/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.92.67","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:51:58.248Z","url":"/api/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.92.193","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:51:58.876Z","url":"/api/status","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":168,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:51:59.671Z","url":"/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":167,"ip":"10.229.92.193","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:52:00.552Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":6,"ip":"10.229.92.193","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-13T11:52:01.175Z","url":"/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":717,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:02.513Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":715,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:03.865Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":715,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:05.246Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":717,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:06.701Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":713,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:08.565Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:10.235Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:12.053Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":718,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:14.370Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:16.483Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:18.798Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":713,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:21.711Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+warn: request {"duration":7807,"ip":"10.229.92.193","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:52:22.831Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":167,"ip":"10.229.98.4","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:52:30.834Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":0,"ip":"10.229.92.193","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:52:31.466Z","url":"/api/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.92.193","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:52:32.096Z","url":"/api/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.92.67","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:52:33.127Z","url":"/api/status","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":168,"ip":"10.229.92.67","method":"GET","route":"/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:52:34.462Z","url":"/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":168,"ip":"10.229.98.4","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:52:35.504Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.92.67","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-13T11:52:36.629Z","url":"/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":713,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:38.199Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":716,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:40.168Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":713,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:42.038Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":715,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:44.636Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":366,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:52:46.170Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":713,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:47.467Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:50.941Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:53.142Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:55.157Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":718,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:52:58.465Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":723,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:01.173Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'admin@example.com';`,
+  parameters: {}
+}
+info: request {"duration":714,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:04.472Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":583,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:53:16.044Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":338,"ip":"10.229.92.193","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:53:45.360Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+warn: request {"duration":1328,"ip":"10.229.98.4","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:53:45.859Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.98.4","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:53:46.461Z","url":"/api/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.98.4","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:53:47.117Z","url":"/api/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":1,"ip":"10.229.92.193","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-13T11:53:47.819Z","url":"/api/status","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":164,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:53:48.604Z","url":"/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":164,"ip":"10.229.92.193","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-13T11:53:49.487Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":0,"ip":"10.229.92.67","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-13T11:53:50.114Z","url":"/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":704,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:51.428Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":704,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:52.767Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":703,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:54.117Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":703,"ip":"10.229.92.193","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:55.611Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":702,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:57.442Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":703,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:53:59.145Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":712,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:54:00.959Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":703,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:54:03.551Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+info: request {"duration":703,"ip":"10.229.98.4","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:54:06.152Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":704,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:54:09.526Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Login error: Error
+    at Query.run (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/postgres/query.js:50:25)
+    at /opt/render/project/src/backend/node_modules/sequelize/lib/sequelize.js:315:28
+    at async PostgresQueryInterface.select (/opt/render/project/src/backend/node_modules/sequelize/lib/dialects/abstract/query-interface.js:407:12)
+    at async User.findAll (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1140:21)
+    at async User.findOne (/opt/render/project/src/backend/node_modules/sequelize/lib/model.js:1240:12)
+    at async login (/opt/render/project/src/backend/dist/controllers/authController.js:79:22) {
+  name: 'SequelizeDatabaseError',
+  parent: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  original: error: column "failedLoginAttempts" does not exist
+      at Parser.parseErrorMessage (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:285:98)
+      at Parser.handlePacket (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:122:29)
+      at Parser.parse (/opt/render/project/src/backend/node_modules/pg-protocol/dist/parser.js:35:38)
+      at TLSSocket.<anonymous> (/opt/render/project/src/backend/node_modules/pg-protocol/dist/index.js:11:42)
+      at TLSSocket.emit (node:events:518:28)
+      at addChunk (node:internal/streams/readable:561:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+      at Readable.push (node:internal/streams/readable:392:5)
+      at TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23) {
+    length: 120,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '209',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'parse_relation.c',
+    line: '3716',
+    routine: 'errorMissingColumn',
+    sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+    parameters: undefined
+  },
+  sql: `SELECT "id", "username", "name", "email", "password", "role", "profileImage", "isAdmin", "isEmailVerified", "emailVerificationToken", "emailVerificationExpires", "resetPasswordToken", "resetPasswordExpires", "failedLoginAttempts", "lastFailedLoginAt", "lockoutUntil", "createdAt", "updatedAt" FROM "users" AS "User" WHERE "User"."email" = 'test1@gmail.com';`,
+  parameters: {}
+}
+info: request {"duration":703,"ip":"10.229.92.67","method":"POST","route":"/login","service":"performance-monitor","status":500,"timestamp":"2025-09-13T11:54:12.261Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [503 Service Unavailable] The model is overloaded. Please try again later.
     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:149:32)
     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-  status: 429,
-  statusText: 'Too Many Requests',
-  errorDetails: [
-    {
-      '@type': 'type.googleapis.com/google.rpc.QuotaFailure',
-      violations: [Array]
-    },
-    { '@type': 'type.googleapis.com/google.rpc.Help', links: [Array] },
-    {
-      '@type': 'type.googleapis.com/google.rpc.RetryInfo',
-      retryDelay: '19s'
-    }
-  ]
+  status: 503,
+  statusText: 'Service Unavailable',
+  errorDetails: undefined
 }
-info: undefined {"duration":146,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-12T17:22:40.534Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-
-Error sending verification email: Error: getaddrinfo ENOTFOUND smtp.example.com
-    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26) {
-  errno: -3008,
-  code: 'EDNS',
-  syscall: 'getaddrinfo',
-  hostname: 'smtp.example.com',
-  command: 'CONN'
-}
-Resend verification email error: Error: Failed to send verification email
-    at sendVerificationEmail (/opt/render/project/src/backend/dist/utils/email.js:85:15)
-    at async resendVerificationEmail (/opt/render/project/src/backend/dist/controllers/authController.js:478:9)
-warn: undefined {"duration":1370,"ip":"10.229.92.193","method":"POST","route":"/resend-verification","service":"performance-monitor","status":200,"timestamp":"2025-09-12T17:24:48.464Z","url":"/api/auth/resend-verification","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":175,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-09-13T11:54:15.630Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":338,"ip":"10.229.92.193","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-09-13T11:54:45.866Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":367,"ip":"10.229.98.4","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:55:27.055Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+info: request {"duration":385,"ip":"10.229.92.193","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-13T11:56:27.415Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+Need better ways to 
