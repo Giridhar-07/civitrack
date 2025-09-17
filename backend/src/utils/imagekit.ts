@@ -1,23 +1,41 @@
 import ImageKit from 'imagekit';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
-// Load environment variables
-dotenv.config();
+// Try to load environment variables from .env file
+// This is primarily for local development
+try {
+  // Check if .env file exists before loading
+  const envPath = path.resolve(process.cwd(), '.env');
+  if (fs.existsSync(envPath)) {
+    console.log('[INFO] Loading environment variables from .env file');
+    dotenv.config();
+  } else {
+    console.log('[INFO] No .env file found, using environment variables from system');
+  }
+} catch (error: any) {
+  console.log('[INFO] Error loading .env file, using environment variables from system:', error.message || 'Unknown error');
+}
 
-// Initialize ImageKit with environment variables
-// Add console logs to debug environment variables
-console.log('ImageKit URL Endpoint:', process.env.IMAGEKIT_URL_ENDPOINT);
-console.log('ImageKit Public Key exists:', !!process.env.IMAGEKIT_PUBLIC_KEY);
-console.log('ImageKit Private Key exists:', !!process.env.IMAGEKIT_PRIVATE_KEY);
+// Add more detailed debug logs
+console.log('[DEBUG] Current working directory:', process.cwd());
+console.log('[DEBUG] NODE_ENV:', process.env.NODE_ENV);
+console.log('[DEBUG] ImageKit URL Endpoint:', process.env.IMAGEKIT_URL_ENDPOINT);
+console.log('[DEBUG] ImageKit Public Key exists:', !!process.env.IMAGEKIT_PUBLIC_KEY);
+console.log('[DEBUG] ImageKit Private Key exists:', !!process.env.IMAGEKIT_PRIVATE_KEY);
 
 // Ensure we have required values or throw meaningful errors
 if (!process.env.IMAGEKIT_PUBLIC_KEY) {
+  console.error('[ERROR] IMAGEKIT_PUBLIC_KEY is missing in environment variables');
   throw new Error('IMAGEKIT_PUBLIC_KEY is missing in environment variables');
 }
 if (!process.env.IMAGEKIT_PRIVATE_KEY) {
+  console.error('[ERROR] IMAGEKIT_PRIVATE_KEY is missing in environment variables');
   throw new Error('IMAGEKIT_PRIVATE_KEY is missing in environment variables');
 }
 if (!process.env.IMAGEKIT_URL_ENDPOINT) {
+  console.error('[ERROR] IMAGEKIT_URL_ENDPOINT is missing in environment variables');
   throw new Error('IMAGEKIT_URL_ENDPOINT is missing in environment variables');
 }
 

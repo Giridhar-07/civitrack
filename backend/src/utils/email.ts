@@ -4,30 +4,34 @@ import crypto from 'crypto';
 import { Op } from 'sequelize';
 
 // Email configuration
-const EMAIL_HOST = process.env.EMAIL_HOST || 'smtp.example.com';
+const EMAIL_HOST = process.env.EMAIL_HOST;
 const EMAIL_PORT = parseInt(process.env.EMAIL_PORT || '587', 10);
-const EMAIL_USER = process.env.EMAIL_USER || 'user@example.com';
-const EMAIL_PASS = process.env.EMAIL_PASS || 'password';
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
 const EMAIL_FROM = process.env.EMAIL_FROM || 'CiviTrack <noreply@civitrack.com>';
 const APP_URL = process.env.FRONTEND_URL || 'https://civitrack-dev.netlify.app';
 
 // Determine if email is properly configured
-const isPlaceholderValue = (v: string) => (
-  v === 'smtp.example.com' || v === 'user@example.com' || v === 'password' || v.trim() === ''
+const isPlaceholderValue = (v?: string) => (
+  !v || v === 'smtp.example.com' || v === 'user@example.com' || v === 'password' || v.trim() === ''
 );
-// Force email configuration to be enabled regardless of placeholder values
-const EMAIL_CONFIGURED = true;
+
+const EMAIL_CONFIGURED = (
+  !isPlaceholderValue(EMAIL_HOST) &&
+  !isPlaceholderValue(EMAIL_USER) &&
+  !isPlaceholderValue(EMAIL_PASS)
+);
 
 // Create nodemailer transporter (log-only mode when not configured)
 let transporter: Transporter;
 if (EMAIL_CONFIGURED) {
   transporter = nodemailer.createTransport({
-    host: EMAIL_HOST,
+    host: EMAIL_HOST!,
     port: EMAIL_PORT,
     secure: EMAIL_PORT === 465, // true for 465, false for other ports
     auth: {
-      user: EMAIL_USER,
-      pass: EMAIL_PASS,
+      user: EMAIL_USER!,
+      pass: EMAIL_PASS!,
     },
   });
 } else {
@@ -64,6 +68,7 @@ export const generateVerificationToken = async (user: User): Promise<string> => 
 // Send verification email
 export const sendVerificationEmail = async (user: User): Promise<void> => {
   try {
+    console.log(`Attempting to send verification email to: ${user.email}`);
     // Generate verification token if missing or expired
     const needsNewToken = !user.emailVerificationToken || !user.emailVerificationExpires || user.emailVerificationExpires <= new Date();
     const token = needsNewToken ? await generateVerificationToken(user) : (user.emailVerificationToken as string);
@@ -97,6 +102,8 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
     const info = await transporter.sendMail(mailOptions);
     if (!EMAIL_CONFIGURED) {
       console.log('Verification email generated (log-only mode):', info);
+    } else {
+      console.log('Verification email sent successfully:', info.response);
     }
   } catch (error) {
     console.error('Error sending verification email:', error);
@@ -110,6 +117,7 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
 // Send password reset email
 export const sendPasswordResetEmail = async (user: User): Promise<void> => {
   try {
+    console.log(`Attempting to send password reset email to: ${user.email}`);
     // Generate password reset token
     const token = crypto.randomBytes(20).toString('hex');
     const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
@@ -147,6 +155,8 @@ export const sendPasswordResetEmail = async (user: User): Promise<void> => {
     const info = await transporter.sendMail(mailOptions);
     if (!EMAIL_CONFIGURED) {
       console.log('Password reset email generated (log-only mode):', info);
+    } else {
+      console.log('Password reset email sent successfully:', info.response);
     }
   } catch (error) {
     console.error('Error sending password reset email:', error);
@@ -220,7 +230,7 @@ export const checkEmailHealth = async (): Promise<EmailHealth> => {
       return {
         smtpConfigured: true,
         smtpReachable: true,
-        host: EMAIL_HOST,
+        host: EMAIL_HOST!,
         port: EMAIL_PORT,
         mode: 'smtp'
       };
@@ -229,7 +239,7 @@ export const checkEmailHealth = async (): Promise<EmailHealth> => {
       return {
         smtpConfigured: false,
         smtpReachable: true,
-        host: EMAIL_HOST,
+        host: EMAIL_HOST || 'unknown', // Provide a fallback for log-only mode
         port: EMAIL_PORT,
         mode: 'log-only'
       };
@@ -238,7 +248,7 @@ export const checkEmailHealth = async (): Promise<EmailHealth> => {
     return {
       smtpConfigured: EMAIL_CONFIGURED,
       smtpReachable: false,
-      host: EMAIL_HOST,
+      host: EMAIL_HOST || 'unknown', // Provide a fallback for log-only mode
       port: EMAIL_PORT,
       mode: EMAIL_CONFIGURED ? 'smtp' : 'log-only',
       error: err?.message || String(err)
