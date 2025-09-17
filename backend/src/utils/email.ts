@@ -15,7 +15,8 @@ const APP_URL = process.env.FRONTEND_URL || 'https://civitrack-dev.netlify.app';
 const isPlaceholderValue = (v: string) => (
   v === 'smtp.example.com' || v === 'user@example.com' || v === 'password' || v.trim() === ''
 );
-const EMAIL_CONFIGURED = !isPlaceholderValue(EMAIL_HOST) && !isPlaceholderValue(EMAIL_USER) && !isPlaceholderValue(EMAIL_PASS);
+// Force email configuration to be enabled regardless of placeholder values
+const EMAIL_CONFIGURED = true;
 
 // Create nodemailer transporter (log-only mode when not configured)
 let transporter: Transporter;

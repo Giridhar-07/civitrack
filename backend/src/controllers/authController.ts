@@ -229,6 +229,9 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<Respo
   }
 };
 
+import path from 'path';
+import fs from 'fs';
+
 // Upload profile image
 export const uploadProfileImage = async (req: Request, res: Response): Promise<Response> => {
   try {
@@ -243,15 +246,38 @@ export const uploadProfileImage = async (req: Request, res: Response): Promise<R
       return unauthorizedResponse(res, 'User not found');
     }
     
-    // Get the relative file URL and build an absolute URL with current host
-    const relativePath = getFileUrl(req.file.filename);
-    const origin = `${req.protocol}://${req.get('host')}`;
-    const profileImage = `${origin}${relativePath}`;
-    
-    // Update user with profile image URL
-    await user.update({ profileImage });
-    
-    return successResponse(res, { profileImage }, 'Profile image updated successfully');
+    // Check if ImageKit is configured
+    if (process.env.IMAGEKIT_URL_ENDPOINT && process.env.IMAGEKIT_PUBLIC_KEY && process.env.IMAGEKIT_PRIVATE_KEY) {
+      // Import the ImageKit utilities
+      const { uploadImage } = await import('../utils/imagekit');
+      
+      // Read file buffer
+      const fileBuffer = req.file.buffer;
+      const fileName = `${userId}_profile_${Date.now()}${path.extname(req.file.originalname)}`;
+      
+      // Upload to ImageKit
+      const uploadResponse = await uploadImage(fileBuffer, fileName);
+      
+      // Update user with ImageKit URL
+      const profileImage = uploadResponse.url;
+      await user.update({ 
+        profileImage,
+        profileImageFileId: uploadResponse.fileId // Store fileId for future deletion
+      });
+      
+      return successResponse(res, { profileImage }, 'Profile image uploaded to ImageKit successfully');
+    } else {
+      // Fallback to local storage if ImageKit is not configured
+      // Get the relative file URL and build an absolute URL with current host
+      const relativePath = getFileUrl(req.file.filename);
+      const origin = `${req.protocol}://${req.get('host')}`;
+      const profileImage = `${origin}${relativePath}`;
+      
+      // Update user with profile image URL
+      await user.update({ profileImage });
+      
+      return successResponse(res, { profileImage }, 'Profile image updated successfully');
+    }
   } catch (error) {
     console.error('Profile image upload error:', error);
     return errorResponse(res, 'Error uploading profile image');

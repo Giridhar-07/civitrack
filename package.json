@@ -13,6 +13,7 @@
     "@types/nodemailer": "^7.0.1",
     "axios": "^1.11.0",
     "dotenv": "^17.2.2",
+    "imagekit": "^6.0.0",
     "nodemailer": "^7.0.6"
   },
   "devDependencies": {

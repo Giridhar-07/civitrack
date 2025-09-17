@@ -44,6 +44,8 @@ import { Issue, User } from '../types';
 import authService from '../services/authService';
 import issueService from '../services/issueService';
 import api from '../services/api';
+import { formatDate } from '../utils/dateUtils';
+import imagekitService from '../services/imagekitService';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -259,8 +261,13 @@ const ProfilePage: React.FC = () => {
     setUploadingImage(true);
     
     try {
+      // Use ImageKit service for image upload
+      const uploadResponse = await imagekitService.uploadImage(file);
+      
+      // Update profile with the new image URL from ImageKit
       const formData = new FormData();
       formData.append('image', file);
+      formData.append('fileId', uploadResponse.fileId);
       
       const response = await api.post<{ profileImage: string }>('/auth/profile/image', formData, {
         headers: {

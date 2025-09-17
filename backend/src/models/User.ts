@@ -11,6 +11,7 @@ interface UserAttributes {
   password: string;
   role: string;
   profileImage?: string;
+  profileImageFileId?: string;
   isAdmin?: boolean;
   isLocked?: boolean;
   isEmailVerified?: boolean;
@@ -109,6 +110,10 @@ User.init(
       },
     },
     profileImage: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    profileImageFileId: {
       type: DataTypes.STRING,
       allowNull: true,
     },
