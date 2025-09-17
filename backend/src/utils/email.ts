@@ -11,6 +11,13 @@ const EMAIL_PASS = process.env.EMAIL_PASS;
 const EMAIL_FROM = process.env.EMAIL_FROM || 'CiviTrack <noreply@civitrack.com>';
 const APP_URL = process.env.FRONTEND_URL || 'https://civitrack-dev.netlify.app';
 
+console.log('Email Config Status:');
+console.log(`  EMAIL_HOST: ${EMAIL_HOST}`);
+console.log(`  EMAIL_PORT: ${EMAIL_PORT}`);
+console.log(`  EMAIL_USER: ${EMAIL_USER}`);
+console.log(`  EMAIL_FROM: ${EMAIL_FROM}`);
+console.log(`  APP_URL: ${APP_URL}`);
+
 // Determine if email is properly configured
 const isPlaceholderValue = (v?: string) => (
   !v || v === 'smtp.example.com' || v === 'user@example.com' || v === 'password' || v.trim() === ''

@@ -1,22 +1,10 @@
 import ImageKit from 'imagekit';
-import dotenv from 'dotenv';
-import fs from 'fs';
-import path from 'path';
+// No dotenv import needed here, rely on main app's dotenv config
+// import dotenv from 'dotenv';
+// import fs from 'fs';
+// import path from 'path';
 
-// Try to load environment variables from .env file
-// This is primarily for local development
-try {
-  // Check if .env file exists before loading
-  const envPath = path.resolve(process.cwd(), '.env');
-  if (fs.existsSync(envPath)) {
-    console.log('[INFO] Loading environment variables from .env file');
-    dotenv.config();
-  } else {
-    console.log('[INFO] No .env file found, using environment variables from system');
-  }
-} catch (error: any) {
-  console.log('[INFO] Error loading .env file, using environment variables from system:', error.message || 'Unknown error');
-}
+// Removed dotenv loading logic, rely on main app's environment variables
 
 // Add more detailed debug logs
 console.log('[DEBUG] Current working directory:', process.cwd());

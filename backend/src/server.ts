@@ -16,7 +16,6 @@ import { initializeSocketIO } from './services/socketService';
 import { checkEmailHealth } from './utils/email';
 
 // Load environment variables
-dotenv.config();
 
 // Create Express app
 const app = express();
