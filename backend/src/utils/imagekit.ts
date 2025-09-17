@@ -5,10 +5,26 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Initialize ImageKit with environment variables
+// Add console logs to debug environment variables
+console.log('ImageKit URL Endpoint:', process.env.IMAGEKIT_URL_ENDPOINT);
+console.log('ImageKit Public Key exists:', !!process.env.IMAGEKIT_PUBLIC_KEY);
+console.log('ImageKit Private Key exists:', !!process.env.IMAGEKIT_PRIVATE_KEY);
+
+// Ensure we have required values or throw meaningful errors
+if (!process.env.IMAGEKIT_PUBLIC_KEY) {
+  throw new Error('IMAGEKIT_PUBLIC_KEY is missing in environment variables');
+}
+if (!process.env.IMAGEKIT_PRIVATE_KEY) {
+  throw new Error('IMAGEKIT_PRIVATE_KEY is missing in environment variables');
+}
+if (!process.env.IMAGEKIT_URL_ENDPOINT) {
+  throw new Error('IMAGEKIT_URL_ENDPOINT is missing in environment variables');
+}
+
 const imagekit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT || ''
+  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
 });
 
 /**
