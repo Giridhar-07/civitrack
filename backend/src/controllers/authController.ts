@@ -7,6 +7,7 @@ import { generateToken } from '../utils/auth';
 import { successResponse, errorResponse, badRequestResponse, unauthorizedResponse } from '../utils/response';
 import { getFileUrl } from '../utils/upload';
 import { sendVerificationEmail, verifyEmailToken, sendPasswordResetEmail, verifyResetToken } from '../utils/email';
+import { isImageKitConfigured, uploadImage, getFileDetails } from '../utils/imagekit';
 
 // Register a new user
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -251,21 +252,33 @@ export const uploadProfileImage = async (req: Request, res: Response): Promise<R
       // Import the ImageKit utilities
       const { uploadImage } = await import('../utils/imagekit');
       
-      // Read file buffer
-      const fileBuffer = req.file.buffer;
-      const fileName = `${userId}_profile_${Date.now()}${path.extname(req.file.originalname)}`;
-      
-      // Upload to ImageKit
-      const uploadResponse = await uploadImage(fileBuffer, fileName);
-      
-      // Update user with ImageKit URL
-      const profileImage = uploadResponse.url;
-      await user.update({ 
-        profileImage,
-        profileImageFileId: uploadResponse.fileId // Store fileId for future deletion
-      });
-      
-      return successResponse(res, { profileImage }, 'Profile image uploaded to ImageKit successfully');
+      // Read file buffer from disk (multer.diskStorage saves files to disk)
+      const localFilePath = (req.file as any).path as string;
+      try {
+        const fileBuffer = await fs.promises.readFile(localFilePath);
+        const fileName = `${userId}_profile_${Date.now()}${path.extname(req.file.originalname)}`;
+        
+        // Upload to ImageKit
+        const uploadResponse = await uploadImage(fileBuffer, fileName);
+        
+        // Clean up local temp file after successful upload
+        await fs.promises.unlink(localFilePath).catch(() => {});
+        
+        // Update user with ImageKit URL and fileId
+        const profileImage = uploadResponse.url;
+        await user.update({ 
+          profileImage,
+          profileImageFileId: uploadResponse.fileId // Store fileId for future deletion
+        });
+        
+        return successResponse(res, { profileImage }, 'Profile image uploaded to ImageKit successfully');
+      } catch (ikErr) {
+        // Attempt to remove local file if upload failed
+        if (localFilePath) {
+          await fs.promises.unlink(localFilePath).catch(() => {});
+        }
+        throw ikErr;
+      }
     } else {
       // Fallback to local storage if ImageKit is not configured
       // Get the relative file URL and build an absolute URL with current host

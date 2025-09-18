@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAuthenticationParameters } from '../utils/imagekit';
+import { getAuthenticationParameters, isImageKitConfigured } from '../utils/imagekit';
 // Define success response interface
 interface SuccessResponse {
   success: boolean;
@@ -22,6 +22,12 @@ const router = express.Router();
 // Get ImageKit authentication parameters for frontend
 router.get('/auth', async (req, res) => {
   try {
+    if (!isImageKitConfigured()) {
+      return res.status(503).json({
+        success: false,
+        message: 'ImageKit is not configured on the server. Please try again later or contact support.'
+      });
+    }
     const authParams = getAuthenticationParameters();
     return successResponse(res, authParams, 'ImageKit authentication parameters retrieved successfully');
   } catch (error) {

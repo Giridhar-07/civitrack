@@ -1,37 +1,36 @@
 import ImageKit from 'imagekit';
-// No dotenv import needed here, rely on main app's dotenv config
-// import dotenv from 'dotenv';
-// import fs from 'fs';
-// import path from 'path';
 
-// Removed dotenv loading logic, rely on main app's environment variables
+// Lazy singleton instance; do not create at module load time to avoid crashes when env is missing
+let imagekitInstance: ImageKit | null = null;
 
-// Add more detailed debug logs
-console.log('[DEBUG] Current working directory:', process.cwd());
-console.log('[DEBUG] NODE_ENV:', process.env.NODE_ENV);
-console.log('[DEBUG] ImageKit URL Endpoint:', process.env.IMAGEKIT_URL_ENDPOINT);
-console.log('[DEBUG] ImageKit Public Key exists:', !!process.env.IMAGEKIT_PUBLIC_KEY);
-console.log('[DEBUG] ImageKit Private Key exists:', !!process.env.IMAGEKIT_PRIVATE_KEY);
+/**
+ * Check whether ImageKit environment variables are configured.
+ */
+export const isImageKitConfigured = (): boolean => {
+  return Boolean(
+    process.env.IMAGEKIT_PUBLIC_KEY &&
+    process.env.IMAGEKIT_PRIVATE_KEY &&
+    process.env.IMAGEKIT_URL_ENDPOINT
+  );
+};
 
-// Ensure we have required values or throw meaningful errors
-if (!process.env.IMAGEKIT_PUBLIC_KEY) {
-  console.error('[ERROR] IMAGEKIT_PUBLIC_KEY is missing in environment variables');
-  throw new Error('IMAGEKIT_PUBLIC_KEY is missing in environment variables');
-}
-if (!process.env.IMAGEKIT_PRIVATE_KEY) {
-  console.error('[ERROR] IMAGEKIT_PRIVATE_KEY is missing in environment variables');
-  throw new Error('IMAGEKIT_PRIVATE_KEY is missing in environment variables');
-}
-if (!process.env.IMAGEKIT_URL_ENDPOINT) {
-  console.error('[ERROR] IMAGEKIT_URL_ENDPOINT is missing in environment variables');
-  throw new Error('IMAGEKIT_URL_ENDPOINT is missing in environment variables');
-}
-
-const imagekit = new ImageKit({
-  publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
-  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
-  urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT
-});
+/**
+ * Get (and lazily initialize) the ImageKit client.
+ * Throws a descriptive error if ImageKit is not configured.
+ */
+const getImageKit = (): ImageKit => {
+  if (!isImageKitConfigured()) {
+    throw new Error('ImageKit is not configured');
+  }
+  if (!imagekitInstance) {
+    imagekitInstance = new ImageKit({
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
+      urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT as string,
+    });
+  }
+  return imagekitInstance;
+};
 
 /**
  * Upload an image to ImageKit
@@ -46,13 +45,13 @@ export const uploadImage = async (
   folder: string = 'profile-images'
 ): Promise<any> => {
   try {
+    const imagekit = getImageKit();
     const response = await imagekit.upload({
       file,
       fileName,
       folder,
-      useUniqueFileName: true
+      useUniqueFileName: true,
     });
-    
     return response;
   } catch (error) {
     console.error('ImageKit upload error:', error);
@@ -67,6 +66,7 @@ export const uploadImage = async (
  */
 export const deleteImage = async (fileId: string): Promise<any> => {
   try {
+    const imagekit = getImageKit();
     const response = await imagekit.deleteFile(fileId);
     return response;
   } catch (error) {
@@ -76,11 +76,26 @@ export const deleteImage = async (fileId: string): Promise<any> => {
 };
 
 /**
+ * Get file details from ImageKit by fileId
+ * @param fileId The ID of the file
+ * @returns File details including URL
+ */
+export const getFileDetails = async (fileId: string): Promise<any> => {
+  try {
+    const imagekit = getImageKit();
+    const details = await imagekit.getFileDetails(fileId);
+    return details;
+  } catch (error) {
+    console.error('ImageKit getFileDetails error:', error);
+    throw new Error('Failed to get file details from ImageKit');
+  }
+};
+
+/**
  * Generate authentication parameters for client-side uploads
  * @returns Authentication parameters for ImageKit
  */
 export const getAuthenticationParameters = (): any => {
+  const imagekit = getImageKit();
   return imagekit.getAuthenticationParameters();
 };
-
-export default imagekit;
