@@ -10,6 +10,8 @@ export interface ApiErrorResponse {
   errorCode?: string;
   fieldErrors?: Record<string, string[]>;
   isNetworkError?: boolean;
+  // New: explicit flag to indicate unverified email case (403)
+  isUnverifiedEmail?: boolean;
 }
 
 /**
@@ -32,21 +34,33 @@ export const extractErrorMessage = (error: unknown): ApiErrorResponse => {
   if (isAxiosError(error)) {
     // Get response data if available
     const responseData = error.response?.data;
-    
+    const status = error.response?.status;
+
     // If response has data with error information
     if (responseData) {
       // Handle different error response formats
       if (typeof responseData === 'string') {
-        return { message: responseData, statusCode: error.response?.status };
+        const msg = responseData;
+        const isUnverified = status === 403 && typeof msg === 'string' && (msg.toLowerCase().includes('not verified') || msg.toLowerCase().includes('verify'));
+        return { 
+          message: msg, 
+          statusCode: status, 
+          ...(isUnverified ? { isUnverifiedEmail: true, errorCode: 'EMAIL_NOT_VERIFIED' } : {})
+        };
       }
       
       // Handle structured error responses
       if ((responseData as any)?.message || (responseData as any)?.error) {
+        const rawMessage = (responseData as any).message || (responseData as any).error;
+        const msg = typeof rawMessage === 'string' ? rawMessage : 'An error occurred.';
+        const code = (responseData as any).code || (responseData as any).errorCode;
+        const isUnverified = status === 403 && msg && (msg.toLowerCase().includes('not verified') || msg.toLowerCase().includes('verify'));
         return {
-          message: (responseData as any).message || (responseData as any).error,
-          statusCode: error.response?.status,
-          errorCode: (responseData as any).code || (responseData as any).errorCode,
-          fieldErrors: (responseData as any).fieldErrors || (responseData as any).errors
+          message: msg,
+          statusCode: status,
+          errorCode: isUnverified ? 'EMAIL_NOT_VERIFIED' : code,
+          fieldErrors: (responseData as any).fieldErrors || (responseData as any).errors,
+          ...(isUnverified ? { isUnverifiedEmail: true } : {})
         };
       }
     }
@@ -99,8 +113,7 @@ export const extractErrorMessage = (error: unknown): ApiErrorResponse => {
       };
     }
 
-    // Handle specific HTTP status codes
-    const status = error.response.status;
+    // Handle specific HTTP status codes (fallback)
     if (status === 401) {
       // Check if this is a login request
       const isLoginRequest = error.config?.url?.includes('/auth/login');
@@ -111,7 +124,13 @@ export const extractErrorMessage = (error: unknown): ApiErrorResponse => {
       }
     }
     if (status === 403) {
-      return { message: 'You do not have permission to perform this action.', statusCode: status };
+      const msg = responseData && typeof (responseData as any).message === 'string' ? (responseData as any).message : 'You do not have permission to perform this action.';
+      const isUnverified = typeof msg === 'string' && (msg.toLowerCase().includes('not verified') || msg.toLowerCase().includes('verify'));
+      return { 
+        message: msg, 
+        statusCode: status,
+        ...(isUnverified ? { isUnverifiedEmail: true, errorCode: 'EMAIL_NOT_VERIFIED' } : {})
+      };
     }
     if (status === 404) {
       return { message: 'The requested resource was not found.', statusCode: status };
@@ -123,7 +142,7 @@ export const extractErrorMessage = (error: unknown): ApiErrorResponse => {
         fieldErrors: (responseData as any)?.errors || {}
       };
     }
-    if (status >= 500) {
+    if (status && status >= 500) {
       return { message: 'A server error occurred. Please try again later.', statusCode: status };
     }
 
@@ -203,9 +222,18 @@ export const logApiError = (functionName: string, error: unknown): Error => {
   if (error instanceof Error) {
     (error as any).statusCode = errorDetails.statusCode;
     (error as any).errorCode = errorDetails.errorCode;
+    if (typeof errorDetails.isUnverifiedEmail === 'boolean') {
+      (error as any).isUnverifiedEmail = errorDetails.isUnverifiedEmail;
+    }
     return error;
   }
   
   // Create a new Error with the extracted message
-  return new Error(errorDetails.message);
+  const generic = new Error(errorDetails.message);
+  (generic as any).statusCode = errorDetails.statusCode;
+  (generic as any).errorCode = errorDetails.errorCode;
+  if (typeof errorDetails.isUnverifiedEmail === 'boolean') {
+    (generic as any).isUnverifiedEmail = errorDetails.isUnverifiedEmail;
+  }
+  return generic;
 };

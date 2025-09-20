@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { TextField, Button, Typography, Box, Paper, Link, CircularProgress, Alert } from '@mui/material';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import authService from '../../services/authService';
 
 const ResetPassword: React.FC = () => {
   const { token } = useParams<{ token: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+
+  // Support both /reset-password/:token and /reset-password?token=...
+  const searchParams = new URLSearchParams(location.search);
+  const queryToken = searchParams.get('token') || undefined;
+  const effectiveToken = token || queryToken;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -37,7 +43,7 @@ const ResetPassword: React.FC = () => {
       return;
     }
 
-    if (!token) {
+    if (!effectiveToken) {
       setError('Reset token is missing');
       return;
     }
@@ -45,7 +51,7 @@ const ResetPassword: React.FC = () => {
     setLoading(true);
 
     try {
-      await authService.resetPassword(token, password);
+      await authService.resetPassword(effectiveToken, password);
       setSuccess(true);
     } catch (err: any) {
       console.error('Password reset error:', err);

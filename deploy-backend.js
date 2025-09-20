@@ -37,42 +37,30 @@ execSync('npm run build', { stdio: 'inherit' });
 // ENV VAR SYNC HELPERS
 // -------------------------
 
-// Sanitize values: trim, strip surrounding quotes
-function sanitizeValue(val) {
-  if (typeof val !== 'string') return val;
-  return val.replace(/^\s*["']?/, '').replace(/["']?\s*$/, '').trim();
-}
-
 /**
  * Read required environment variables from backend/.env and return a map.
  * Never logs secret values, only presence flags.
  */
 function readLocalEnvForRender() {
   const keys = [
-    // ImageKit
     'IMAGEKIT_URL_ENDPOINT',
     'IMAGEKIT_PUBLIC_KEY',
     'IMAGEKIT_PRIVATE_KEY',
-    // Email
     'EMAIL_HOST',
     'EMAIL_PORT',
     'EMAIL_USER',
     'EMAIL_PASS',
     'EMAIL_FROM',
-    // App URLs / CORS
-    'FRONTEND_URL',
+    'APP_URL',
     'CORS_ORIGIN',
-    // Auth
-    'JWT_SECRET',
-    'JWT_EXPIRES_IN',
-    // Database (optional; prefer Render Dashboard)
-    'DATABASE_URL'
+    'JWT_AUDIENCE',
+    'JWT_ISSUER'
   ];
 
   const result = {};
   keys.forEach((k) => {
     if (process.env[k] !== undefined && String(process.env[k]).trim() !== '') {
-      result[k] = sanitizeValue(String(process.env[k]));
+      result[k] = String(process.env[k]);
     }
   });
 
@@ -84,28 +72,61 @@ function readLocalEnvForRender() {
   console.log(`  EMAIL_HOST set: ${!!result.EMAIL_HOST}`);
   console.log(`  EMAIL_USER set: ${!!result.EMAIL_USER}`);
   console.log(`  EMAIL_FROM set: ${!!result.EMAIL_FROM}`);
-  console.log(`  FRONTEND_URL set: ${!!result.FRONTEND_URL}`);
-  console.log(`  JWT_SECRET set: ${!!result.JWT_SECRET}`);
 
   return result;
 }
 
 /**
- * Build env var array payload from a map
+ * Fetch current env vars configured on the Render service.
  */
-function buildEnvVarArray(localMap) {
-  return Object.entries(localMap).map(([key, value]) => ({ key, value }));
+async function fetchCurrentServiceEnv() {
+  const resp = await axios.get(RENDER_ENV_API_URL, {
+    headers: { Authorization: `Bearer ${RENDER_API_KEY}` }
+  });
+  // Some fields may come with extra metadata; normalize to { key, value }
+  const list = Array.isArray(resp.data) ? resp.data : resp.data.envVars || [];
+  return list.map((item) => ({ key: item.key, value: item.value }));
+}
+
+/**
+ * Merge existing env vars with local ones.
+ * - Updates values for keys provided locally
+ * - Adds missing keys from local
+ * - Preserves other existing keys
+ */
+function mergeEnvVars(existingList, localMap) {
+  const merged = {};
+  existingList.forEach(({ key, value }) => {
+    merged[key] = value;
+  });
+  Object.entries(localMap).forEach(([k, v]) => {
+    merged[k] = v; // override/add
+  });
+  return Object.entries(merged).map(([key, value]) => ({ key, value }));
 }
 
 /**
  * Update env vars on Render service.
- * Use wrapped payload and avoid replacing all existing keys.
+ * Try common payload shapes for compatibility across API versions.
  */
 async function updateServiceEnvVars(envVarsList) {
   try {
+    // Attempt with array body first
+    await axios.put(RENDER_ENV_API_URL, envVarsList, {
+      headers: {
+        Authorization: `Bearer ${RENDER_API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    console.log('[SYNC] Service env vars updated (array payload).');
+  } catch (err) {
+    const status = err.response?.status;
+    const data = err.response?.data;
+    console.warn('[SYNC] Array payload failed, retrying with { envVars: [...] } format', status || '', data || '');
+    // Retry with wrapped payload
     await axios.put(
       RENDER_ENV_API_URL,
-      { envVars: envVarsList, clearExisting: false },
+      { envVars: envVarsList },
       {
         headers: {
           Authorization: `Bearer ${RENDER_API_KEY}`,
@@ -113,12 +134,7 @@ async function updateServiceEnvVars(envVarsList) {
         }
       }
     );
-    console.log('[SYNC] Service env vars updated successfully.');
-  } catch (err) {
-    const status = err.response?.status;
-    const data = err.response?.data;
-    console.warn('[SYNC] Failed to update env vars:', status || '', data || err.message);
-    console.warn('[SYNC] Continuing without env var sync. Please verify variables in the Render dashboard.');
+    console.log('[SYNC] Service env vars updated (wrapped payload).');
   }
 }
 
@@ -221,12 +237,9 @@ async function main() {
   try {
     console.log('--- STEP 1: Sync env vars to Render service ---');
     const localEnv = readLocalEnvForRender();
-    const payload = buildEnvVarArray(localEnv);
-    if (payload.length > 0) {
-      await updateServiceEnvVars(payload);
-    } else {
-      console.log('[SYNC] No local env vars to sync. Skipping.');
-    }
+    const current = await fetchCurrentServiceEnv();
+    const merged = mergeEnvVars(current, localEnv);
+    await updateServiceEnvVars(merged);
 
     console.log('--- STEP 2: Trigger deployment to apply env changes ---');
     await deployToRender();

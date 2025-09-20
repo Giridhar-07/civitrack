@@ -81,7 +81,7 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
     const token = needsNewToken ? await generateVerificationToken(user) : (user.emailVerificationToken as string);
     
     // Create verification URL
-    const verificationUrl = `${APP_URL}/verify-email?token=${token}`;
+    const verificationUrl = `${APP_URL}/verify-email/${token}`;
     
     // Email content
     const mailOptions = {
@@ -134,7 +134,7 @@ export const sendPasswordResetEmail = async (user: User): Promise<void> => {
     await user.save();
     
     // Create reset URL
-    const resetUrl = `${APP_URL}/reset-password?token=${token}`;
+    const resetUrl = `${APP_URL}/reset-password/${token}`;
     
     // Email content
     const mailOptions = {
@@ -227,6 +227,7 @@ export interface EmailHealth {
   host: string;
   port: number;
   mode: 'smtp' | 'log-only';
+  ok: boolean; // overall email health indicator
   error?: string;
 }
 
@@ -239,25 +240,28 @@ export const checkEmailHealth = async (): Promise<EmailHealth> => {
         smtpReachable: true,
         host: EMAIL_HOST!,
         port: EMAIL_PORT,
-        mode: 'smtp'
+        mode: 'smtp',
+        ok: true
       };
     } else {
-      // In log-only mode, we consider it reachable but not configured
+      // In log-only mode, we consider transport reachable but not configured; mark ok=false to surface config issue
       return {
         smtpConfigured: false,
         smtpReachable: true,
-        host: EMAIL_HOST || 'unknown', // Provide a fallback for log-only mode
+        host: EMAIL_HOST || 'unknown',
         port: EMAIL_PORT,
-        mode: 'log-only'
+        mode: 'log-only',
+        ok: false
       };
     }
   } catch (err: any) {
     return {
       smtpConfigured: EMAIL_CONFIGURED,
       smtpReachable: false,
-      host: EMAIL_HOST || 'unknown', // Provide a fallback for log-only mode
+      host: EMAIL_HOST || 'unknown',
       port: EMAIL_PORT,
       mode: EMAIL_CONFIGURED ? 'smtp' : 'log-only',
+      ok: false,
       error: err?.message || String(err)
     };
   }

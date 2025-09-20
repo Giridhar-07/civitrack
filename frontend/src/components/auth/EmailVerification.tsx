@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Box, Typography, Paper, Button, CircularProgress, Alert } from '@mui/material';
 import authService from '../../services/authService';
 
 const EmailVerification: React.FC = () => {
   const { token } = useParams<{ token: string }>();
+  const location = useLocation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
 
+  // Support both /verify-email/:token and /verify-email?token=...
+  const searchParams = new URLSearchParams(location.search);
+  const queryToken = searchParams.get('token') || undefined;
+  const effectiveToken = token || queryToken;
+
   useEffect(() => {
     const verifyEmail = async () => {
-      if (!token) {
+      if (!effectiveToken) {
         setError('Verification token is missing');
         setLoading(false);
         return;
       }
 
       try {
-        const response = await authService.verifyEmail(token);
+        const response = await authService.verifyEmail(effectiveToken);
         setSuccess(true);
         setLoading(false);
         
@@ -35,7 +41,7 @@ const EmailVerification: React.FC = () => {
     };
 
     verifyEmail();
-  }, [token]);
+  }, [effectiveToken]);
 
   const handleResendVerification = async () => {
     const email = prompt('Please enter your email address to resend verification');
@@ -76,7 +82,7 @@ const EmailVerification: React.FC = () => {
         ) : success ? (
           <>
             <Alert severity="success" sx={{ mb: 3 }}>
-              Your email has been successfully verified!
+              Verification successful
             </Alert>
             <Typography variant="body1" paragraph>
               You can now log in to your account with your credentials.

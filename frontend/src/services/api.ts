@@ -42,7 +42,7 @@ const resolveApiBaseUrl = (): string => {
   
   // In local dev or unknown environments
   if (typeof window !== 'undefined') {
-    const { origin, hostname } = window.location;
+    const { origin } = window.location;
 
     try {
       const useLocalBackend = localStorage.getItem('use_local_backend') === 'true';
@@ -122,6 +122,21 @@ const mockApi = {
       const response = await mockService.login(data.email, data.password);
       // mockService returns { token, user }
       return { data: (response as any) as T };
+    }
+    // Handle resend verification across accepted aliases
+    if (
+      url === '/auth/resend-verification' ||
+      url === '/auth/resend-verify' ||
+      url === '/auth/resend-verification-email' ||
+      url === '/auth/send-verification-email' ||
+      url === '/auth/verify-email/resend'
+    ) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      const email = data?.email ?? '';
+      const message = email
+        ? `Verification email sent to ${email}. Please check your inbox.`
+        : 'Verification email sent. Please check your inbox.';
+      return { data: ({ message } as any) as T };
     }
     throw new Error(`Unhandled mock POST request to ${url}`);
   },

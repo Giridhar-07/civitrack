@@ -213,42 +213,80 @@ const authService = {
       
       return response.data;
     } catch (error: any) {
-      // Enhanced error logging with specific handling for network errors
-      if (error.errorCode === 'SERVER_UNAVAILABLE' || error.errorCode === 'OFFLINE_ERROR') {
-        // Re-throw pre-identified network errors
+      // New: Respect standardized error shape coming from axios interceptor
+      const statusFromInterceptor = typeof error?.statusCode === 'number' ? error.statusCode : (typeof error?.status === 'number' ? error.status : undefined);
+      const errorCode = error?.errorCode as string | undefined;
+      const isNetwork = error?.isNetworkError === true || errorCode === 'NETWORK_ERROR' || errorCode === 'OFFLINE_ERROR';
+      const isTimeout = errorCode === 'TIMEOUT_ERROR' || error?.code === 'ECONNABORTED' || (typeof error?.message === 'string' && error.message.toLowerCase().includes('timeout'));
+
+      // Handle known HTTP statuses FIRST (even if error.response is missing)
+      if (statusFromInterceptor === 403) {
+        const unverifiedErr = new Error(error?.message || 'Your email is not verified. Please check your inbox or request a new verification email.');
+        (unverifiedErr as any).status = 403;
+        (unverifiedErr as any).statusCode = 403;
+        // Preserve flag/code from interceptor if present, or infer from message
+        const inferredUnverified = typeof unverifiedErr.message === 'string' && /not verified|verify/i.test(unverifiedErr.message);
+        (unverifiedErr as any).isUnverifiedEmail = error?.isUnverifiedEmail === true || inferredUnverified;
+        if (error?.errorCode === 'EMAIL_NOT_VERIFIED' || (unverifiedErr as any).isUnverifiedEmail) {
+          (unverifiedErr as any).errorCode = 'EMAIL_NOT_VERIFIED';
+        }
+        throw unverifiedErr;
+      }
+      if (statusFromInterceptor === 401) {
+        const authErr = new Error(error?.message || 'Invalid email or password');
+        (authErr as any).status = 401;
+        (authErr as any).statusCode = 401;
+        throw authErr;
+      }
+      if (statusFromInterceptor === 429) {
+        const rateLimitError = new Error(error?.message || 'Too many login attempts. Please try again later.');
+        (rateLimitError as any).status = 429;
+        (rateLimitError as any).statusCode = 429;
+        (rateLimitError as any).retryAfter = (error && (error.retryAfter || error['retry-after'])) || 60;
+        throw rateLimitError;
+      }
+
+      // Preserve explicit pre-identified server/connection issues
+      if (errorCode === 'SERVER_UNAVAILABLE' || errorCode === 'OFFLINE_ERROR') {
         throw error;
-      } else if (error.code === 'ECONNABORTED' || (error.message && error.message.toLowerCase().includes('timeout'))) {
-        console.warn('Login API timeout error:', error.message);
-        // Throw a more user-friendly error for timeout issues
+      }
+
+      if (isTimeout) {
+        console.warn('Login API timeout error:', error?.message);
         const timeoutError = new Error('Connection timed out. The server is taking too long to respond.');
         (timeoutError as any).errorCode = 'TIMEOUT_ERROR';
         (timeoutError as any).isNetworkError = true;
         throw timeoutError;
-      } else if (!error.response || error.message?.toLowerCase().includes('network') || error.name === 'NetworkError') {
-        console.warn('Login API network error:', error.message);
-        const networkError = new Error('Unable to connect to the server. Please try again later.');
+      }
+
+      // Only treat as network error if explicitly flagged, not just because response is missing
+      if (isNetwork) {
+        console.warn('Login API network error:', error?.message);
+        const networkError = new Error(error?.message || 'Unable to connect to the server. Please try again later.');
         (networkError as any).errorCode = 'NETWORK_ERROR';
         (networkError as any).isNetworkError = true;
         throw networkError;
-      } else if (error.response?.status === 401 || error.statusCode === 401 || error.status === 401) {
-        // Handle authentication errors properly with consistent 401 response
+      }
+
+      // Fallback to original axios error handling if available
+      if (error?.response?.status === 401) {
         console.error('Login API authentication error:', error.response?.data?.message || 'Invalid credentials');
         const authError = new Error(error.response?.data?.message || 'Invalid email or password');
         (authError as any).status = 401;
         (authError as any).statusCode = 401;
         throw authError;
-      } else if (error.response?.status === 429) {
-        // Handle rate limiting errors
+      }
+      if (error?.response?.status === 429) {
         console.error('Login API rate limit error:', error.response?.data?.message || 'Too many requests');
         const rateLimitError = new Error('Too many login attempts. Please try again later.');
         (rateLimitError as any).status = 429;
         (rateLimitError as any).statusCode = 429;
         (rateLimitError as any).retryAfter = error.response?.headers?.['retry-after'] || 60;
         throw rateLimitError;
-      } else {
-        console.error('Login API error:', error.response?.data || error.message);
-        throw error;
       }
+
+      console.error('Login API error:', error?.response?.data || error?.message || error);
+      throw error;
     }
   },
 
