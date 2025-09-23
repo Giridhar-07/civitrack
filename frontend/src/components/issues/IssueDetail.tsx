@@ -364,7 +364,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
                         <CardMedia
                           component="img"
                           height="140"
-                          image={photo}
+                          image={photo && photo.length > 0 ? photo : `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`}
                           alt={`Issue photo ${index + 1}`}
                          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                            const target = e.currentTarget as HTMLImageElement;
@@ -616,7 +616,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
             <Box sx={{ position: 'relative' }}>
               <Box sx={{ position: 'relative', width: '100%', minHeight: '300px' }}>
                 <img 
-                  src={issue.photos[currentPhotoIndex]}
+                  src={issue.photos && issue.photos[currentPhotoIndex] ? issue.photos[currentPhotoIndex] : `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`}
                   alt={`Issue photo ${currentPhotoIndex + 1}`} 
                   style={{ width: '100%', height: 'auto', display: 'block' }} 
                   onError={(e) => {

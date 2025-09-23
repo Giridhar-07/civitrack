@@ -11,9 +11,10 @@ import { URL } from 'url';
 import routes from './routes';
 import sequelize from './config/database';
 import { syncModels } from './models';
-import { errorResponse } from './utils/response';
+import { errorResponse, badRequestResponse } from './utils/response';
 import { initializeSocketIO } from './services/socketService';
 import { checkEmailHealth } from './utils/email';
+import { MulterError } from 'multer';
 
 // Load environment variables
 
@@ -34,7 +35,7 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:", "blob:"],
+      imgSrc: ["'self'", "data:", "blob:", "http://localhost:5000", "https://civitrack.onrender.com"],
       connectSrc: [
         "'self'",
         "https://civitrack-dev.netlify.app",
@@ -51,6 +52,10 @@ app.use(helmet({
       frameSrc: ["'none'"],
     },
   },
+  // Enable cross-origin resource loading for images and other static assets
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+  // Disable COEP to avoid blocking cross-origin resources inadvertently
+  crossOriginEmbedderPolicy: false,
   xssFilter: true,
   noSniff: true,
   referrerPolicy: { policy: 'same-origin' },
@@ -137,7 +142,7 @@ app.use(cors({
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Cache-Control', 'Pragma', 'x-no-retry', 'X-No-Retry']
 }));
 
 // Add cookie parser for secure cookies
@@ -293,6 +298,44 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   
   if ((err as any).message && (err as any).message.includes('CORS')) {
     return errorResponse(res, 'CORS policy violation', 403);
+  }
+
+  // Handle Multer upload errors (e.g., file size limit)
+  if ((err as any)?.name === 'MulterError' || err instanceof MulterError) {
+    const mErr = err as MulterError;
+
+    // Map known Multer error codes to friendly messages and error codes
+    switch (mErr.code) {
+      case 'LIMIT_FILE_SIZE': {
+        const fieldErrors = { image: 'File size exceeds the 5MB limit' } as Record<string, string>;
+        return badRequestResponse(res, 'File too large', fieldErrors, 'FILE_TOO_LARGE');
+      }
+      case 'LIMIT_FILE_COUNT': {
+        const fieldErrors = { image: 'Too many files uploaded' } as Record<string, string>;
+        return badRequestResponse(res, 'Too many files', fieldErrors, 'FILE_COUNT_LIMIT');
+      }
+      case 'LIMIT_PART_COUNT': {
+        return badRequestResponse(res, 'Too many parts in the multipart request', undefined, 'PART_COUNT_LIMIT');
+      }
+      case 'LIMIT_FIELD_KEY': {
+        return badRequestResponse(res, 'Field name too long', undefined, 'FIELD_KEY_LIMIT');
+      }
+      case 'LIMIT_FIELD_VALUE': {
+        return badRequestResponse(res, 'Field value too long', undefined, 'FIELD_VALUE_LIMIT');
+      }
+      case 'LIMIT_FIELD_COUNT': {
+        return badRequestResponse(res, 'Too many fields in the form', undefined, 'FIELD_COUNT_LIMIT');
+      }
+      case 'LIMIT_UNEXPECTED_FILE': {
+        const fieldName = (mErr as any).field || 'image';
+        const fieldErrors = { [fieldName]: 'Unexpected file field' } as Record<string, string>;
+        return badRequestResponse(res, 'Unexpected file field', fieldErrors, 'UNEXPECTED_FILE');
+      }
+      default: {
+        // Generic Multer error
+        return badRequestResponse(res, 'File upload error', undefined, 'FILE_UPLOAD_ERROR');
+      }
+    }
   }
   
   // Default error response

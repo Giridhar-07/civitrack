@@ -1,4 +1,5 @@
 import api from './api';
+import { extractErrorMessage } from '../utils/apiErrorHandler';
 
 /**
  * Service for handling ImageKit operations
@@ -17,9 +18,18 @@ const imagekitService = {
         signature: string;
         publicKey: string;
       };
-    } catch (error) {
-      console.error('Error getting ImageKit auth params:', error);
-      throw error;
+    } catch (error: any) {
+      // Provide clearer error messaging, especially when the server has ImageKit disabled
+      const status = error?.response?.status;
+      if (status === 503) {
+        const err = new Error('Image uploads are temporarily unavailable. Please try again later.');
+        (err as any).status = 503;
+        throw err;
+      }
+      const message = extractErrorMessage(error) || 'Unable to get upload authorization. Please retry in a moment.';
+      const err = new Error(message.toString());
+      (err as any).original = error;
+      throw err;
     }
   },
 
@@ -49,11 +59,39 @@ const imagekitService = {
       });
       
       if (!response.ok) {
-        throw new Error('Failed to upload image to ImageKit');
+        let serverMessage = '';
+        try {
+          const data = await response.json();
+          serverMessage = data?.message || data?.error || '';
+        } catch (_) {
+          try {
+            serverMessage = await response.text();
+          } catch { /* ignore */ }
+        }
+
+        // Map common failure scenarios to user-friendly messages
+        let friendly = 'Failed to upload image to ImageKit.';
+        if (response.status === 401 || response.status === 403) {
+          friendly = 'Upload authorization failed. Please refresh the page and try again.';
+        } else if (response.status === 413) {
+          friendly = 'The selected file is too large. Please choose a smaller image.';
+        } else if (response.status === 400 && serverMessage.toLowerCase().includes('signature')) {
+          friendly = 'Upload authorization expired. Please try again.';
+        }
+
+        const err = new Error(serverMessage || friendly);
+        (err as any).status = response.status;
+        throw err;
       }
       
       return await response.json();
-    } catch (error) {
+    } catch (error: any) {
+      // Normalize network-type failures
+      if (error?.name === 'TypeError' && (error?.message?.includes('NetworkError') || error?.message?.includes('Failed to fetch'))) {
+        const err = new Error('Network connection issue. Please check your internet connection and try again.');
+        (err as any).isNetworkError = true;
+        throw err;
+      }
       console.error('Error uploading image to ImageKit:', error);
       throw error;
     }

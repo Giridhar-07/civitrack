@@ -55,11 +55,26 @@ export const extractErrorMessage = (error: unknown): ApiErrorResponse => {
         const msg = typeof rawMessage === 'string' ? rawMessage : 'An error occurred.';
         const code = (responseData as any).code || (responseData as any).errorCode;
         const isUnverified = status === 403 && msg && (msg.toLowerCase().includes('not verified') || msg.toLowerCase().includes('verify'));
+        const rawFieldErrors = (responseData as any).fieldErrors || (responseData as any).errors;
+        let normalizedFieldErrors: Record<string, string[] | string> | undefined = undefined;
+        if (rawFieldErrors && typeof rawFieldErrors === 'object') {
+          // If values are strings, keep them; if arrays, keep first; otherwise coerce to string
+          normalizedFieldErrors = Object.entries(rawFieldErrors).reduce((acc, [k, v]) => {
+            if (Array.isArray(v)) {
+              acc[k] = v;
+            } else if (typeof v === 'string') {
+              acc[k] = v;
+            } else if (v != null) {
+              acc[k] = String(v);
+            }
+            return acc;
+          }, {} as Record<string, string[] | string>);
+        }
         return {
           message: msg,
           statusCode: status,
           errorCode: isUnverified ? 'EMAIL_NOT_VERIFIED' : code,
-          fieldErrors: (responseData as any).fieldErrors || (responseData as any).errors,
+          fieldErrors: normalizedFieldErrors as Record<string, string[]> | undefined,
           ...(isUnverified ? { isUnverifiedEmail: true } : {})
         };
       }

@@ -29,7 +29,12 @@ router.get('/auth', async (req, res) => {
       });
     }
     const authParams = getAuthenticationParameters();
-    return successResponse(res, authParams, 'ImageKit authentication parameters retrieved successfully');
+    // Include the publicKey so the frontend can complete client-side uploads
+    const payload = {
+      ...authParams,
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY
+    };
+    return successResponse(res, payload, 'ImageKit authentication parameters retrieved successfully');
   } catch (error) {
     console.error('Error getting ImageKit auth parameters:', error);
     return res.status(500).json({ 

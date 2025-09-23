@@ -45,7 +45,9 @@ import authService from '../services/authService';
 import issueService from '../services/issueService';
 import api from '../services/api';
 import { formatDate } from '../utils/dateUtils';
-import imagekitService from '../services/imagekitService';
+// Removed unused ImageKit client-side service to rely on backend upload flow
+// import imagekitService from '../services/imagekitService';
+import { extractErrorMessage } from '../utils/apiErrorHandler';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -261,17 +263,15 @@ const ProfilePage: React.FC = () => {
     setUploadingImage(true);
     
     try {
-      // Use ImageKit service for image upload
-      const uploadResponse = await imagekitService.uploadImage(file);
-      
-      // Update profile with the new image URL from ImageKit
+      // Directly upload to backend; it will handle ImageKit or local storage based on configuration
       const formData = new FormData();
       formData.append('image', file);
-      formData.append('fileId', uploadResponse.fileId);
       
-      const response = await api.post<{ profileImage: string }>('/auth/profile/image', formData, {
+      const response = await api.post<{ profileImage: string }>("/auth/profile/image", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          // Let the browser set proper multipart boundary automatically
+          // 'Content-Type': 'multipart/form-data',
+          'x-no-retry': 'true' // prevent retries on non-idempotent multipart uploads
         }
       });
       
@@ -284,29 +284,55 @@ const ProfilePage: React.FC = () => {
         };
       });
       
+      // Clean up preview URL and local preview state after success
+      URL.revokeObjectURL(previewUrl);
+      setProfileImage(null);
+      
       setSnackbar({
         open: true,
         message: 'Profile image updated successfully!',
         severity: 'success'
       });
     } catch (error: any) {
-      console.error('Error uploading profile image:', error);
-      
-      // Check for network errors
-      if (error.isNetworkError || error.message?.includes('Network')) {
-        setSnackbar({
-          open: true,
-          message: 'Network connection issue. Please check your internet connection and try again.',
-          severity: 'error'
-        });
+      const details = extractErrorMessage(error);
+      console.error('Error uploading profile image:', { original: error, details });
+
+      const fieldErrors = details.fieldErrors || {};
+      const imageError = (fieldErrors as any).image;
+      let message = Array.isArray(imageError)
+        ? imageError[0]
+        : (typeof imageError === 'string' ? imageError : details.message);
+
+      // Map common error codes to friendly, contextual messages
+      if (details.isUnverifiedEmail) {
+        message = 'Please verify your email to upload a profile image.';
       } else {
-        setSnackbar({
-          open: true,
-          message: error?.message || 'Failed to upload profile image. Please try again.',
-          severity: 'error'
-        });
+        switch (details.errorCode) {
+          case 'OFFLINE_ERROR':
+            message = 'You appear to be offline. Please check your internet connection and try again.';
+            break;
+          case 'LIMIT_FILE_SIZE':
+            message = 'Selected image is too large. Please choose an image under 5MB.';
+            break;
+          case 'LIMIT_UNEXPECTED_FILE':
+          case 'INVALID_IMAGE_MIMETYPE':
+            message = 'Please select a valid image file (JPEG, PNG, GIF).';
+            break;
+          case 'AUTH_REQUIRED':
+            message = 'Please log in to upload a profile image.';
+            break;
+          default:
+            // keep derived message
+            break;
+        }
       }
-      
+
+      setSnackbar({
+        open: true,
+        message: message || 'Failed to upload profile image. Please try again.',
+        severity: 'error'
+      });
+
       // Revoke the preview URL on error
       URL.revokeObjectURL(previewUrl);
       setProfileImage(null);

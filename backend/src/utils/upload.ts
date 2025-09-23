@@ -22,13 +22,31 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter to allow only images
+// Allowed image MIME types for profile uploads
+const ALLOWED_IMAGE_MIMES = new Set([
+  'image/png',
+  'image/jpeg',
+  'image/jpg',
+  'image/webp',
+  'image/gif',
+  'image/svg+xml'
+]);
+
+// File filter to allow only specific image formats
+// - Sets a flag on req when invalid type is detected so controllers can respond with a clear error
 const fileFilter = (req: Request, file: Express.Multer.File, cb: multer.FileFilterCallback) => {
-  // Accept only image files
-  if (file.mimetype.startsWith('image/')) {
+  if (ALLOWED_IMAGE_MIMES.has(file.mimetype)) {
     cb(null, true);
+  } else if (file.mimetype.startsWith('image/')) {
+    // Image but unsupported subtype
+    (req as any).fileValidationError = 'INVALID_FILE_TYPE';
+    (req as any).fileValidationMessage = 'Only image files (PNG, JPG, JPEG, WEBP, GIF, SVG) are allowed';
+    cb(null, false);
   } else {
-    cb(new Error('Only image files are allowed'));
+    // Not an image at all
+    (req as any).fileValidationError = 'INVALID_FILE_TYPE';
+    (req as any).fileValidationMessage = 'Only image files (PNG, JPG, JPEG, WEBP, GIF, SVG) are allowed';
+    cb(null, false);
   }
 };
 

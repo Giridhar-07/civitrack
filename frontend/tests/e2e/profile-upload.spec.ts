@@ -38,3 +38,84 @@ test('Profile image upload UI works when available', async ({ page, baseURL }) =
 
   expect.soft(true).toBeTruthy();
 });
+
+// Additional scenarios using network interception to simulate backend responses
+// These tests do not require authentication and will intercept the upload API call.
+
+test('Profile upload shows error for invalid image format (INVALID_FILE_TYPE)', async ({ page, baseURL }) => {
+  await page.route(/\/api\/auth\/profile\/image(\?.*)?$/, async (route) => {
+    await route.fulfill({
+      status: 400,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        success: false,
+        message: 'Only image files (PNG, JPG, JPEG, WEBP, GIF, SVG) are allowed',
+        errorCode: 'INVALID_FILE_TYPE',
+        fieldErrors: { image: 'Only image files (PNG, JPG, JPEG, WEBP, GIF, SVG) are allowed' }
+      })
+    });
+  });
+
+  await page.goto(`${baseURL}${profilePath}`);
+  await page.waitForLoadState('domcontentloaded');
+  if (!(await isProfileUploadUIVisible(page))) test.skip(true, 'Profile UI not accessible without auth; skipping upload test.');
+
+  const fileInput = page.locator('input[type="file"][accept="image/*"]').first();
+  await fileInput.setInputFiles(fixturePath);
+
+  const alert = page.locator('[role="alert"]');
+  await alert.waitFor({ state: 'visible', timeout: 15000 });
+  await expect(alert).toContainText('Only image files');
+});
+
+// File too large (handled by Multer and backend returns FILE_TOO_LARGE)
+test('Profile upload shows error when file exceeds size limit (FILE_TOO_LARGE)', async ({ page, baseURL }) => {
+  await page.route(/\/api\/auth\/profile\/image(\?.*)?$/, async (route) => {
+    await route.fulfill({
+      status: 400,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        success: false,
+        message: 'File size exceeds the 5MB limit',
+        errorCode: 'FILE_TOO_LARGE',
+        fieldErrors: { image: 'File size exceeds the 5MB limit' }
+      })
+    });
+  });
+
+  await page.goto(`${baseURL}${profilePath}`);
+  await page.waitForLoadState('domcontentloaded');
+  if (!(await isProfileUploadUIVisible(page))) test.skip(true, 'Profile UI not accessible without auth; skipping upload test.');
+
+  const fileInput = page.locator('input[type="file"][accept="image/*"]').first();
+  await fileInput.setInputFiles(fixturePath);
+
+  const alert = page.locator('[role="alert"]');
+  await alert.waitFor({ state: 'visible', timeout: 15000 });
+  await expect(alert).toContainText('5MB limit');
+});
+
+// Server error scenario (500)
+test('Profile upload shows a generic error on server failure (500)', async ({ page, baseURL }) => {
+  await page.route(/\/api\/auth\/profile\/image(\?.*)?$/, async (route) => {
+    await route.fulfill({
+      status: 500,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        success: false,
+        message: 'Error uploading profile image'
+      })
+    });
+  });
+
+  await page.goto(`${baseURL}${profilePath}`);
+  await page.waitForLoadState('domcontentloaded');
+  if (!(await isProfileUploadUIVisible(page))) test.skip(true, 'Profile UI not accessible without auth; skipping upload test.');
+
+  const fileInput = page.locator('input[type="file"][accept="image/*"]').first();
+  await fileInput.setInputFiles(fixturePath);
+
+  const alert = page.locator('[role="alert"]');
+  await alert.waitFor({ state: 'visible', timeout: 15000 });
+  await expect(alert).toBeVisible();
+});

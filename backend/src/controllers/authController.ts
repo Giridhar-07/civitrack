@@ -237,9 +237,18 @@ import fs from 'fs';
 export const uploadProfileImage = async (req: Request, res: Response): Promise<Response> => {
   try {
     const userId = (req as any).user.id;
-    
+
+    // If multer flagged invalid type via fileFilter
+    const fileValidationError = (req as any).fileValidationError as string | undefined;
+    const fileValidationMessage = (req as any).fileValidationMessage as string | undefined;
+    if (fileValidationError) {
+      const fieldErrors = { image: fileValidationMessage || 'Invalid image file type' } as Record<string, string>;
+      return badRequestResponse(res, 'Invalid file type', fieldErrors, 'INVALID_FILE_TYPE');
+    }
+
+    // Check if file exists (after fileFilter)
     if (!req.file) {
-      return badRequestResponse(res, 'No image file provided');
+      return badRequestResponse(res, 'No image file provided', undefined, 'NO_FILE_PROVIDED');
     }
     
     const user = await User.findByPk(userId);
@@ -254,26 +263,35 @@ export const uploadProfileImage = async (req: Request, res: Response): Promise<R
       
       // Read file buffer from disk (multer.diskStorage saves files to disk)
       const localFilePath = (req.file as any).path as string;
+      console.log(`[uploadProfileImage] Local file path: ${localFilePath}`); // Log 1
       try {
         const fileBuffer = await fs.promises.readFile(localFilePath);
+        console.log(`[uploadProfileImage] File buffer size: ${fileBuffer.length} bytes`); // Log 2
         const fileName = `${userId}_profile_${Date.now()}${path.extname(req.file.originalname)}`;
+        console.log(`[uploadProfileImage] Generated file name: ${fileName}`); // Log 3
         
         // Upload to ImageKit
         const uploadResponse = await uploadImage(fileBuffer, fileName);
+        console.log(`[uploadProfileImage] ImageKit upload response:`, uploadResponse); // Log 4
         
         // Clean up local temp file after successful upload
         await fs.promises.unlink(localFilePath).catch(() => {});
+        console.log(`[uploadProfileImage] Local temp file deleted: ${localFilePath}`); // Log 5
         
         // Update user with ImageKit URL and fileId
         const profileImage = uploadResponse.url;
-        await user.update({ 
+        console.log(`[uploadProfileImage] Updating user profile with image URL: ${profileImage} and file ID: ${uploadResponse.fileId}`); // Log 6
+        await user.update({
           profileImage,
           profileImageFileId: uploadResponse.fileId // Store fileId for future deletion
         });
+        console.log(`[uploadProfileImage] User profile updated successfully.`); // Log 7
         
         return successResponse(res, { profileImage }, 'Profile image uploaded to ImageKit successfully');
       } catch (ikErr) {
+        console.error('[uploadProfileImage] ImageKit specific error during upload or file cleanup:', ikErr); // Log 8
         // Attempt to remove local file if upload failed
+        const localFilePath = (req.file as any)?.path as string | undefined;
         if (localFilePath) {
           await fs.promises.unlink(localFilePath).catch(() => {});
         }

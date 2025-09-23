@@ -200,6 +200,14 @@ const VALID_API_ENDPOINTS = {
    '/auth/verify-email/resend': ['POST'],
    '/auth/request-password-reset': ['POST'],
    '/auth/reset-password': ['POST'],
+  
+  // Logging endpoints
+  '/logs': ['POST'],
+  '/api/logs': ['POST'],
+
+  // ImageKit endpoints
+  '/imagekit/auth': ['GET'],
+  '/api/imagekit/auth': ['GET'],
    
   // User endpoints
   //'/users': ['GET'],
@@ -386,6 +394,14 @@ if (!USE_MOCK_SERVICE) {
           config.headers = {};
         }
         config.headers.Authorization = `Bearer ${token}`;
+      }
+
+      // If sending FormData, let the browser/axios set the proper multipart boundary automatically
+      if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+        if (config.headers) {
+          delete config.headers['Content-Type'];
+          delete (config.headers as any)['content-type'];
+        }
       }
       
       // Log outgoing requests in development environment
