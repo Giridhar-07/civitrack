@@ -10,6 +10,7 @@ const MapPage: React.FC = () => {
   const navigate = useNavigate();
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [center, setCenter] = useState<[number, number]>([40.7128, -74.0060]);
 
   // Fetch all issues to display as markers on the map
   useEffect(() => {
@@ -29,6 +30,24 @@ const MapPage: React.FC = () => {
     return () => { mounted = false; };
   }, []);
 
+  // Attempt to center map to user's current location on mount
+  useEffect(() => {
+    if (!('geolocation' in navigator)) {
+      console.warn('Geolocation not supported by this browser');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        setCenter([latitude, longitude]);
+      },
+      (err) => {
+        console.warn('Geolocation error:', err);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  }, []);
+
   return (
     <Layout>
       <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -42,7 +61,7 @@ const MapPage: React.FC = () => {
         <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden', height: 'calc(100vh - 240px)', minHeight: '500px' }}>
           <IssueMap
             issues={issues}
-            center={[40.7128, -74.0060]}
+            center={center}
             zoom={12}
             height="100%"
           />
