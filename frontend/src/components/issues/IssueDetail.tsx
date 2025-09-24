@@ -132,12 +132,45 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
 
   const handleSubmitStatusRequest = async () => {
     if (!onRequestStatusChange) return;
+    
+    // Validate that requested status is different from current status
+    if (requestedStatus === issue.status) {
+      alert('Please select a different status than the current one');
+      return;
+    }
+    
+    // Validate reason length if provided
+    if (requestReason && (requestReason.length < 5 || requestReason.length > 500)) {
+      alert('Reason must be between 5 and 500 characters');
+      return;
+    }
+    
     setRequesting(true);
     try {
+      // Log request details for debugging
+      console.debug('Submitting status request:', {
+        issueId: issue.id,
+        currentStatus: issue.status,
+        requestedStatus,
+        reasonLength: requestReason?.length
+      });
+      
       await onRequestStatusChange(issue.id, requestedStatus, requestReason);
       handleRequestDialogClose();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to submit status change request:', error);
+      
+      // Extract more meaningful error message
+      let errorMessage = 'Unknown error';
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      } else if (typeof error === 'string') {
+        errorMessage = error;
+      }
+      
+      alert(`Failed to submit status change request: ${errorMessage}`);
     } finally {
       setRequesting(false);
     }
@@ -331,7 +364,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
                         <CardMedia
                           component="img"
                           height="140"
-                          image={photo}
+                          image={photo && photo.length > 0 ? photo : `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`}
                           alt={`Issue photo ${index + 1}`}
                          onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
                            const target = e.currentTarget as HTMLImageElement;
@@ -583,7 +616,7 @@ const IssueDetail: React.FC<IssueDetailProps> = ({
             <Box sx={{ position: 'relative' }}>
               <Box sx={{ position: 'relative', width: '100%', minHeight: '300px' }}>
                 <img 
-                  src={issue.photos[currentPhotoIndex]}
+                  src={issue.photos && issue.photos[currentPhotoIndex] ? issue.photos[currentPhotoIndex] : `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`}
                   alt={`Issue photo ${currentPhotoIndex + 1}`} 
                   style={{ width: '100%', height: 'auto', display: 'block' }} 
                   onError={(e) => {

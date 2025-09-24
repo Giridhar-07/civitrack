@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, Box, Paper, Link, CircularProgress } from '@mui/material';
+import { TextField, Button, Typography, Box, Paper, Link, CircularProgress, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import authService, { RegisterData } from '../../services/authService';
 
@@ -14,6 +14,7 @@ const RegisterForm: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,7 +30,7 @@ const RegisterForm: React.FC = () => {
 
   const validateForm = (): boolean => {
     // Check for empty required fields
-    if (!formData.name.trim()) {
+    if (!formData?.name?.trim()) {
       setError('Name is required');
       return false;
     }
@@ -104,10 +105,20 @@ const RegisterForm: React.FC = () => {
     setLoading(true);
 
     try {
-      await authService.register(formData);
-      // Force a full page reload to ensure all components update with the new auth state
-      // This is more reliable than just navigating
-      window.location.href = '/';
+      const response = await authService.register(formData);
+      
+      // After registration, always show verification message and redirect to login
+      // The token is not stored in localStorage (modified in authService)
+      setSuccess(true);
+      setTimeout(() => {
+        navigate('/login', { 
+          state: { 
+            showVerificationMessage: true,
+            email: formData.email,
+            justRegistered: true
+          } 
+        });
+      }, 3000);
     } catch (err: any) {
       console.error('Registration failed:', err);
       
@@ -148,7 +159,12 @@ const RegisterForm: React.FC = () => {
         Create Account
       </Typography>
       
-      {error && (
+      {success ? (
+        <Alert severity="success" sx={{ mb: 3 }}>
+          Registration successful! Please check your email to verify your account.
+          You will be redirected to the login page shortly...
+        </Alert>
+      ) : error ? (
         <Box sx={{ mb: 2, p: 2, backgroundColor: 'rgba(244, 67, 54, 0.1)', borderRadius: 1 }}>
           {error.split('\n').map((line, index) => (
             <Typography key={index} color="error" variant="body2" sx={{ mb: index < error.split('\n').length - 1 ? 1 : 0 }}>
@@ -156,7 +172,7 @@ const RegisterForm: React.FC = () => {
             </Typography>
           ))}
         </Box>
-      )}
+      ) : null}
       
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <TextField

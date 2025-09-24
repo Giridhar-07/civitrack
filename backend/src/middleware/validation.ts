@@ -187,12 +187,13 @@ export const getNearbyIssuesValidation = [
 // Status Request validation
 export const createStatusRequestValidation = [
   param('id')
-    .isUUID(4).withMessage('Invalid issue ID'),
+    .isUUID(4).withMessage('Invalid issue ID')
+    .notEmpty().withMessage('Issue ID is required'),
   body('requestedStatus')
     .notEmpty().withMessage('Requested status is required')
     .isIn(Object.values(IssueStatus)).withMessage('Invalid requested status'),
   body('reason')
-    .optional()
+    .optional({ nullable: true, checkFalsy: false })
     .isLength({ min: 5, max: 500 }).withMessage('Reason must be between 5 and 500 characters')
 ];
 

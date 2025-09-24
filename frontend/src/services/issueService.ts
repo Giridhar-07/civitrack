@@ -1,4 +1,4 @@
-import api from './api';
+import api, { BASE_URL } from './api';
 import { Issue, Location, IssueStatus, IssueCategory } from '../types';
 
 export interface IssueFormData {
@@ -22,6 +22,37 @@ export interface IssueFilterParams {
   userId?: string;
 }
 
+// Helper: derive API origin from BASE_URL once
+const API_ORIGIN: string = (() => {
+  try {
+    return new URL(BASE_URL).origin;
+  } catch {
+    return '';
+  }
+})();
+
+// Helper: normalize any media URL to absolute
+function normalizeMediaUrl(url?: string): string {
+  if (!url) return '';
+  if (/^(?:https?:|data:|blob:)/i.test(url)) return url;
+  if (url.startsWith('/')) return `${API_ORIGIN}${url}`;
+  return `${API_ORIGIN}/${url.replace(/^\/+/, '')}`;
+}
+
+// Helper: normalize photos array on an Issue
+function normalizeIssuePhotos(issue: Issue): Issue {
+  if (!issue) return issue;
+  const photos = Array.isArray((issue as any).photos)
+    ? (issue as any).photos.map((p: string) => normalizeMediaUrl(p))
+    : [];
+  return { ...issue, photos } as Issue;
+}
+
+// Helper: normalize a list of issues
+function normalizeIssuesArray(issues: Issue[] = []): Issue[] {
+  return issues.map(normalizeIssuePhotos);
+}
+
 // Function for infinite scroll with pagination
 export const getIssuesNearby = async (
   latitude: number, 
@@ -41,7 +72,7 @@ export const getIssuesNearby = async (
       params: { latitude, longitude, radius, page, limit }
     });
     return {
-      data: (response.data as { issues: Issue[] }).issues,
+      data: normalizeIssuesArray((response.data as { issues: Issue[] }).issues),
       pagination: (response.data as { pagination: { total: number; hasNextPage: boolean } }).pagination
     };
   } catch (error) {
@@ -69,7 +100,7 @@ const issueService = {
         return []; // Return empty array instead of throwing to prevent UI breakage
       }
       
-      return response.data.issues;
+      return normalizeIssuesArray(response.data.issues);
     } catch (error: any) {
       // Enhanced error handling for network issues
       if (error.isNetworkError || 
@@ -114,7 +145,10 @@ const issueService = {
         };
       }
       
-      return response.data;
+      return { 
+        issues: normalizeIssuesArray(response.data.issues), 
+        pagination: response.data.pagination 
+      };
     } catch (error: any) {
       // Enhanced error handling for network issues
       if (error.isNetworkError || 
@@ -136,7 +170,7 @@ const issueService = {
   getIssueById: async (id: string): Promise<Issue> => {
     try {
       const response = await api.get<Issue>(`/issues/${id}`);
-      return response.data;
+      return normalizeIssuePhotos(response.data);
     } catch (error) {
       throw error;
     }
@@ -168,10 +202,12 @@ const issueService = {
 
       const response = await api.post<Issue>('/issues', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          // Let axios set multipart boundary automatically
+          // 'Content-Type': 'multipart/form-data',
+          'x-no-retry': 'true'
         }
       });
-      return response.data;
+      return normalizeIssuePhotos(response.data);
     } catch (error) {
       throw error;
     }
@@ -183,7 +219,7 @@ const issueService = {
         status, 
         statusComment: comment 
       });
-      return response.data;
+      return normalizeIssuePhotos(response.data);
     } catch (error) {
       throw error;
     }
@@ -205,7 +241,7 @@ const issueService = {
       }
       
       const response = await api.post<Issue>(`/issues/${id}/flag`, { reason });
-      return response.data;
+      return normalizeIssuePhotos(response.data);
     } catch (error: any) {
       // Handle validation errors specifically
       if (error.response?.data?.statusCode === 400) {
@@ -238,7 +274,7 @@ const issueService = {
       }
       
       const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues/user/me');
-      return response.data.issues || [];
+      return normalizeIssuesArray(response.data.issues || []);
     } catch (error: any) {
       // Log the error with more details
       console.error('Error fetching user issues:', error);
@@ -261,7 +297,7 @@ const issueService = {
       }
       
       const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues/saved');
-      return response.data.issues || [];
+      return normalizeIssuesArray(response.data.issues || []);
     } catch (error: any) {
       // Log the error with more details
       console.error('Error fetching saved issues:', error);
@@ -300,7 +336,7 @@ const issueService = {
       const response = await api.get<{ issues: Issue[]; pagination: any }>('/issues/nearby', {
         params: { latitude, longitude, radius }
       });
-      return response.data.issues;
+      return normalizeIssuesArray(response.data.issues);
     } catch (error) {
       throw error;
     }
@@ -334,7 +370,7 @@ const issueService = {
       });
       
       return {
-        data: response.data.issues,
+        data: normalizeIssuesArray(response.data.issues),
         pagination: {
           total: response.data.pagination.total,
           hasNextPage: page < response.data.pagination.pages

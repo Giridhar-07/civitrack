@@ -6,6 +6,8 @@ import { Op } from 'sequelize';
 import { generateToken } from '../utils/auth';
 import { successResponse, errorResponse, badRequestResponse, unauthorizedResponse } from '../utils/response';
 import { getFileUrl } from '../utils/upload';
+import { sendVerificationEmail, verifyEmailToken, sendPasswordResetEmail, verifyResetToken } from '../utils/email';
+import { isImageKitConfigured, uploadImage, getFileDetails } from '../utils/imagekit';
 
 // Register a new user
 export const register = async (req: Request, res: Response): Promise<Response> => {
@@ -29,7 +31,10 @@ export const register = async (req: Request, res: Response): Promise<Response> =
     });
 
     if (existingUser) {
-      return badRequestResponse(res, 'User already exists with this email or username');
+      return badRequestResponse(
+        res,
+        'An account with this email or username already exists. Please use a different one or log in.'
+      );
     }
 
     // Create new user
@@ -39,7 +44,16 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       email,
       password,
       role: 'user',
+      isEmailVerified: false,
     });
+
+    // Send verification email
+    try {
+      await sendVerificationEmail(user);
+    } catch (emailError) {
+      console.error('Failed to send verification email:', emailError);
+      // Continue with registration even if email fails
+    }
 
     // Generate JWT token
     const token = generateToken(user);
@@ -51,10 +65,11 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       name: user.name,
       email: user.email,
       role: user.role,
+      isEmailVerified: user.isEmailVerified,
       createdAt: user.createdAt,
     };
 
-    return successResponse(res, { user: userData, token }, 'User registered successfully', 201);
+    return successResponse(res, { user: userData, token }, 'User registered successfully. Please check your email to verify your account.', 201);
   } catch (error) {
     console.error('Registration error:', error);
     return errorResponse(res, 'Error registering user');
@@ -70,24 +85,96 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
       return badRequestResponse(res, 'Validation error', errors.array().map(err => err.msg));
     }
 
-    const { email, password } = req.body;
+    const { email, password, rememberMe } = req.body;
 
     // Find user by email
     const user = await User.findOne({ where: { email } });
     if (!user) {
-      // Consistent 401 response for invalid credentials
-      return unauthorizedResponse(res, 'Invalid credentials');
+      // Clearer message for unregistered email
+      return unauthorizedResponse(res, 'No account found with that email');
+    }
+
+    const now = new Date();
+
+    // If previously locked but lockout expired, clear lockout state
+    if (user.lockoutUntil && new Date(user.lockoutUntil).getTime() <= now.getTime()) {
+      user.failedLoginAttempts = 0;
+      user.lastFailedLoginAt = null as any;
+      user.lockoutUntil = null as any;
+      user.isLocked = false;
+      await user.save();
+    }
+
+    // If currently locked, block login
+    if (user.lockoutUntil && new Date(user.lockoutUntil).getTime() > now.getTime()) {
+      const msRemaining = new Date(user.lockoutUntil).getTime() - now.getTime();
+      const minutesRemaining = Math.ceil(msRemaining / 60000);
+      return errorResponse(
+        res,
+        `Your account is temporarily locked due to multiple failed login attempts. Please try again in about ${minutesRemaining} minute(s).`,
+        403
+      );
     }
 
     // Check password
     const isPasswordValid = await user.comparePassword(password);
     if (!isPasswordValid) {
-      // Consistent 401 response for invalid credentials
-      return unauthorizedResponse(res, 'Invalid credentials');
+      // Increment failed attempts within a rolling window
+      const windowMs = (parseInt(process.env.FAILED_ATTEMPTS_WINDOW_MINUTES || '15', 10)) * 60 * 1000;
+      const lastAt = user.lastFailedLoginAt ? new Date(user.lastFailedLoginAt).getTime() : 0;
+      const withinWindow = lastAt && (now.getTime() - lastAt) <= windowMs;
+
+      const currentAttempts = withinWindow ? (user.failedLoginAttempts || 0) + 1 : 1;
+      user.failedLoginAttempts = currentAttempts;
+      user.lastFailedLoginAt = now;
+
+      const maxAttempts = parseInt(process.env.MAX_FAILED_LOGIN_ATTEMPTS || '5', 10);
+      const lockoutMinutes = parseInt(process.env.LOCKOUT_DURATION_MINUTES || '15', 10);
+
+      if (currentAttempts >= maxAttempts) {
+        user.lockoutUntil = new Date(now.getTime() + lockoutMinutes * 60 * 1000);
+        user.isLocked = true;
+        await user.save();
+        return errorResponse(
+          res,
+          `Too many failed login attempts. Your account has been locked for ${lockoutMinutes} minute(s).`,
+          403
+        );
+      }
+
+      await user.save();
+      return unauthorizedResponse(res, 'Incorrect password');
     }
 
-    // Generate JWT token
-    const token = generateToken(user);
+    // If password is valid but email not verified, block login with 403
+    if (user.isEmailVerified === false) {
+      // Clear any failed attempts on correct password
+      if (user.failedLoginAttempts || user.lockoutUntil || user.isLocked) {
+        user.failedLoginAttempts = 0;
+        user.lastFailedLoginAt = null as any;
+        user.lockoutUntil = null as any;
+        user.isLocked = false;
+        await user.save();
+      }
+
+      return errorResponse(
+        res,
+        'Your email is not verified. Please check your inbox or request a new verification email.',
+        403
+      );
+    }
+
+    // Successful login: clear lockout state if any
+    if (user.failedLoginAttempts || user.lockoutUntil || user.isLocked) {
+      user.failedLoginAttempts = 0;
+      user.lastFailedLoginAt = null as any;
+      user.lockoutUntil = null as any;
+      user.isLocked = false;
+      await user.save();
+    }
+
+    // Generate JWT token with remember me option
+    const token = generateToken(user, rememberMe === true);
 
     // Return user data (excluding password) and token
     const userData = {
@@ -100,7 +187,7 @@ export const login = async (req: Request, res: Response): Promise<Response> => {
       createdAt: user.createdAt,
     };
 
-    return successResponse(res, { user: userData, token }, 'Login successful');
+    return successResponse(res, { user: userData, token, tokenExpiry: rememberMe ? '30 days' : '12 hours' }, 'Login successful');
   } catch (error) {
     console.error('Login error:', error);
     
@@ -143,13 +230,25 @@ export const getCurrentUser = async (req: Request, res: Response): Promise<Respo
   }
 };
 
+import path from 'path';
+import fs from 'fs';
+
 // Upload profile image
 export const uploadProfileImage = async (req: Request, res: Response): Promise<Response> => {
   try {
     const userId = (req as any).user.id;
-    
+
+    // If multer flagged invalid type via fileFilter
+    const fileValidationError = (req as any).fileValidationError as string | undefined;
+    const fileValidationMessage = (req as any).fileValidationMessage as string | undefined;
+    if (fileValidationError) {
+      const fieldErrors = { image: fileValidationMessage || 'Invalid image file type' } as Record<string, string>;
+      return badRequestResponse(res, 'Invalid file type', fieldErrors, 'INVALID_FILE_TYPE');
+    }
+
+    // Check if file exists (after fileFilter)
     if (!req.file) {
-      return badRequestResponse(res, 'No image file provided');
+      return badRequestResponse(res, 'No image file provided', undefined, 'NO_FILE_PROVIDED');
     }
     
     const user = await User.findByPk(userId);
@@ -157,15 +256,59 @@ export const uploadProfileImage = async (req: Request, res: Response): Promise<R
       return unauthorizedResponse(res, 'User not found');
     }
     
-    // Get the relative file URL and build an absolute URL with current host
-    const relativePath = getFileUrl(req.file.filename);
-    const origin = `${req.protocol}://${req.get('host')}`;
-    const profileImage = `${origin}${relativePath}`;
-    
-    // Update user with profile image URL
-    await user.update({ profileImage });
-    
-    return successResponse(res, { profileImage }, 'Profile image updated successfully');
+    // Check if ImageKit is configured
+    if (process.env.IMAGEKIT_URL_ENDPOINT && process.env.IMAGEKIT_PUBLIC_KEY && process.env.IMAGEKIT_PRIVATE_KEY) {
+      // Import the ImageKit utilities
+      const { uploadImage } = await import('../utils/imagekit');
+      
+      // Read file buffer from disk (multer.diskStorage saves files to disk)
+      const localFilePath = (req.file as any).path as string;
+      console.log(`[uploadProfileImage] Local file path: ${localFilePath}`); // Log 1
+      try {
+        const fileBuffer = await fs.promises.readFile(localFilePath);
+        console.log(`[uploadProfileImage] File buffer size: ${fileBuffer.length} bytes`); // Log 2
+        const fileName = `${userId}_profile_${Date.now()}${path.extname(req.file.originalname)}`;
+        console.log(`[uploadProfileImage] Generated file name: ${fileName}`); // Log 3
+        
+        // Upload to ImageKit
+        const uploadResponse = await uploadImage(fileBuffer, fileName);
+        console.log(`[uploadProfileImage] ImageKit upload response:`, uploadResponse); // Log 4
+        
+        // Clean up local temp file after successful upload
+        await fs.promises.unlink(localFilePath).catch(() => {});
+        console.log(`[uploadProfileImage] Local temp file deleted: ${localFilePath}`); // Log 5
+        
+        // Update user with ImageKit URL and fileId
+        const profileImage = uploadResponse.url;
+        console.log(`[uploadProfileImage] Updating user profile with image URL: ${profileImage} and file ID: ${uploadResponse.fileId}`); // Log 6
+        await user.update({
+          profileImage,
+          profileImageFileId: uploadResponse.fileId // Store fileId for future deletion
+        });
+        console.log(`[uploadProfileImage] User profile updated successfully.`); // Log 7
+        
+        return successResponse(res, { profileImage }, 'Profile image uploaded to ImageKit successfully');
+      } catch (ikErr) {
+        console.error('[uploadProfileImage] ImageKit specific error during upload or file cleanup:', ikErr); // Log 8
+        // Attempt to remove local file if upload failed
+        const localFilePath = (req.file as any)?.path as string | undefined;
+        if (localFilePath) {
+          await fs.promises.unlink(localFilePath).catch(() => {});
+        }
+        throw ikErr;
+      }
+    } else {
+      // Fallback to local storage if ImageKit is not configured
+      // Get the relative file URL and build an absolute URL with current host
+      const relativePath = getFileUrl(req.file.filename);
+      const origin = `${req.protocol}://${req.get('host')}`;
+      const profileImage = `${origin}${relativePath}`;
+      
+      // Update user with profile image URL
+      await user.update({ profileImage });
+      
+      return successResponse(res, { profileImage }, 'Profile image updated successfully');
+    }
   } catch (error) {
     console.error('Profile image upload error:', error);
     return errorResponse(res, 'Error uploading profile image');
@@ -407,6 +550,7 @@ export const deleteUserByAdmin = async (req: Request, res: Response): Promise<Re
 
     // Optional: prevent deleting self
     const currentUser = (req as any).user;
+    
     if (currentUser && currentUser.id === id) {
       return badRequestResponse(res, 'You cannot delete your own account');
     }
@@ -416,5 +560,119 @@ export const deleteUserByAdmin = async (req: Request, res: Response): Promise<Re
   } catch (error) {
     console.error('Admin delete user error:', error);
     return errorResponse(res, 'Error deleting user');
+  }
+};
+
+// Verify email
+export const verifyEmail = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { token } = req.body;
+    
+    if (!token) {
+      return badRequestResponse(res, 'Verification token is required');
+    }
+    
+    // Verify token
+    const user = await verifyEmailToken(token);
+    
+    if (!user) {
+      return badRequestResponse(res, 'Invalid or expired verification token');
+    }
+    
+    return successResponse(res, { verified: true }, 'Email verified successfully');
+  } catch (error) {
+    console.error('Email verification error:', error);
+    return errorResponse(res, 'Error verifying email');
+  }
+};
+
+// Request password reset
+export const requestPasswordReset = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return badRequestResponse(res, 'Email is required');
+    }
+    
+    // Find user by email
+    const user = await User.findOne({ where: { email } });
+    
+    // Always return success even if user not found (security best practice)
+    if (!user) {
+      return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
+    }
+    
+    // Send password reset email
+    await sendPasswordResetEmail(user);
+    
+    return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
+  } catch (error) {
+    console.error('Password reset request error:', error);
+    // Still return success to prevent email enumeration
+    return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
+  }
+};
+
+// Reset password
+export const resetPassword = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { token, password } = req.body;
+    
+    if (!token || !password) {
+      return badRequestResponse(res, 'Token and new password are required');
+    }
+    
+    // Validate password
+    if (password.length < 6) {
+      return badRequestResponse(res, 'Password must be at least 6 characters long');
+    }
+    
+    // Verify token
+    const user = await verifyResetToken(token);
+    
+    if (!user) {
+      return badRequestResponse(res, 'Invalid or expired reset token');
+    }
+    
+    // Update password
+    user.password = password;
+    user.resetPasswordToken = null as any;
+    user.resetPasswordExpires = null as any;
+    
+    await user.save();
+    
+    return successResponse(res, {}, 'Password reset successfully');
+  } catch (error) {
+    console.error('Password reset error:', error);
+    return errorResponse(res, 'Error resetting password');
+  }
+};
+
+// Resend verification email
+export const resendVerificationEmail = async (req: Request, res: Response): Promise<Response> => {
+  try {
+    const { email } = req.body;
+    
+    if (!email) {
+      return badRequestResponse(res, 'Email is required');
+    }
+    
+    // Find user by email
+    const user = await User.findOne({ where: { email } });
+    
+    // Always return success even if user not found (security best practice)
+    if (!user || user.isEmailVerified) {
+      return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
+    }
+    
+    // Send verification email
+    await sendVerificationEmail(user);
+    
+    return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
+  } catch (error) {
+    console.error('Resend verification email error:', error);
+    // Still return success to prevent email enumeration
+    return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
   }
 };

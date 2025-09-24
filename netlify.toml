@@ -1,11 +1,29 @@
 [build]
   base = "frontend"
-  command = "npm install && CI=false npm run build"
   publish = "build"
+  command = "npm install && cross-env CI=false npm run build"
 
 [build.environment]
-  REACT_APP_API_URL = "https://backend-tau-inky-24.vercel.app/api"
-  REACT_APP_SOCKET_URL = "https://backend-tau-inky-24.vercel.app"
+  CI = "false"
+  REACT_APP_API_URL = "https://civitrack.onrender.com/api"
+  REACT_APP_DEFAULT_THEME = "dark"
+
+# API proxy redirect
+[[redirects]]
+  from = "/api/*"
+  to = "https://civitrack.onrender.com/api/:splat"
+  status = 200
+  force = true
+  headers = {Access-Control-Allow-Origin = "*", Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS", Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma", Access-Control-Allow-Credentials = "true", Access-Control-Max-Age = "86400"}
+
+# Handle OPTIONS preflight requests for CORS
+[[redirects]]
+  from = "/api/*"
+  to = "https://civitrack.onrender.com/api/:splat"
+  status = 200
+  force = true
+  conditions = {Method = ["OPTIONS"]}
+  headers = {Access-Control-Allow-Origin = "*", Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH, OPTIONS", Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma", Access-Control-Allow-Credentials = "true", Access-Control-Max-Age = "86400"}
 
 # Specific SPA redirects for known routes
 [[redirects]]

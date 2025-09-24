@@ -59,12 +59,23 @@ const useFiltering = <T extends Record<string, any>>(
         // Skip null, undefined, or empty string filters
         if (value === null || value === undefined || value === '') return true;
 
+        // Handle case where item doesn't have the key
+        if (!(key in item)) return false;
+        
         const itemValue = item[key];
+        
+        // Handle case where itemValue is null or undefined
+        if (itemValue === null || itemValue === undefined) return false;
 
         // Handle different filter value types
         if (typeof value === 'string') {
           // Case-insensitive string comparison
-          return String(itemValue).toLowerCase().includes(value.toLowerCase());
+          try {
+            return String(itemValue).toLowerCase().includes(value.toLowerCase());
+          } catch (e) {
+            // If conversion to string fails, return false
+            return false;
+          }
         } else if (typeof value === 'number') {
           // Exact number match
           return itemValue === value;
@@ -73,7 +84,8 @@ const useFiltering = <T extends Record<string, any>>(
           return itemValue === value;
         }
 
-        return false;
+        // Default case: direct equality comparison
+        return itemValue === value;
       });
     },
     []
@@ -84,19 +96,45 @@ const useFiltering = <T extends Record<string, any>>(
     (a: T, b: T, sortConfig: SortConfig): number => {
       if (!sortConfig.field || !sortConfig.direction) return 0;
 
+      // Handle cases where field doesn't exist in one or both objects
+      if (!(sortConfig.field in a) && !(sortConfig.field in b)) return 0;
+      if (!(sortConfig.field in a)) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (!(sortConfig.field in b)) return sortConfig.direction === 'asc' ? 1 : -1;
+      
       const aValue = a[sortConfig.field];
       const bValue = b[sortConfig.field];
+      
+      // Handle null or undefined values
+      if (aValue === null || aValue === undefined) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (bValue === null || bValue === undefined) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
 
       // Handle different value types
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         return sortConfig.direction === 'asc'
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
-      } else {
-        if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
-        if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
-        return 0;
       }
+      
+      // Handle date strings by converting to Date objects
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        const dateA = new Date(aValue);
+        const dateB = new Date(bValue);
+        
+        if (!isNaN(dateA.getTime()) && !isNaN(dateB.getTime())) {
+          return sortConfig.direction === 'asc'
+            ? dateA.getTime() - dateB.getTime()
+            : dateB.getTime() - dateA.getTime();
+        }
+      }
+      
+      // Default comparison for numbers and other types
+      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
+      return 0;
     },
     []
   );

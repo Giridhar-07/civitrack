@@ -6,10 +6,17 @@ interface ApiResponse<T> {
   message?: string;
   data?: T;
   error?: string | string[];
+  errorCode?: string;
+  fieldErrors?: Record<string, string[] | string>;
 }
 
 // Success response
-export const successResponse = <T>(res: Response, data: T, message: string = 'Success', statusCode: number = 200): Response => {
+export const successResponse = <T>(
+  res: Response,
+  data: T,
+  message: string = 'Success',
+  statusCode: number = 200
+): Response => {
   const response: ApiResponse<T> = {
     success: true,
     message,
@@ -19,11 +26,20 @@ export const successResponse = <T>(res: Response, data: T, message: string = 'Su
 };
 
 // Error response
-export const errorResponse = (res: Response, message: string = 'An error occurred', statusCode: number = 500, errors?: string | string[]): Response => {
+export const errorResponse = (
+  res: Response,
+  message: string = 'An error occurred',
+  statusCode: number = 500,
+  errors?: string | string[],
+  errorCode?: string,
+  fieldErrors?: Record<string, string[] | string>
+): Response => {
   const response: ApiResponse<null> = {
     success: false,
     message,
     error: errors,
+    errorCode,
+    fieldErrors,
   };
   return res.status(statusCode).json(response);
 };
@@ -34,8 +50,16 @@ export const notFoundResponse = (res: Response, message: string = 'Resource not 
 };
 
 // Bad request response
-export const badRequestResponse = (res: Response, message: string = 'Bad request', errors?: string | string[]): Response => {
-  return errorResponse(res, message, 400, errors);
+export const badRequestResponse = (
+  res: Response,
+  message: string = 'Bad request',
+  errorsOrFieldErrors?: string | string[] | Record<string, string[] | string>,
+  errorCode?: string
+): Response => {
+  if (errorsOrFieldErrors && typeof errorsOrFieldErrors === 'object' && !Array.isArray(errorsOrFieldErrors)) {
+    return errorResponse(res, message, 400, undefined, errorCode, errorsOrFieldErrors);
+  }
+  return errorResponse(res, message, 400, errorsOrFieldErrors as string | string[] | undefined, errorCode);
 };
 
 // Unauthorized response

@@ -1,0 +1,6 @@
+# Netlify redirects file
+# Handle API requests
+/api/*  https://backend-tau-inky-24.vercel.app/api/:splat  200
+
+# SPA fallback
+/*  /index.html  200

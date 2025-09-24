@@ -64,17 +64,19 @@ const HomePage: React.FC = () => {
   
   // Filtered issues based on search term and category
   const filteredIssues = React.useMemo(() => {
+    if (!issues) return [];
     if (!searchTerm && searchCategory === 'all') return issues;
     
-    return issues?.filter(issue => {
-      const matchesTerm = searchTerm ? 
-        issue.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        issue.description.toLowerCase().includes(searchTerm.toLowerCase()) : 
-        true;
+    return issues.filter(issue => {
+      // Safely handle search term with proper type checking
+      const term = typeof searchTerm === 'string' ? searchTerm.toLowerCase() : '';
+      const matchesTerm = !term || 
+        (issue.title && issue.title.toLowerCase().includes(term)) || 
+        (issue.description && issue.description.toLowerCase().includes(term));
         
-      const matchesCategory = searchCategory !== 'all' ? 
-        issue.category === searchCategory : 
-        true;
+      // Safely handle category filtering
+      const category = typeof searchCategory === 'string' ? searchCategory : 'all';
+      const matchesCategory = category === 'all' || issue.category === category;
         
       return matchesTerm && matchesCategory;
     });
@@ -104,6 +106,13 @@ const HomePage: React.FC = () => {
 
   // Request geolocation with graceful fallbacks and user feedback
   function requestGeolocation() {
+    // Set loading state immediately to show progress
+    setIssuesState(prev => ({
+      ...prev,
+      loading: true,
+      error: null
+    }));
+    
     // First, fetch all issues regardless of location to ensure we display all previously reported issues
     issueService.getAllIssues().then(allIssues => {
       if (allIssues && allIssues.length > 0) {
@@ -117,6 +126,7 @@ const HomePage: React.FC = () => {
       }
     }).catch(err => {
       console.error('Failed to fetch all issues:', err);
+      // Don't set error state here as we'll try geolocation next
     });
     
     if (!navigator.geolocation) {
@@ -219,7 +229,7 @@ const HomePage: React.FC = () => {
                 position: 'relative'
               }}
             >
-              <Box sx={{ position: 'relative', height: 400 }}>
+              <Box sx={{ position: 'relative', height: { xs: 260, sm: 360, md: 400 } }}>
                 {carouselItems.map((item, index) => (
                   <Box
                     key={item.id}
@@ -338,28 +348,32 @@ const HomePage: React.FC = () => {
           </Grid>
         </Grid>
 
-        <Grid container spacing={3} sx={{ minHeight: '70vh' }}> {/* Adjusted minHeight to prevent overlap */}
+        <Grid container spacing={3} sx={{ minHeight: { xs: 'auto', md: '70vh' } }}> {/* Adjusted minHeight to prevent overlap */}
           <Grid item xs={12}>
-            <Paper sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <Typography variant="h5" sx={{ mr: 2 }}>
+            <Paper sx={{ p: 2, display: 'flex', alignItems: { xs: 'stretch', sm: 'center' }, justifyContent: 'space-between', flexWrap: { xs: 'wrap', sm: 'nowrap' }, gap: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', flex: 1, minWidth: 0 }}>
+                <Typography variant="h5" sx={{ mr: 2, flexShrink: 0 }}>
                   Community Issues
                 </Typography>
                 <Tabs
                   value={viewMode}
                   onChange={(_, newValue) => setViewMode(newValue)}
                   aria-label="view mode tabs"
+                  variant={isMobile ? 'scrollable' : 'standard'}
+                  scrollButtons={isMobile ? 'auto' : false}
+                  allowScrollButtonsMobile
                 >
                   <Tab label="Map View" value="map" icon={<MapIcon />} iconPosition="start" />
                   <Tab label="List View" value="list" icon={<ListIcon />} iconPosition="start" />
                 </Tabs>
               </Box>
-              <Box>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: { xs: 'flex-start', md: 'flex-end' }, width: { xs: '100%', md: 'auto' }, mt: { xs: 1, md: 0 } }}>
                 <Button
                   variant="outlined"
                   startIcon={<RefreshIcon />}
                   onClick={handleRefresh}
-                  sx={{ mr: 1 }}
+                  size={isMobile ? 'small' : 'medium'}
+                  sx={{ whiteSpace: 'nowrap' }}
                 >
                   Refresh
                 </Button>
@@ -367,7 +381,8 @@ const HomePage: React.FC = () => {
                   variant="outlined"
                   startIcon={<MyLocationIcon />}
                   onClick={requestGeolocation}
-                  sx={{ mr: 1 }}
+                  size={isMobile ? 'small' : 'medium'}
+                  sx={{ whiteSpace: 'nowrap' }}
                 >
                   Use My Location
                 </Button>
@@ -375,6 +390,8 @@ const HomePage: React.FC = () => {
                   variant="contained"
                   startIcon={<AddIcon />}
                   onClick={() => navigate('/report')}
+                  size={isMobile ? 'small' : 'medium'}
+                  sx={{ whiteSpace: 'nowrap' }}
                 >
                   Report Issue
                 </Button>

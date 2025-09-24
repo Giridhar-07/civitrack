@@ -1,72 +1,128 @@
-import React, { useState } from 'react';
-import { TextField, Button, Typography, Box, Paper, Link, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { TextField, Button, Typography, Box, Paper, Link, CircularProgress, FormControlLabel, Checkbox, Alert } from '@mui/material';
+import { useNavigate, useLocation } from 'react-router-dom';
 import authService, { LoginCredentials } from '../../services/authService';
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [credentials, setCredentials] = useState<LoginCredentials>({
     email: '',
-    password: ''
+    password: '',
+    rememberMe: false
   });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [verificationMessage, setVerificationMessage] = useState<string | null>(null);
+  const [resendLoading, setResendLoading] = useState<boolean>(false);
+  
+  useEffect(() => {
+    // Check if redirected from registration or email verification
+    const state = location.state as any;
+    if (state?.showVerificationMessage) {
+      setVerificationMessage('Please check your email to verify your account before logging in.');
+      if (state.email) {
+        setCredentials(prev => ({
+          ...prev,
+          email: state.email
+        }));
+      }
+    } else if (state?.emailVerified && state?.justVerified) {
+      setVerificationMessage('Your email has been successfully verified! You can now log in.');
+    }
+  }, [location]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const { name, value, checked, type } = e.target;
     setCredentials(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
     setLoading(true);
+    setError(null);
+    setVerificationMessage(null);
 
     try {
-      console.log('Submitting login form with credentials:', { email: credentials.email });
       const response = await authService.login(credentials);
-      console.log('Login successful, navigating to home page');
-      
-      // Force a full page reload to ensure all components update with the new auth state
-      // This is more reliable than just navigating
+      console.log('Login successful');
+      localStorage.setItem('token', response.token);
       window.location.href = '/';
-      
-      return response;
+      return null;
     } catch (err: any) {
-      console.error('Login failed:', err);
-      
-      // Extract detailed error message from response
-      let errorMessage = 'Login failed. Please try again.';
-      
-      // Handle different error types
-      if (err.errorCode === 'NETWORK_ERROR') {
-        // Handle network errors
-        errorMessage = err.message || 'Network connection issue. Please check your internet connection and try again.';
-      } else if (err.errorCode === 'TIMEOUT_ERROR') {
-        // Handle timeout errors
-        errorMessage = err.message || 'Server response timeout. The system will automatically retry. Please wait a moment.';
-      } else if (err.response?.status === 429 || err.statusCode === 429 || err.status === 429) {
-        // Handle rate limiting errors
-        const retryAfter = err.retryAfter || 60;
-        errorMessage = `Too many login attempts. Please try again after ${Math.ceil(retryAfter / 60)} minute(s).`;
-      } else if (err.response?.status === 401 || err.statusCode === 401 || err.status === 401) {
-        // Handle authentication errors - check response.status, statusCode and status properties
-        errorMessage = 'Invalid email or password. Please try again.';
-      } else if (err.response?.data?.message) {
-        // Use server error message if available
-        errorMessage = err.response.data.message;
-      } else if (err.message) {
-        // Use the error message if available
-        errorMessage = err.message;
+      console.error('Login error:', err);
+
+      // Normalize common fields from standardized error shape
+      const status: number | undefined =
+        typeof err?.statusCode === 'number' ? err.statusCode :
+        (typeof err?.status === 'number' ? err.status : err?.response?.status);
+      const errorCode: string | undefined = err?.errorCode;
+      const isNetwork: boolean = err?.isNetworkError === true || errorCode === 'NETWORK_ERROR' || errorCode === 'OFFLINE_ERROR';
+      const isTimeout: boolean = errorCode === 'TIMEOUT_ERROR' || err?.code === 'ECONNABORTED' || (typeof err?.message === 'string' && err.message.toLowerCase().includes('timeout'));
+      const retryAfterHeader = err?.response?.headers?.['retry-after'];
+      const retryAfter: number | undefined = typeof err?.retryAfter === 'number' ? err.retryAfter : (retryAfterHeader ? parseInt(retryAfterHeader, 10) : undefined);
+
+      // Handle network/timeout issues first
+      if (isNetwork) {
+        setError('Unable to connect to the server. Please try again later.');
+        return null;
       }
-      
-      setError(errorMessage);
+      if (isTimeout) {
+        setError('Connection timed out. The server is taking too long to respond. Please try again later.');
+        return null;
+      }
+
+      // Rate limiting
+      if (status === 429) {
+        const minutes = Math.ceil((retryAfter ?? 60) / 60);
+        setError(`Too many login attempts. Please try again after ${minutes} minute(s).`);
+        return null;
+      }
+
+      // Auth failure
+      if (status === 401) {
+        setError('Invalid email or password. Please try again.');
+        return null;
+      }
+
+      // Unverified email: prefer standardized flags/codes
+      const isUnverified = err?.isUnverifiedEmail === true || errorCode === 'EMAIL_NOT_VERIFIED' || (status === 403 && typeof err?.message === 'string' && /not verified|verify/i.test(err.message));
+      if (isUnverified) {
+        setVerificationMessage(err?.message || 'Your email is not verified. Please check your inbox or request a new verification email.');
+        setError(null);
+        return null;
+      }
+
+      // Default error message fallback
+      const fallbackMsg = (typeof err?.message === 'string' && err.message)
+        || err?.response?.data?.message
+        || 'An error occurred during login. Please try again.';
+      setError(fallbackMsg);
       return null;
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResendVerification = async () => {
+    if (!credentials.email) {
+      setError('Please enter your email address to resend verification');
+      return;
+    }
+    
+    setResendLoading(true);
+    try {
+      await authService.resendVerificationEmail(credentials.email);
+      setVerificationMessage('Verification email has been sent. Please check your inbox.');
+      setError(null);
+    } catch (err: any) {
+      console.error('Resend verification error:', err);
+      setError(err?.message || 'Failed to resend verification email. Please try again.');
+    } finally {
+      setResendLoading(false);
     }
   };
 
@@ -75,6 +131,25 @@ const LoginForm: React.FC = () => {
       <Typography variant="h5" component="h1" gutterBottom align="center">
         Sign In
       </Typography>
+      
+      {verificationMessage && (
+        <Alert 
+          severity="info" 
+          sx={{ mb: 3 }}
+          action={
+            <Button 
+              color="inherit" 
+              size="small" 
+              onClick={handleResendVerification}
+              disabled={resendLoading}
+            >
+              {resendLoading ? 'Sending...' : 'Resend'}
+            </Button>
+          }
+        >
+          {verificationMessage}
+        </Alert>
+      )}
       
       {error && (
         <Box sx={{ mb: 2, p: 2, backgroundColor: 'rgba(244, 67, 54, 0.1)', borderRadius: 1 }}>
@@ -119,6 +194,19 @@ const LoginForm: React.FC = () => {
               color: '#fff',
             },
           }}
+        />
+        
+        <FormControlLabel
+          control={
+            <Checkbox
+              name="rememberMe"
+              checked={credentials.rememberMe}
+              onChange={handleChange}
+              color="primary"
+            />
+          }
+          label="Remember me"
+          sx={{ mt: 1, mb: 2, color: '#fff' }}
         />
         
         <TextField
@@ -174,6 +262,21 @@ const LoginForm: React.FC = () => {
         </Button>
         
         <Box sx={{ textAlign: 'center', mt: 2 }}>
+          <Typography variant="body2" sx={{ color: '#aaa', mb: 1 }}>
+            <Link 
+              onClick={() => navigate('/forgot-password')} 
+              sx={{ 
+                cursor: 'pointer', 
+                color: '#4CAF50',
+                textDecoration: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                }
+              }}
+            >
+              Forgot password?
+            </Link>
+          </Typography>
           <Typography variant="body2" sx={{ color: '#aaa' }}>
             Don't have an account?{' '}
             <Link 

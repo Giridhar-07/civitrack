@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import { Box, Container } from '@mui/material';
 import Header from './Header';
 import Footer from './Footer';
 import { User } from '../../types';
@@ -11,44 +11,6 @@ import Chatbot from '../common/Chatbot';
 interface LayoutProps {
   children: React.ReactNode;
 }
-
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#4CAF50',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-    background: {
-      default: '#121212',
-      paper: '#1e1e1e',
-    },
-  },
-  typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-    button: {
-      textTransform: 'none',
-    },
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          borderRadius: 8,
-        },
-      },
-    },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          borderRadius: 8,
-        },
-      },
-    },
-  },
-});
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -148,39 +110,36 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <CssBaseline />
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          minHeight: '100vh',
-          backgroundColor: '#121212',
-        }}
-      >
-        <Header user={user} onLogout={handleLogout} />
-        {!isOnline && (
-          <Box 
-            sx={{ 
-              bgcolor: 'warning.main', 
-              color: 'warning.contrastText', 
-              py: 0.5, 
-              textAlign: 'center',
-              fontSize: '0.875rem',
-              fontWeight: 'medium'
-            }}
-          >
-            You are currently offline. Some features may be limited.
-          </Box>
-        )}
-        <Container component="main" sx={{ flexGrow: 1, py: 4 }}>
-          {children}
-        </Container>
-        <NetworkStatus />
-        <Footer />
-        <Chatbot />
-      </Box>
-    </ThemeProvider>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '100vh',
+        bgcolor: 'background.default',
+      }}
+    >
+      <Header user={user} onLogout={handleLogout} />
+      {!isOnline && (
+        <Box 
+          sx={{ 
+            bgcolor: 'warning.main', 
+            color: 'warning.contrastText', 
+            py: 0.5, 
+            textAlign: 'center',
+            fontSize: '0.875rem',
+            fontWeight: 'medium'
+          }}
+        >
+          You are currently offline. Some features may be limited.
+        </Box>
+      )}
+      <Container component="main" sx={{ flexGrow: 1, py: 4 }}>
+        {children}
+      </Container>
+      <NetworkStatus />
+      <Footer />
+      <Chatbot />
+    </Box>
   );
 };
 
