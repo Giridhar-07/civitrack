@@ -244,7 +244,7 @@ const healthHandler = async (_req: Request, res: Response) => {
 
   const overallStatus = dbHealthy && emailHealthy ? 'ok' : (dbHealthy || emailHealthy ? 'degraded' : 'unhealthy');
 
-  return res.status(overallStatus === 'ok' ? 200 : 503).json({
+  return res.status(200).json({
     status: overallStatus,
     timestamp,
     version,
