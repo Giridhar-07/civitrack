@@ -102,7 +102,7 @@ const IssueCard: React.FC<IssueCardProps> = ({
             <CardMedia
               component="img"
               height="140"
-              image={issue.photos[0]}
+              image={issue.photos && issue.photos[0] ? issue.photos[0] : `${process.env.PUBLIC_URL || ''}/assets/placeholder.svg`}
              alt={issue.title}
               sx={{ 
                 objectFit: 'cover',

@@ -1,11 +1,52 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Paper, Box, Typography, Button } from '@mui/material';
 import Layout from '../components/layout/Layout';
-import InfiniteScrollMap from '../components/map/InfiniteScrollMap';
+import IssueMap from '../components/map/IssueMap';
 import { useNavigate } from 'react-router-dom';
+import issueService from '../services/issueService';
+import { Issue } from '../types';
 
 const MapPage: React.FC = () => {
   const navigate = useNavigate();
+  const [issues, setIssues] = useState<Issue[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [center, setCenter] = useState<[number, number]>([40.7128, -74.0060]);
+
+  // Fetch all issues to display as markers on the map
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const allIssues = await issueService.getAllIssues();
+        if (mounted) {
+          setIssues(Array.isArray(allIssues) ? allIssues : []);
+        }
+      } catch (e) {
+        console.error('Failed to load issues for MapPage:', e);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+    return () => { mounted = false; };
+  }, []);
+
+  // Attempt to center map to user's current location on mount
+  useEffect(() => {
+    if (!('geolocation' in navigator)) {
+      console.warn('Geolocation not supported by this browser');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        setCenter([latitude, longitude]);
+      },
+      (err) => {
+        console.warn('Geolocation error:', err);
+      },
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 }
+    );
+  }, []);
 
   return (
     <Layout>
@@ -18,7 +59,17 @@ const MapPage: React.FC = () => {
         </Box>
 
         <Paper elevation={3} sx={{ borderRadius: 2, overflow: 'hidden', height: 'calc(100vh - 240px)', minHeight: '500px' }}>
-          <InfiniteScrollMap center={[40.7128, -74.0060]} initialZoom={12} height="100%" />
+          <IssueMap
+            issues={issues}
+            center={center}
+            zoom={12}
+            height="100%"
+          />
+          {loading && (
+            <Box sx={{ p: 2 }}>
+              <Typography variant="body2">Loading issues...</Typography>
+            </Box>
+          )}
         </Paper>
       </Container>
     </Layout>

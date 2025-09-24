@@ -11,3 +11,64 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Map marker styling based on issue status */
+.status-reported img {
+  filter: hue-rotate(0deg) saturate(1.5); /* Red */
+}
+
+.status-under_review img {
+  filter: hue-rotate(30deg) saturate(1.5); /* Orange */
+}
+
+.status-in_progress img {
+  filter: hue-rotate(210deg) saturate(1.5); /* Blue */
+}
+
+.status-resolved img {
+  filter: hue-rotate(120deg) saturate(1.5); /* Green */
+}
+
+.status-closed img {
+  filter: grayscale(1); /* Grey */
+}
+
+/* Improve map responsiveness */
+.leaflet-container {
+  font: inherit;
+  position: relative;
+  outline: none;
+  /* Prevent blue highlight on mobile tap */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Improve popup styling for mobile */
+.leaflet-popup-content {
+  margin: 8px !important;
+  line-height: 1.4 !important;
+  font-size: 14px !important;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 8px !important;
+}
+
+/* Improve mobile touch targets */
+.leaflet-touch .leaflet-bar a {
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+}
+
+/* Ensure map tiles load properly */
+.map-tiles {
+  z-index: 1;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 600px) {
+  .leaflet-popup-content {
+    max-width: 220px !important;
+    font-size: 13px !important;
+  }
+}

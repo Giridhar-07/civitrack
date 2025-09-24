@@ -75,6 +75,35 @@ const ClickSelectHandler: React.FC<{ enabled: boolean; onSelect?: (loc: Location
   return null;
 };
 
+const MapReadyHandler: React.FC = () => {
+  const map = useMap();
+
+  useEffect(() => {
+    console.log('Map is ready');
+    // Force a re-render to ensure markers are displayed
+    setTimeout(() => {
+      if (map) {
+        map.invalidateSize();
+        console.log('Map invalidated to ensure markers display correctly');
+        
+        // Additional check to ensure map is fully initialized
+        if (map.getContainer()) {
+          console.log('Map container is available');
+          // Force another invalidation after a short delay
+          setTimeout(() => {
+            map.invalidateSize();
+            console.log('Map invalidated again for marker visibility');
+          }, 500);
+        }
+      } else {
+        console.warn('Map object is not available');
+      }
+    }, 300); // Increased timeout for better reliability
+  }, [map]);
+
+  return null;
+};
+
 const IssueMap: React.FC<IssueMapProps> = ({
   issues,
   center = [39.8283, -98.5795], // Center of the US for wider view
@@ -99,6 +128,15 @@ const IssueMap: React.FC<IssueMapProps> = ({
     
     return () => clearTimeout(loadingTimer);
   }, []);
+  
+  // Log issues data to help debug map pin display issues
+  useEffect(() => {
+    if (issues && Array.isArray(issues)) {
+      console.log(`IssueMap: Received ${issues.length} issues`);
+    } else {
+      console.log('IssueMap: No issues received or issues is not an array', issues);
+    }
+  }, [issues]);
   
   // Handle map click for reporting at any location
   const handleMapClick = (location: Location) => {
@@ -130,10 +168,15 @@ const IssueMap: React.FC<IssueMapProps> = ({
 
   // Custom icon for each issue based on status
   const getMarkerIcon = (status: IssueStatus) => {
+    // Create a custom colored marker based on status
     return new Icon({
-      ...defaultIcon.options,
       iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-      // In a real app, we would use different colored markers for each status
+      shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41],
+      popupAnchor: [1, -34],
+      shadowSize: [41, 41],
+      className: `status-${status.toLowerCase()}` // Add a class for CSS styling
     });
   };
 
@@ -160,20 +203,29 @@ const IssueMap: React.FC<IssueMapProps> = ({
 
   return (
     <Box sx={{ height, width: '100%', position: 'relative' }}>
-      {/* Report mode toggle button */}
+      {/* Report mode toggle button - improved for mobile */}
       <Box sx={{ 
         position: 'absolute', 
         top: 10, 
         right: 10, 
-        zIndex: 1000 
+        zIndex: 1000,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 1
       }}>
         <Button 
           variant={reportMode ? "contained" : "outlined"} 
           color="primary" 
           onClick={() => setReportMode(!reportMode)}
           size="small"
+          sx={{
+            whiteSpace: 'nowrap',
+            minWidth: { xs: '40px', sm: 'auto' },
+            px: { xs: 1, sm: 2 },
+            fontSize: { xs: '0.75rem', sm: '0.875rem' }
+          }}
         >
-          {reportMode ? "Cancel" : "Report Issue Here"}
+          {reportMode ? "Cancel" : "Report Issue"}
         </Button>
       </Box>
       
@@ -209,25 +261,38 @@ const IssueMap: React.FC<IssueMapProps> = ({
         center={center as LatLngExpression} 
         zoom={zoom} 
         style={{ height: '100%', width: '100%', borderRadius: '8px' }}
-        ref={(map) => {
-          console.log('Map created successfully');
-        }}
-        whenReady={() => {
-          console.log('Map is ready');
-        }}
+        attributionControl={false} /* Move attribution to a better position for mobile */
+        zoomControl={false} /* We'll add zoom control in a better position */
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           maxZoom={19}
           keepBuffer={8}
           updateWhenZooming={false}
           updateWhenIdle={true}
+          className="map-tiles"
         />
+        
+        {/* Add attribution control in a better position for mobile */}
+        <div className="leaflet-control-attribution leaflet-control" 
+          style={{
+            position: 'absolute',
+            bottom: '0',
+            right: '0',
+            zIndex: 1000,
+            backgroundColor: 'rgba(255,255,255,0.7)',
+            padding: '0 5px',
+            fontSize: '10px',
+            borderRadius: '3px 0 0 0'
+          }}>
+          &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors
+        </div>
         <MapMoveHandler onMoveEnd={onMoveEnd} />
         <ClickSelectHandler enabled={reportMode || (!!selectable && !!onLocationSelect)} onSelect={handleMapClick} />
         
         <ChangeMapView center={center as LatLngExpression} />
+        <MapReadyHandler />
         
         {(Array.isArray(issues) ? issues : []).map((issue) => (
           <Marker 

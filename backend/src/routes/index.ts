@@ -3,6 +3,7 @@ import authRoutes from './authRoutes';
 import issueRoutes from './issueRoutes';
 import statusRequestRoutes from './statusRequestRoutes';
 import aiRoutes from './aiRoutes';
+import imagekitRoutes from './imagekitRoutes';
 
 const router = Router();
 
@@ -11,15 +12,7 @@ router.use('/auth', authRoutes);
 router.use('/issues', issueRoutes);
 router.use('/status-requests', statusRequestRoutes);
 router.use('/ai', aiRoutes);
+router.use('/imagekit', imagekitRoutes);
 
-// Health check endpoint - accessible both with and without /api prefix
-router.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'ok', 
-    message: 'Server is running',
-    timestamp: new Date().toISOString(),
-    version: process.env.npm_package_version || '1.0.0'
-  });
-});
 
 export default router;

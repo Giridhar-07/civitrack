@@ -1,7 +1,22 @@
 {
-  "private": true,
-  "workspaces": ["frontend", "backend"],
+  "name": "civitrack-root",
+  "version": "1.0.0",
+  "description": "Root package for CiviTrack deployment scripts",
+  "main": "index.js",
   "scripts": {
-    "build": "npm --prefix frontend ci && npm --prefix frontend run build"
+    "test-deployment": "node test-deployment.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/nodemailer": "^7.0.1",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.2",
+    "imagekit": "^6.0.0",
+    "nodemailer": "^7.0.6"
+  },
+  "devDependencies": {
+    "cross-env": "^10.0.0"
   }
 }

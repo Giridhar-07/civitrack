@@ -5,18 +5,20 @@ import mockService from './mockService';
 export interface LoginCredentials {
   email: string;
   password: string;
+  rememberMe?: boolean;
 }
 
 export interface RegisterData {
   username: string;
-  name: string;
   email: string;
   password: string;
+  name?: string;
 }
 
 export interface AuthResponse {
   user: User;
   token: string;
+  tokenExpiry?: string;
 }
 
 const authService = {
@@ -25,26 +27,96 @@ const authService = {
     try {
       // Use resolved API base URL which typically ends with '/api'
       const baseUrl = (BASE_URL || '').replace(/\/$/, '');
+      console.log('Checking backend health at:', baseUrl);
       
-      // Try the health endpoint relative to the API base URL
-      try {
-        const response = await fetch(`${baseUrl}/health`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          cache: 'no-store',
-          signal: AbortSignal.timeout(5000) // 5 second timeout
-        });
-        
-        if (response.ok) {
-          console.log('Health check successful via API /health endpoint');
-          return true;
-        }
-        console.warn(`Health check failed with status: ${response.status}`);
-      } catch (error) {
-        console.warn('Health check failed for API /health endpoint:', error);
+      // Define possible API URLs to try, including fallbacks
+      const possibleApiUrls = [
+        baseUrl,                                // Current API URL
+        baseUrl.replace('/api', ''),           // Root domain
+        'https://civitrack.onrender.com/api',  // Production URL
+        'https://civitrack.onrender.com',      // Production root
+        'http://localhost:5000/api',           // Local development
+      ];
+      
+      // Try multiple endpoints with different approaches
+      const endpoints = [];
+      
+      // Generate endpoints for each possible API URL
+      for (const apiUrl of possibleApiUrls) {
+        endpoints.push(
+          { url: `${apiUrl}/health`, method: 'GET' },
+          { url: `${apiUrl}/api/health`, method: 'GET' },
+          { url: `${apiUrl}/`, method: 'GET' },
+          { url: `${apiUrl}/status`, method: 'GET' }
+        );
       }
       
-      // If attempt fails, throw an error
+      // Try each endpoint until one succeeds with increased timeout
+      for (const endpoint of endpoints) {
+        try {
+          console.log(`Trying health check at: ${endpoint.url}`);
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second timeout
+          
+          const response = await fetch(endpoint.url, {
+            method: endpoint.method,
+            headers: { 
+              'Content-Type': 'application/json'
+            },
+            cache: 'no-store',
+            mode: 'cors',
+            credentials: 'include', // For cross-domain cookies
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          
+          if (response.ok) {
+            console.log(`Health check successful via ${endpoint.url}`);
+            // Store the successful URL for future use
+            if (typeof localStorage !== 'undefined') {
+              localStorage.setItem('last_successful_api_url', endpoint.url.replace('/health', '').replace('/api/health', ''));
+            }
+            return true;
+          }
+          console.warn(`Health check failed for ${endpoint.url} with status: ${response.status}`);
+        } catch (error) {
+          console.warn(`Health check failed for ${endpoint.url}:`, error);
+        }
+      }
+      
+      // If all attempts fail, try a direct ping to the domain without any path
+      try {
+        // Try multiple domain URLs
+        const domainUrls = [
+          baseUrl.split('/api')[0],
+          'https://civitrack.onrender.com',
+          'http://localhost:5000'
+        ];
+        
+        for (const domainUrl of domainUrls) {
+          console.log(`Trying direct domain ping at: ${domainUrl}`);
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+          
+          const response = await fetch(domainUrl, {
+            method: 'GET',
+            mode: 'no-cors', // Use no-cors as a last resort
+            cache: 'no-store',
+            signal: controller.signal
+          });
+          
+          clearTimeout(timeoutId);
+          
+          // With no-cors, we can't check response.ok, but if we get here without an error, the domain is reachable
+          console.log(`Domain ping completed with status: ${response.type}`);
+          return true;
+        }
+      } catch (error) {
+        console.warn('All domain pings failed:', error);
+      }
+      
+      // If all attempts fail, throw an error
       throw new Error('All health check attempts failed');
     } catch (error) {
       console.error('Backend health check failed:', error);
@@ -115,6 +187,14 @@ const authService = {
         localStorage.setItem('token', response.data.token);
         console.log('Token stored in localStorage');
         
+        // Store remember me preference if enabled
+        if (credentials.rememberMe) {
+          localStorage.setItem('rememberMe', 'true');
+          console.log('Remember me preference stored');
+        } else {
+          localStorage.removeItem('rememberMe');
+        }
+        
         // Set flag to indicate successful connection to backend
         localStorage.setItem('use_local_backend', 'false');
         
@@ -133,42 +213,80 @@ const authService = {
       
       return response.data;
     } catch (error: any) {
-      // Enhanced error logging with specific handling for network errors
-      if (error.errorCode === 'SERVER_UNAVAILABLE' || error.errorCode === 'OFFLINE_ERROR') {
-        // Re-throw pre-identified network errors
+      // New: Respect standardized error shape coming from axios interceptor
+      const statusFromInterceptor = typeof error?.statusCode === 'number' ? error.statusCode : (typeof error?.status === 'number' ? error.status : undefined);
+      const errorCode = error?.errorCode as string | undefined;
+      const isNetwork = error?.isNetworkError === true || errorCode === 'NETWORK_ERROR' || errorCode === 'OFFLINE_ERROR';
+      const isTimeout = errorCode === 'TIMEOUT_ERROR' || error?.code === 'ECONNABORTED' || (typeof error?.message === 'string' && error.message.toLowerCase().includes('timeout'));
+
+      // Handle known HTTP statuses FIRST (even if error.response is missing)
+      if (statusFromInterceptor === 403) {
+        const unverifiedErr = new Error(error?.message || 'Your email is not verified. Please check your inbox or request a new verification email.');
+        (unverifiedErr as any).status = 403;
+        (unverifiedErr as any).statusCode = 403;
+        // Preserve flag/code from interceptor if present, or infer from message
+        const inferredUnverified = typeof unverifiedErr.message === 'string' && /not verified|verify/i.test(unverifiedErr.message);
+        (unverifiedErr as any).isUnverifiedEmail = error?.isUnverifiedEmail === true || inferredUnverified;
+        if (error?.errorCode === 'EMAIL_NOT_VERIFIED' || (unverifiedErr as any).isUnverifiedEmail) {
+          (unverifiedErr as any).errorCode = 'EMAIL_NOT_VERIFIED';
+        }
+        throw unverifiedErr;
+      }
+      if (statusFromInterceptor === 401) {
+        const authErr = new Error(error?.message || 'Invalid email or password');
+        (authErr as any).status = 401;
+        (authErr as any).statusCode = 401;
+        throw authErr;
+      }
+      if (statusFromInterceptor === 429) {
+        const rateLimitError = new Error(error?.message || 'Too many login attempts. Please try again later.');
+        (rateLimitError as any).status = 429;
+        (rateLimitError as any).statusCode = 429;
+        (rateLimitError as any).retryAfter = (error && (error.retryAfter || error['retry-after'])) || 60;
+        throw rateLimitError;
+      }
+
+      // Preserve explicit pre-identified server/connection issues
+      if (errorCode === 'SERVER_UNAVAILABLE' || errorCode === 'OFFLINE_ERROR') {
         throw error;
-      } else if (error.code === 'ECONNABORTED' || (error.message && error.message.toLowerCase().includes('timeout'))) {
-        console.warn('Login API timeout error:', error.message);
-        // Throw a more user-friendly error for timeout issues
+      }
+
+      if (isTimeout) {
+        console.warn('Login API timeout error:', error?.message);
         const timeoutError = new Error('Connection timed out. The server is taking too long to respond.');
         (timeoutError as any).errorCode = 'TIMEOUT_ERROR';
         (timeoutError as any).isNetworkError = true;
         throw timeoutError;
-      } else if (!error.response || error.message?.toLowerCase().includes('network') || error.name === 'NetworkError') {
-        console.warn('Login API network error:', error.message);
-        const networkError = new Error('Unable to connect to the server. Please try again later.');
+      }
+
+      // Only treat as network error if explicitly flagged, not just because response is missing
+      if (isNetwork) {
+        console.warn('Login API network error:', error?.message);
+        const networkError = new Error(error?.message || 'Unable to connect to the server. Please try again later.');
         (networkError as any).errorCode = 'NETWORK_ERROR';
         (networkError as any).isNetworkError = true;
         throw networkError;
-      } else if (error.response?.status === 401 || error.statusCode === 401 || error.status === 401) {
-        // Handle authentication errors properly with consistent 401 response
+      }
+
+      // Fallback to original axios error handling if available
+      if (error?.response?.status === 401) {
         console.error('Login API authentication error:', error.response?.data?.message || 'Invalid credentials');
         const authError = new Error(error.response?.data?.message || 'Invalid email or password');
         (authError as any).status = 401;
         (authError as any).statusCode = 401;
         throw authError;
-      } else if (error.response?.status === 429) {
-        // Handle rate limiting errors
+      }
+      if (error?.response?.status === 429) {
         console.error('Login API rate limit error:', error.response?.data?.message || 'Too many requests');
         const rateLimitError = new Error('Too many login attempts. Please try again later.');
         (rateLimitError as any).status = 429;
         (rateLimitError as any).statusCode = 429;
         (rateLimitError as any).retryAfter = error.response?.headers?.['retry-after'] || 60;
         throw rateLimitError;
-      } else {
-        console.error('Login API error:', error.response?.data || error.message);
-        throw error;
       }
+
+      console.error('Login API error:', error?.response?.data || error?.message || error);
+      throw error;
     }
   },
 
@@ -188,13 +306,20 @@ const authService = {
         const mockResponse = await mockService.register(userData.username, userData.email, userData.password);
         const { token, user } = mockResponse;
         
-        localStorage.setItem('token', token);
+        // Don't store token in localStorage to prevent automatic login
+        // User needs to verify email first
         return { user, token };
       }
       
       const response = await api.post<AuthResponse>('/auth/register', userData);
-      // Store token in localStorage
-      localStorage.setItem('token', response.data.token);
+      // Don't store token in localStorage to prevent automatic login
+      // User needs to verify email first
+      
+      // Display email verification message if user is not verified
+      if (response.data.user && response.data.user.isEmailVerified === false) {
+        console.log('User registered successfully. Email verification required.');
+      }
+      
       return response.data;
     } catch (error: any) {
       // Enhanced error logging with specific handling for timeout errors
@@ -216,7 +341,71 @@ const authService = {
     }
   },
 
+  verifyEmail: async (token: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>('/auth/verify-email', { token });
+      return response.data;
+    } catch (error: any) {
+      console.error('Email verification error:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
+  resendVerificationEmail: async (email: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>(
+        '/auth/resend-verification',
+        { email }
+      );
+      return response.data;
+    } catch (error: any) {
+      // If endpoint validation or 404 occurs, try alias routes as fallback
+      const isNotFound = (error?.statusCode === 404) || (typeof error?.message === 'string' && error.message.includes('Invalid API endpoint'));
+      if (isNotFound) {
+        const aliases = [
+          '/auth/resend-verify',
+          '/auth/resend-verification-email',
+          '/auth/send-verification-email',
+          '/auth/verify-email/resend'
+        ];
+        for (const alias of aliases) {
+          try {
+            const alt = await api.post<{ message: string }>(alias, { email });
+            return alt.data;
+          } catch (e) {
+            // continue trying next alias
+          }
+        }
+      }
+      console.error('Resend verification email error:', error?.response?.data || error?.message);
+      throw error;
+    }
+  },
+
+  requestPasswordReset: async (email: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>('/auth/request-password-reset', { email });
+      return response.data;
+    } catch (error: any) {
+      console.error('Password reset request error:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
+  resetPassword: async (token: string, password: string): Promise<{ message: string }> => {
+    try {
+      const response = await api.post<{ message: string }>('/auth/reset-password', { token, password });
+      return response.data;
+    } catch (error: any) {
+      console.error('Password reset error:', error.response?.data || error.message);
+      throw error;
+    }
+  },
+
   logout: (): void => {
+    // Get the current token before removing it
+    const currentToken = localStorage.getItem('token');
+    
     // Remove token from localStorage
     console.log('Logging out user, removing token');
     localStorage.removeItem('token');
@@ -228,7 +417,7 @@ const authService = {
       window.dispatchEvent(new StorageEvent('storage', {
         key: 'token',
         newValue: null,
-        oldValue: 'removed-token',
+        oldValue: currentToken, // Use the actual previous token value
         storageArea: localStorage
       }));
     }

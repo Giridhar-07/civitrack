@@ -63,11 +63,44 @@ const IssueDetailPage: React.FC = () => {
 
   const handleRequestStatusChange = async (issueId: string, requestedStatus: IssueStatus, reason?: string) => {
     try {
+      // Log request details for debugging
+      console.debug('IssueDetailPage - Requesting status change:', { 
+        issueId, 
+        requestedStatus, 
+        reasonProvided: !!reason,
+        reasonLength: reason?.length 
+      });
+      
       await statusRequestService.requestStatusChange(issueId, requestedStatus, reason);
       setSnackbar({ open: true, message: 'Status change request submitted for review', severity: 'success' });
-    } catch (err) {
+      
+      // Refresh issue data to show the pending status request
+      if (id) {
+        const updatedIssue = await issueService.getIssueById(id);
+        setIssue(updatedIssue);
+      }
+    } catch (err: any) {
       console.error('Error requesting status change:', err);
-      setSnackbar({ open: true, message: 'Failed to submit status change request', severity: 'error' });
+      
+      // Extract more meaningful error message
+      let errorMessage = 'Failed to submit status change request';
+      
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
+      
+      // Check for validation errors
+      if (errorMessage.includes('Validation error') && err?.fieldErrors) {
+        // Format field errors if available
+        const fieldErrorMessages = Object.entries(err.fieldErrors)
+          .map(([field, msg]) => `${field}: ${msg}`)
+          .join(', ');
+        errorMessage = `Validation error: ${fieldErrorMessages || 'Please check your input'}`;
+      }
+      
+      setSnackbar({ open: true, message: errorMessage, severity: 'error' });
       throw err;
     }
   };

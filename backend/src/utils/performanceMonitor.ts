@@ -63,20 +63,21 @@ export const performanceMonitor = (req: Request, res: Response, next: NextFuncti
     const duration = Date.now() - start;
     const status = res.statusCode;
     
-    // Determine severity level based on duration
-    let level = 'info';
+    // Determine severity level based on duration and status
+    let level: 'info' | 'warn' | 'error' = 'info';
     if (duration > THRESHOLDS.CRITICAL) {
-      level = 'error';
+      level = status >= 500 ? 'error' : 'warn'; // don't mark successful responses as error
     } else if (duration > THRESHOLDS.WARNING) {
       level = 'warn';
     }
 
-    // Log performance data
-    performanceLogger.log(level, {
+    // Log performance data with an explicit message to avoid 'undefined'
+    performanceLogger.log(level, 'request', {
       url,
       method,
       status,
       duration,
+      route: (req.route && req.route.path) || undefined,
       userAgent: req.headers['user-agent'],
       ip: req.ip
     });
@@ -97,15 +98,15 @@ export const trackPerformance = async <T>(
     const duration = Date.now() - start;
     
     // Determine severity level based on duration
-    let level = 'info';
+    let level: 'info' | 'warn' | 'error' = 'info';
     if (duration > THRESHOLDS.CRITICAL) {
-      level = 'error';
+      level = 'warn';
     } else if (duration > THRESHOLDS.WARNING) {
       level = 'warn';
     }
     
-    // Log performance data
-    performanceLogger.log(level, {
+    // Log performance data with message
+    performanceLogger.log(level, 'operation', {
       operation: operationName,
       duration,
       success: true
@@ -115,8 +116,8 @@ export const trackPerformance = async <T>(
   } catch (error) {
     const duration = Date.now() - start;
     
-    // Log error with performance data
-    performanceLogger.error({
+    // Log error with performance data and message
+    performanceLogger.log('error', 'operation error', {
       operation: operationName,
       duration,
       success: false,
@@ -134,9 +135,10 @@ export const alertOnPerformanceIssue = (
   threshold: number = THRESHOLDS.CRITICAL
 ) => {
   if (duration > threshold) {
-    performanceLogger.error({
+    performanceLogger.log('error', 'performance threshold exceeded', {
       operation: operationName,
       duration,
+      threshold,
       message: `Performance threshold exceeded: ${operationName} took ${duration}ms (threshold: ${threshold}ms)`
     });
     

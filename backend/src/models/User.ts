@@ -11,14 +11,25 @@ interface UserAttributes {
   password: string;
   role: string;
   profileImage?: string;
+  profileImageFileId?: string;
   isAdmin?: boolean;
   isLocked?: boolean;
+  isEmailVerified?: boolean;
+  emailVerificationToken?: string | null;
+  emailVerificationExpires?: Date | null;
+  resetPasswordToken?: string | null;
+  resetPasswordExpires?: Date | null;
+  failedLoginAttempts?: number;
+  lastFailedLoginAt?: Date | null;
+  lockoutUntil?: Date | null;
+  neonAuthId?: string | null;
+  neonAuthData?: any;
   createdAt: Date;
   updatedAt: Date;
 }
 
 // User creation attributes interface (optional fields during creation)
-interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'isAdmin'> {}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'isAdmin' | 'failedLoginAttempts' | 'lastFailedLoginAt' | 'lockoutUntil'> {}
 
 // User model class
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
@@ -28,8 +39,19 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public email!: string;
   public password!: string;
   public role!: string;
+  public profileImage?: string;
   public isAdmin?: boolean;
   public isLocked?: boolean;
+  public isEmailVerified?: boolean;
+  public emailVerificationToken?: string | null;
+  public emailVerificationExpires?: Date | null;
+  public resetPasswordToken?: string | null;
+  public resetPasswordExpires?: Date | null;
+  public failedLoginAttempts?: number;
+  public lastFailedLoginAt?: Date | null;
+  public lockoutUntil?: Date | null;
+  public neonAuthId?: string | null;
+  public neonAuthData?: any;
   public createdAt!: Date;
   public updatedAt!: Date;
 
@@ -91,10 +113,56 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    profileImageFileId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: true,
       defaultValue: false,
+    },
+    isEmailVerified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true,
+      defaultValue: false,
+    },
+    emailVerificationToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    emailVerificationExpires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    resetPasswordToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resetPasswordExpires: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    failedLoginAttempts: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    lastFailedLoginAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    lockoutUntil: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    neonAuthId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    neonAuthData: {
+      type: DataTypes.JSON,
+      allowNull: true,
     },
     createdAt: {
       type: DataTypes.DATE,

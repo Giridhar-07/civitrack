@@ -37,11 +37,11 @@ export interface RetryConfig {
  * Default retry configuration
  */
 export const defaultRetryConfig: RetryConfig = {
-  maxRetries: 8, // Increased from 5 to 8
-  initialDelayMs: 500, // Reduced from 1000ms to 500ms for faster initial retry
-  backoffFactor: 1.3, // Reduced from 1.5 to 1.3 for more gradual backoff
-  maxDelayMs: 15000, // Reduced from 30s to 15s to prevent long waits
-  retryStatusCodes: [401, 408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524], // Added 401 for auth retries
+  maxRetries: 10, // Increased from 8 to 10 for more persistence
+  initialDelayMs: 300, // Reduced from 500ms to 300ms for faster initial retry
+  backoffFactor: 1.2, // Reduced from 1.3 to 1.2 for more gradual backoff
+  maxDelayMs: 12000, // Reduced from 15s to 12s to prevent long waits
+  retryStatusCodes: [401, 408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524, 525, 526, 527], // Added more Cloudflare error codes
   retryNetworkErrors: true
 };
 
@@ -81,12 +81,23 @@ export function createRetryableAxiosInstance(
       retryableConfig.__retryCount = retryableConfig.__retryCount || 0;
       
       // Check if we should retry based on custom condition or default logic
+      const isNetworkError = !error.response && (error.code === 'ECONNABORTED' || error.message.includes('timeout') || error.message.includes('Network Error'));
+      const isRetryableStatus = error.response && finalRetryConfig.retryStatusCodes.includes(error.response.status);
+      const hasCustomRetryCondition = finalRetryConfig.retryCondition && finalRetryConfig.retryCondition(error);
+      
+      // Log retry attempt information
+      if (retryableConfig.__retryCount > 0) {
+        console.log(`Retry attempt ${retryableConfig.__retryCount}/${finalRetryConfig.maxRetries} for ${retryableConfig.url}`);
+        if (isNetworkError) console.log('Retrying due to network error:', error.message);
+        if (isRetryableStatus) console.log(`Retrying due to status code: ${error.response?.status}`);
+      }
+      
       const shouldRetry = (
         retryableConfig.__retryCount < finalRetryConfig.maxRetries &&
         (
-          (finalRetryConfig.retryCondition && finalRetryConfig.retryCondition(error)) ||
-          (finalRetryConfig.retryNetworkErrors && !error.response) ||
-          (error.response && finalRetryConfig.retryStatusCodes.includes(error.response.status))
+          hasCustomRetryCondition ||
+          (finalRetryConfig.retryNetworkErrors && isNetworkError) ||
+          isRetryableStatus
         )
       );
       
@@ -97,7 +108,16 @@ export function createRetryableAxiosInstance(
       // Increment retry count
       retryableConfig.__retryCount += 1;
       
-      // Calculate delay with exponential backoff
+      // Calculate delay with exponential backoff and jitter for better distribution
+      const calculateDelay = () => {
+        const exponentialDelay = finalRetryConfig.initialDelayMs * Math.pow(finalRetryConfig.backoffFactor, retryableConfig.__retryCount || 0);
+        const cappedDelay = Math.min(exponentialDelay, finalRetryConfig.maxDelayMs);
+        // Add random jitter of ±20% to prevent thundering herd problem
+        const jitter = cappedDelay * 0.2 * (Math.random() - 0.5) * 2;
+        return Math.max(0, Math.floor(cappedDelay + jitter));
+      };
+      
+      // Use the calculated delay
       let delay = finalRetryConfig.initialDelayMs * 
         Math.pow(finalRetryConfig.backoffFactor, retryableConfig.__retryCount - 1);
       

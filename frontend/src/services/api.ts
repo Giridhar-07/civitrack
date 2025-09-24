@@ -17,42 +17,57 @@ const resolveApiBaseUrl = (): string => {
     return envUrl;
   }
   
-  // For Netlify deployment or any production environment, use the stable Vercel backend URL
+  // Check if we have a previously successful API URL stored
+  if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    try {
+      const lastSuccessfulUrl = localStorage.getItem('last_successful_api_url');
+      if (lastSuccessfulUrl) {
+        console.log('Using last successful API URL:', lastSuccessfulUrl);
+        // Ensure it ends with /api
+        return lastSuccessfulUrl.endsWith('/api') ? lastSuccessfulUrl : `${lastSuccessfulUrl}/api`;
+      }
+    } catch (e) {
+      console.warn('Error accessing localStorage:', e);
+    }
+  }
+  
+  // For Netlify deployment or any production environment
   if (typeof window !== 'undefined' && 
       (window.location.hostname.includes('netlify.app') || 
        process.env.NODE_ENV === 'production')) {
-    // Use HTTPS for secure connection
-    return 'https://backend-tau-inky-24.vercel.app/api';
+    // Always use Render backend for all deployments
+    console.log('Using production backend URL');
+    return 'https://civitrack.onrender.com/api';
   }
   
-  // In local dev, frontend runs on :3000 and backend on :5000 by default
+  // In local dev or unknown environments
   if (typeof window !== 'undefined') {
-    const origin = window.location.origin;
-    const isLocal3000 = origin.includes('localhost:3000') || origin.includes('127.0.0.1:3000');
-    if (isLocal3000) {
-      // Prioritize the Vercel backend for TestSprite testing
-      try {
-        // Force use of Vercel backend for TestSprite
-        localStorage.setItem('use_local_backend', 'false');
-        return 'https://backend-tau-inky-24.vercel.app/api';
-        
-        // Uncomment below to use local backend when needed
-        /*
-        const localBackendAvailable = localStorage.getItem('use_local_backend') === 'true';
-        if (localBackendAvailable) {
-          return 'http://localhost:5000/api';
-        }
-        */
-      } catch (e) {
-        return 'https://backend-tau-inky-24.vercel.app/api'; // Fallback to production
+    const { origin } = window.location;
+
+    try {
+      const useLocalBackend = localStorage.getItem('use_local_backend') === 'true';
+      const useSameOriginApi = localStorage.getItem('use_same_origin_api') === 'true';
+
+      // If explicitly opting into local backend for development
+      if (useLocalBackend) {
+        return 'http://localhost:5000/api';
       }
+
+      // If explicitly opting into same-origin API (for setups with a reverse proxy)
+      if (useSameOriginApi) {
+        return `${origin.replace(/\/$/, '')}/api`;
+      }
+    } catch (e) {
+      // Ignore localStorage errors and continue with safe defaults
     }
-    // Same-origin fallback (use reverse proxy or server-side /api)
-    return `${origin.replace(/\/$/, '')}/api`;
+
+    // Default safe choice for most environments (including Vite dev on 5173, etc.)
+    // Use the hosted backend unless explicitly overridden via flags above.
+    return 'https://civitrack.onrender.com/api';
   }
   
-  // SSR or unknown environment fallback - always use the stable production URL
-  return 'https://backend-tau-inky-24.vercel.app/api';
+  // SSR or unknown environment fallback - use the Render backend
+  return 'https://civitrack.onrender.com/api';
 };
 
 export const BASE_URL = resolveApiBaseUrl();
@@ -65,16 +80,11 @@ const axiosInstance: AxiosInstance = createRetryableAxiosInstance({
     'Content-Type': 'application/json'
   },
   withCredentials: true,
-  timeout: 20000, // 20 seconds timeout for slower connections
+  timeout: 25000, // 25 seconds timeout for slower connections
   timeoutErrorMessage: 'Request timed out. Please try again.'
 }, {
-  // Enhanced retry configuration
-  maxRetries: 5,
-  initialDelayMs: 1000,
-  backoffFactor: 2,
-  maxDelayMs: 15000,
-  retryStatusCodes: [408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524],
-  retryNetworkErrors: true
+  // Use the default retry configuration from apiRetry.ts
+  // which has been optimized for better reliability
 });
 
 // Helper to normalize API responses (unwrap backend { success, message, data })
@@ -113,10 +123,20 @@ const mockApi = {
       // mockService returns { token, user }
       return { data: (response as any) as T };
     }
-    if (url.startsWith('/issues/') && url.endsWith('/flag')) {
-      const id = url.split('/')[2];
-      const response = await mockService.flagIssue(id, data.reason);
-      return { data: response as T };
+    // Handle resend verification across accepted aliases
+    if (
+      url === '/auth/resend-verification' ||
+      url === '/auth/resend-verify' ||
+      url === '/auth/resend-verification-email' ||
+      url === '/auth/send-verification-email' ||
+      url === '/auth/verify-email/resend'
+    ) {
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      const email = data?.email ?? '';
+      const message = email
+        ? `Verification email sent to ${email}. Please check your inbox.`
+        : 'Verification email sent. Please check your inbox.';
+      return { data: ({ message } as any) as T };
     }
     throw new Error(`Unhandled mock POST request to ${url}`);
   },
@@ -134,13 +154,16 @@ const mockApi = {
   }
 };
 
-// Define the API interface
 interface ApiInterface {
   get: <T>(url: string, config?: any) => Promise<{ data: T }>;
   post: <T>(url: string, data?: any, config?: any) => Promise<{ data: T }>;
   put: <T>(url: string, data?: any, config?: any) => Promise<{ data: T }>;
   patch: <T>(url: string, data?: any, config?: any) => Promise<{ data: T }>;
   delete: <T>(url: string, config?: any) => Promise<{ data: T }>;
+  defaults?: {
+    baseURL?: string;
+    [key: string]: any;
+  };
 }
 
 // Create the API instance with performance optimizations
@@ -168,6 +191,23 @@ const VALID_API_ENDPOINTS = {
    '/auth/admin/users/:id/roles/:roleId': ['DELETE'],
    '/auth/admin/roles/:id/users/:userId': ['DELETE'],
    '/auth/admin/users/status-requests': ['GET'],
+   '/auth/verify-email': ['POST'],
+   '/auth/resend-verification': ['POST'], // This endpoint is correctly defined in backend routes
+   // Alias endpoints for resilience across deployments
+   '/auth/resend-verify': ['POST'],
+   '/auth/resend-verification-email': ['POST'],
+   '/auth/send-verification-email': ['POST'],
+   '/auth/verify-email/resend': ['POST'],
+   '/auth/request-password-reset': ['POST'],
+   '/auth/reset-password': ['POST'],
+  
+  // Logging endpoints
+  '/logs': ['POST'],
+  '/api/logs': ['POST'],
+
+  // ImageKit endpoints
+  '/imagekit/auth': ['GET'],
+  '/api/imagekit/auth': ['GET'],
    
   // User endpoints
   //'/users': ['GET'],
@@ -243,6 +283,9 @@ const validateEndpoint = (url: string, method: string): boolean => {
 };
 
 const api: ApiInterface = USE_MOCK_SERVICE ? mockApi : {
+  defaults: {
+    baseURL: BASE_URL
+  },
   get: async <T>(url: string, config?: any) => {
     // Validate endpoint before making request
     if (!validateEndpoint(url, 'GET')) {
@@ -351,6 +394,14 @@ if (!USE_MOCK_SERVICE) {
           config.headers = {};
         }
         config.headers.Authorization = `Bearer ${token}`;
+      }
+
+      // If sending FormData, let the browser/axios set the proper multipart boundary automatically
+      if (typeof FormData !== 'undefined' && config.data instanceof FormData) {
+        if (config.headers) {
+          delete config.headers['Content-Type'];
+          delete (config.headers as any)['content-type'];
+        }
       }
       
       // Log outgoing requests in development environment

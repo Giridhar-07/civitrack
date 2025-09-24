@@ -28,6 +28,15 @@ const mockUsers: User[] = [
     isAdmin: true,
     createdAt: new Date('2022-12-01')
   },
+  // Added a dedicated unverified user for testing unverified-email login flow
+  {
+    id: '4',
+    username: 'unverified',
+    name: 'Unverified User',
+    email: 'unverified@example.com',
+    role: 'user',
+    createdAt: new Date('2023-03-01')
+  },
 ];
 
 // Mock location data
@@ -149,10 +158,21 @@ const mockService = {
     console.log('mockService: login called with email:', email);
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 800));
-    
+
+    // If email hints at unverified, simulate 403 regardless of whether user exists in mockUsers
+    if (/unverified/i.test(email) && password === 'password') {
+      const err: any = new Error('Your email is not verified. Please check your inbox or request a new verification email.');
+      err.statusCode = 403;
+      err.status = 403;
+      err.errorCode = 'EMAIL_NOT_VERIFIED';
+      err.isUnverifiedEmail = true;
+      err.response = { status: 403, data: { message: err.message, errorCode: 'EMAIL_NOT_VERIFIED', isUnverifiedEmail: true } };
+      throw err;
+    }
+
     const user = mockUsers.find(u => u.email === email);
     console.log('mockService: found user:', user ? 'yes' : 'no');
-    
+
     // In a real app, we would verify the password here
     if (user && password === 'password') {
       console.log('mockService: login successful');
@@ -160,8 +180,14 @@ const mockService = {
       localStorage.setItem('mock_current_user', JSON.stringify(user));
       return { user, token };
     }
+
+    // Structured invalid credentials error (401)
     console.log('mockService: login failed - invalid credentials');
-    throw new Error('Invalid credentials');
+    const credErr: any = new Error('Invalid email or password');
+    credErr.statusCode = 401;
+    credErr.status = 401;
+    credErr.response = { status: 401, data: { message: 'Invalid email or password' } };
+    throw credErr;
   },
   
   register: async (username: string, email: string, password: string) => {
