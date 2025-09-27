@@ -177,7 +177,9 @@ const authService = {
       }
       
       // Use real API
-      const response = await api.post<AuthResponse>('/auth/login', credentials);
+      const response = await api.post<AuthResponse>('/auth/login', credentials, {
+        headers: { 'x-no-retry': 'true' }
+      });
       
       // Log successful login response
       console.log('Login successful, response:', response.data);
@@ -311,7 +313,9 @@ const authService = {
         return { user, token };
       }
       
-      const response = await api.post<AuthResponse>('/auth/register', userData);
+      const response = await api.post<AuthResponse>('/auth/register', userData, {
+        headers: { 'x-no-retry': 'true' }
+      });
       // Don't store token in localStorage to prevent automatic login
       // User needs to verify email first
       

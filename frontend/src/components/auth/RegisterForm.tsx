@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Button, Typography, Box, Paper, Link, CircularProgress, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import authService, { RegisterData } from '../../services/authService';
+import { extractErrorMessage, formatFieldErrors } from '../../utils/apiErrorHandler';
 
 const RegisterForm: React.FC = () => {
   const navigate = useNavigate();
@@ -15,139 +16,157 @@ const RegisterForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'confirmPassword') {
       setConfirmPassword(value);
+      // Clear confirmPassword field error as user types
+      setFieldErrors(prev => {
+        const { confirmPassword: _removed, ...rest } = prev;
+        return rest;
+      });
     } else {
       setFormData(prev => ({
         ...prev,
         [name]: value
       }));
+      // Clear field-specific error for the changed field
+      setFieldErrors(prev => {
+        const { [name]: _removed, ...rest } = prev;
+        return rest;
+      });
     }
   };
 
   const validateForm = (): boolean => {
-    // Check for empty required fields
+    const newFieldErrors: Record<string, string> = {};
+
+    // Required fields
     if (!formData?.name?.trim()) {
-      setError('Name is required');
-      return false;
+      newFieldErrors.name = 'Name is required';
+    } else if (formData.name.trim().length < 2 || formData.name.trim().length > 100) {
+      newFieldErrors.name = 'Name must be between 2 and 100 characters';
     }
-    
+
     if (!formData.username.trim()) {
-      setError('Username is required');
-      return false;
+      newFieldErrors.username = 'Username is required';
+    } else if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
+      newFieldErrors.username = 'Username can only contain letters, numbers, and underscores';
+    } else if (formData.username.length < 3 || formData.username.length > 30) {
+      newFieldErrors.username = 'Username must be between 3 and 30 characters';
     }
-    
+
     if (!formData.email.trim()) {
-      setError('Email is required');
-      return false;
+      newFieldErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newFieldErrors.email = 'Please enter a valid email address';
     }
-    
+
     if (!formData.password) {
-      setError('Password is required');
+      newFieldErrors.password = 'Password is required';
+    } else if (formData.password.length < 8) {
+      newFieldErrors.password = 'Password must be at least 8 characters';
+    } else {
+      // Check password complexity using the exact same regex as the backend
+      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
+      if (!passwordRegex.test(formData.password)) {
+        newFieldErrors.password = 'Password must be at least 8 characters and include an uppercase letter, a lowercase letter, and a number';
+      }
+    }
+
+    if (confirmPassword.length === 0) {
+      newFieldErrors.confirmPassword = 'Please confirm your password';
+    } else if (formData.password !== confirmPassword) {
+      newFieldErrors.confirmPassword = 'Passwords do not match';
+    }
+
+    setFieldErrors(newFieldErrors);
+    if (Object.keys(newFieldErrors).length > 0) {
+      setError('Please fix the highlighted fields.');
       return false;
     }
-    
-    // Check name length
-    if (formData.name.trim().length < 2 || formData.name.trim().length > 100) {
-      setError('Name must be between 2 and 100 characters');
-      return false;
-    }
-    
-    // Check if passwords match
-    if (formData.password !== confirmPassword) {
-      setError('Passwords do not match');
-      return false;
-    }
-    
-    // Check password length
-    if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters');
-      return false;
-    }
-    
-    // Check password complexity using the exact same regex as the backend
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$/;
-    if (!passwordRegex.test(formData.password)) {
-      setError('Password must be at least 8 characters long and contain at least one uppercase letter (A-Z), one lowercase letter (a-z), and one number (0-9). Special characters (@$!%*?&) are allowed but not required.');
-      return false;
-    }
-    
-    // Check username format
-    if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
-      setError('Username can only contain letters, numbers, and underscores');
-      return false;
-    }
-    
-    // Check username length
-    if (formData.username.length < 3 || formData.username.length > 30) {
-      setError('Username must be between 3 and 30 characters');
-      return false;
-    }
-    
-    // Check email format
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      setError('Please enter a valid email address');
-      return false;
-    }
-    
+
+    setError(null);
     return true;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    
+
     if (!validateForm()) return;
-    
+
     setLoading(true);
 
     try {
       const response = await authService.register(formData);
-      
+
       // After registration, always show verification message and redirect to login
       // The token is not stored in localStorage (modified in authService)
       setSuccess(true);
       setTimeout(() => {
-        navigate('/login', { 
-          state: { 
+        navigate('/login', {
+          state: {
             showVerificationMessage: true,
             email: formData.email,
             justRegistered: true
-          } 
+          }
         });
       }, 3000);
     } catch (err: any) {
       console.error('Registration failed:', err);
-      
-      // Extract detailed error message from response
-      let errorMessage = 'Registration failed. Please try again.';
-      
-      // Handle timeout errors specifically
-      if (err.code === 'ECONNABORTED' || err.errorCode === 'NETWORK_ERROR' || err.errorCode === 'TIMEOUT_ERROR' || (err.message && err.message.includes('timeout'))) {
-        errorMessage = 'The server is taking too long to respond. Please check your internet connection and try again.';
-      } else if (err.response?.data) {
-        const responseData = err.response.data;
-        
-        // Check for validation errors array
-        if (Array.isArray(responseData.error)) {
-          errorMessage = responseData.error.join('\n');
-        } 
-        // Check for single error message
-        else if (responseData.message) {
-          errorMessage = responseData.message;
-        }
-        // Check for error field
-        else if (responseData.error) {
-          errorMessage = responseData.error;
-        }
-      } else if (err.message) {
-        errorMessage = err.message;
+
+      // Use standardized error extraction
+      const apiErr = extractErrorMessage(err);
+
+      // Map field errors if present
+      if (apiErr.fieldErrors) {
+        const mapped = formatFieldErrors(apiErr.fieldErrors);
+        setFieldErrors(prev => ({ ...prev, ...mapped }));
       }
-      
-      setError(errorMessage);
+
+      // Friendly user-facing messages based on status/errorCode
+      let friendlyMessage = apiErr.message || 'Registration failed. Please try again.';
+
+      // Network/offline/timeout
+      if (apiErr.errorCode === 'OFFLINE_ERROR') {
+        friendlyMessage = 'You are currently offline. Please check your internet connection and try again.';
+      } else if (apiErr.errorCode === 'TIMEOUT_ERROR') {
+        friendlyMessage = 'Request timed out. The server is taking too long to respond. Please try again later.';
+      } else if (apiErr.errorCode === 'NETWORK_ERROR' || apiErr.isNetworkError) {
+        friendlyMessage = 'Network connection issue. Please check your internet connection and try again.';
+      }
+
+      // HTTP status-specific
+      switch (apiErr.statusCode) {
+        case 409:
+          // Conflict: likely email or username already exists
+          if (apiErr.fieldErrors) {
+            friendlyMessage = 'An account with these details already exists. Please correct the highlighted fields.';
+          } else {
+            friendlyMessage = 'An account with this email or username already exists.';
+          }
+          break;
+        case 422:
+          friendlyMessage = 'Some details are invalid. Please correct the highlighted fields.';
+          break;
+        case 429:
+          friendlyMessage = 'Too many attempts. Please wait a while and try again.';
+          break;
+        case 400:
+          // Generic invalid request
+          if (!apiErr.fieldErrors) {
+            friendlyMessage = apiErr.message || 'Invalid registration details. Please review and try again.';
+          }
+          break;
+        default:
+          // keep extracted message
+          break;
+      }
+
+      setError(friendlyMessage);
     } finally {
       setLoading(false);
     }
@@ -185,7 +204,8 @@ const RegisterForm: React.FC = () => {
           autoComplete="name"
           value={formData.name}
           onChange={handleChange}
-          helperText="Enter your full name (2-100 characters)"
+          error={Boolean(fieldErrors.name)}
+          helperText={fieldErrors.name || 'Enter your full name (2-100 characters)'}
           FormHelperTextProps={{
             sx: { color: '#aaa' }
           }}
@@ -219,7 +239,8 @@ const RegisterForm: React.FC = () => {
           autoFocus
           value={formData.username}
           onChange={handleChange}
-          helperText="3-30 characters, letters, numbers and underscores only"
+          error={Boolean(fieldErrors.username)}
+          helperText={fieldErrors.username || '3-30 characters, letters, numbers and underscores only'}
           FormHelperTextProps={{
             sx: { color: '#aaa' }
           }}
@@ -252,7 +273,8 @@ const RegisterForm: React.FC = () => {
           autoComplete="email"
           value={formData.email}
           onChange={handleChange}
-          helperText="Enter a valid email address"
+          error={Boolean(fieldErrors.email)}
+          helperText={fieldErrors.email || 'Enter a valid email address'}
           FormHelperTextProps={{
             sx: { color: '#aaa' }
           }}
@@ -286,7 +308,8 @@ const RegisterForm: React.FC = () => {
           autoComplete="new-password"
           value={formData.password}
           onChange={handleChange}
-          helperText="Must be at least 8 characters with 1 uppercase letter, 1 lowercase letter, and 1 number"
+          error={Boolean(fieldErrors.password)}
+          helperText={fieldErrors.password || 'Must be at least 8 characters with 1 uppercase letter, 1 lowercase letter, and 1 number'}
           FormHelperTextProps={{
             sx: { color: '#aaa' }
           }}
@@ -320,7 +343,8 @@ const RegisterForm: React.FC = () => {
           autoComplete="new-password"
           value={confirmPassword}
           onChange={handleChange}
-          helperText="Re-enter your password to confirm"
+          error={Boolean(fieldErrors.confirmPassword)}
+          helperText={fieldErrors.confirmPassword || 'Re-enter your password to confirm'}
           FormHelperTextProps={{
             sx: { color: '#aaa' }
           }}

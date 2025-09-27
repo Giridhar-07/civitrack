@@ -41,7 +41,7 @@ export const defaultRetryConfig: RetryConfig = {
   initialDelayMs: 300, // Reduced from 500ms to 300ms for faster initial retry
   backoffFactor: 1.2, // Reduced from 1.3 to 1.2 for more gradual backoff
   maxDelayMs: 12000, // Reduced from 15s to 12s to prevent long waits
-  retryStatusCodes: [401, 408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524, 525, 526, 527], // Added more Cloudflare error codes
+  retryStatusCodes: [408, 429, 500, 502, 503, 504, 520, 521, 522, 523, 524, 525, 526, 527], // Removed 401 to avoid retrying authentication failures
   retryNetworkErrors: true
 };
 
@@ -74,6 +74,11 @@ export function createRetryableAxiosInstance(
       
       // Skip retry if explicitly disabled
       if (retryableConfig.headers?.['x-no-retry']) {
+        return Promise.reject(error);
+      }
+      
+      // Explicitly avoid retrying authentication failures
+      if (error.response?.status === 401) {
         return Promise.reject(error);
       }
       

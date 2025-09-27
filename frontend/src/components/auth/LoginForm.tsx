@@ -42,9 +42,21 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
     setVerificationMessage(null);
+
+    // Client-side validation: email format and required password
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!credentials.email || !emailRegex.test(credentials.email)) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+    if (!credentials.password || credentials.password.trim().length === 0) {
+      setError('Please enter your password.');
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const response = await authService.login(credentials);
