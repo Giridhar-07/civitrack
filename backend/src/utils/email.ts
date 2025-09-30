@@ -77,11 +77,11 @@ export const generateVerificationToken = async (user: User): Promise<string> => 
 };
 
 // Maximum number of retry attempts for email sending
-const MAX_RETRY_ATTEMPTS = 5;
+const MAX_RETRY_ATTEMPTS = 7;
 // Delay between retry attempts in milliseconds (exponential backoff)
-const RETRY_DELAY_MS = 2000;
-// Email sending timeout in milliseconds (30 seconds)
-const EMAIL_TIMEOUT_MS = 30000;
+const RETRY_DELAY_MS = 3000;
+// Email sending timeout in milliseconds (45 seconds)
+const EMAIL_TIMEOUT_MS = 45000;
 
 /**
  * Send an email with retry mechanism and timeout handling
