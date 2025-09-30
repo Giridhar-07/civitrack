@@ -51,6 +51,41 @@ if (EMAIL_CONFIGURED) {
   console.warn('Email service is not fully configured. Running in log-only mode. Set EMAIL_HOST/USER/PASS to enable SMTP sending.');
 }
 
+// Optional fallback SMTP configuration
+const FALLBACK_EMAIL_HOST = process.env.EMAIL_FALLBACK_HOST;
+const FALLBACK_EMAIL_PORT = parseInt(process.env.EMAIL_FALLBACK_PORT || '587', 10);
+const FALLBACK_EMAIL_SECURE = process.env.EMAIL_FALLBACK_SECURE === 'true';
+const FALLBACK_EMAIL_USER = process.env.EMAIL_FALLBACK_USER;
+const FALLBACK_EMAIL_PASS = process.env.EMAIL_FALLBACK_PASS;
+const FALLBACK_CONFIGURED = Boolean(FALLBACK_EMAIL_HOST && FALLBACK_EMAIL_USER && FALLBACK_EMAIL_PASS);
+
+let fallbackTransporter: Transporter | null = null;
+if (FALLBACK_CONFIGURED) {
+  try {
+    fallbackTransporter = nodemailer.createTransport({
+      host: FALLBACK_EMAIL_HOST!,
+      port: FALLBACK_EMAIL_PORT,
+      secure: FALLBACK_EMAIL_SECURE,
+      auth: {
+        user: FALLBACK_EMAIL_USER!,
+        pass: FALLBACK_EMAIL_PASS!,
+      },
+      connectionTimeout: 30000,
+      greetingTimeout: 20000,
+      socketTimeout: 30000,
+    });
+    // Verify silently; failures handled at send time
+    fallbackTransporter.verify().then(() => {
+      console.log('Fallback email server is ready to send messages');
+    }).catch((err: any) => {
+      console.warn('Fallback email server verification failed:', err?.message || String(err));
+    });
+  } catch (e) {
+    console.warn('Failed to initialize fallback email transporter:', e);
+    fallbackTransporter = null;
+  }
+}
+
 // Verify email configuration in all environments, but do not crash
 transporter.verify((error: Error | null) => {
   if (error) {
@@ -103,6 +138,8 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0): Promise<any
     const info = await Promise.race([emailPromise, timeoutPromise]);
     return info;
   } catch (error: any) {
+    // Detect jsonTransport (log-only mode)
+    const usingJsonTransport = !EMAIL_CONFIGURED;
     // If we haven't exceeded max retries, try again with exponential backoff
     if (retryCount < MAX_RETRY_ATTEMPTS) {
       console.log(`Email sending attempt ${retryCount + 1} failed, retrying in ${RETRY_DELAY_MS * (2 ** retryCount)}ms...`);
@@ -110,6 +147,23 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0): Promise<any
       return sendEmailWithRetry(mailOptions, retryCount + 1);
     }
     
+    // Primary exhausted; attempt fallback provider once if configured and not in log-only mode
+    if (!usingJsonTransport && fallbackTransporter) {
+      try {
+        console.log('Primary SMTP failed after retries, attempting fallback SMTP provider...');
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Fallback email sending timeout')), EMAIL_TIMEOUT_MS);
+        });
+        const fallbackPromise = fallbackTransporter.sendMail(mailOptions);
+        const info = await Promise.race([fallbackPromise, timeoutPromise]);
+        console.log('Fallback email sent successfully');
+        return info;
+      } catch (fallbackErr) {
+        console.error('Fallback SMTP sending failed:', fallbackErr);
+        throw fallbackErr;
+      }
+    }
+
     // Max retries exceeded, throw the error
     throw error;
   }

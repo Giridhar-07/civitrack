@@ -31,25 +31,3 @@ jest.mock('axios', () => {
     isAxiosError: axios.isAxiosError,
   };
 });
-
-// Globally mock ESM-only react-leaflet to avoid Jest transform issues under react-scripts v5 (Jest 27)
-jest.mock('react-leaflet', () => {
-  const React = require('react');
-  const Stub: React.FC<any> = ({ children }) => React.createElement('div', null, children);
-  return {
-    __esModule: true,
-    MapContainer: Stub,
-    TileLayer: Stub,
-    Marker: Stub,
-    Popup: Stub,
-    useMap: () => ({ setView: () => {} }),
-    useMapEvents: () => ({}),
-  };
-});
-
-// Minimal mock for leaflet to satisfy react-leaflet expectations when used
-jest.mock('leaflet', () => ({
-  __esModule: true,
-  CRS: {},
-  icon: () => ({}),
-}));

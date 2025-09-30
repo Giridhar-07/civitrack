@@ -3,12 +3,16 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-// Allow overriding model via env; default to a free-tier model
-// Only allow free-tier models to avoid unavailable models
-const ALLOWED_FREE_MODELS = new Set(['gemini-1.0-pro', 'gemini-1.0-pro-vision']);
+// Allow overriding model via env; default to widely available v1 models
+// Prefer current models to avoid deprecated/unsupported variants
+const ALLOWED_FREE_MODELS = new Set([
+  'gemini-1.5-flash',
+  'gemini-1.5-pro',
+  'gemini-1.5-flash-8b',
+]);
 const ENV_MODEL = process.env.GEMINI_MODEL;
-const DEFAULT_MODEL = (ENV_MODEL && ALLOWED_FREE_MODELS.has(ENV_MODEL)) ? ENV_MODEL : 'gemini-1.0-pro';
-const FALLBACK_MODEL = 'gemini-1.0-pro';
+const DEFAULT_MODEL = (ENV_MODEL && ALLOWED_FREE_MODELS.has(ENV_MODEL)) ? ENV_MODEL : 'gemini-1.5-flash';
+const FALLBACK_MODEL = 'gemini-1.5-flash';
 if (ENV_MODEL && !ALLOWED_FREE_MODELS.has(ENV_MODEL)) {
   console.warn(`GEMINI_MODEL="${ENV_MODEL}" is not a supported free-tier model. Falling back to "${DEFAULT_MODEL}".`);
 }

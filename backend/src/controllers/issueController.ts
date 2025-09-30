@@ -11,7 +11,6 @@ import sequelize from '../config/database';
 // import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
 import { getFileUrl } from '../utils/upload';
 import NodeCache from 'node-cache';
-import cloneDeep from 'clone-deep';
 
 // Simple in-memory cache with 30-second TTL
 const nearbyIssuesCache = new NodeCache({ stdTTL: 30, checkperiod: 60 });
@@ -240,6 +239,8 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
           limit: limitNum,
           offset
         });
+        // Convert Sequelize model instances to plain JSON to avoid cloning TCP/socket internals
+        const plainIssues = issues.map(issue => issue.toJSON());
         
         // Calculate pagination metadata
         const totalPages = Math.ceil(count / limitNum);
@@ -247,7 +248,7 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
         const hasPrevPage = pageNum > 1;
         
         return {
-          issues,
+          issues: plainIssues,
           pagination: {
             total: count,
             page: pageNum,
@@ -257,14 +258,13 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
             hasPrevPage
           }
         }
-    };
+      };
 
     // Execute the function directly instead of using Redis
     const resultData = await result();
     
-    // Use cloneDeep to safely cache the result without TCP object issues
-    const safeResultData = cloneDeep(resultData);
-    nearbyIssuesCache.set(cacheKey, safeResultData);
+    // Cache plain JSON result directly (safe for in-memory cache)
+    nearbyIssuesCache.set(cacheKey, resultData);
 
     return successResponse(res, resultData, 'Nearby issues retrieved successfully');
   } catch (error) {
