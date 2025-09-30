@@ -112,11 +112,16 @@ export const generateVerificationToken = async (user: User): Promise<string> => 
 };
 
 // Maximum number of retry attempts for email sending
-const MAX_RETRY_ATTEMPTS = 7;
-// Delay between retry attempts in milliseconds (exponential backoff)
-const RETRY_DELAY_MS = 3000;
-// Email sending timeout in milliseconds (45 seconds)
-const EMAIL_TIMEOUT_MS = 45000;
+const MAX_RETRY_ATTEMPTS = 5;
+// Base delay between retry attempts in milliseconds (exponential backoff with jitter)
+const RETRY_BASE_MS = 2000;
+// Deduplication window to prevent duplicate sends (in ms)
+const DEDUPE_WINDOW_MS = 2 * 60 * 1000; // 2 minutes
+
+// In-flight/ recent send registry to prevent duplicates
+const inFlightSends = new Map<string, number>();
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 /**
  * Send an email with retry mechanism and timeout handling
@@ -125,37 +130,40 @@ const EMAIL_TIMEOUT_MS = 45000;
  * @returns Promise resolving to nodemailer info object
  */
 const sendEmailWithRetry = async (mailOptions: any, retryCount = 0): Promise<any> => {
+  const key = `${mailOptions.to}|${mailOptions.subject}`;
+  const now = Date.now();
+
+  // Dedupe: if a send started recently for the same key, skip
+  const lastStart = inFlightSends.get(key);
+  if (lastStart && (now - lastStart) < DEDUPE_WINDOW_MS) {
+    console.warn(`Skipping duplicate email send within window for ${key}`);
+    return { skipped: true };
+  }
+  inFlightSends.set(key, now);
+
   try {
-    // Create a promise that will reject after timeout
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Email sending timeout')), EMAIL_TIMEOUT_MS);
-    });
-    
-    // Create the email sending promise
-    const emailPromise = transporter.sendMail(mailOptions);
-    
-    // Race the promises - whichever completes/fails first wins
-    const info = await Promise.race([emailPromise, timeoutPromise]);
+    // Attempt send with built-in transporter timeouts
+    const info = await transporter.sendMail(mailOptions);
     return info;
   } catch (error: any) {
-    // Detect jsonTransport (log-only mode)
     const usingJsonTransport = !EMAIL_CONFIGURED;
-    // If we haven't exceeded max retries, try again with exponential backoff
-    if (retryCount < MAX_RETRY_ATTEMPTS) {
-      console.log(`Email sending attempt ${retryCount + 1} failed, retrying in ${RETRY_DELAY_MS * (2 ** retryCount)}ms...`);
-      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS * (2 ** retryCount)));
+
+    // Determine if error is transient and worth retrying
+    const transientCodes = new Set(['ETIMEDOUT', 'ECONNRESET', 'EHOSTUNREACH', 'ENETUNREACH']);
+    const isTransient = transientCodes.has(error?.code) || /timeout/i.test(error?.message || '') || /socket/i.test(error?.message || '');
+
+    if (isTransient && retryCount < MAX_RETRY_ATTEMPTS) {
+      const backoff = RETRY_BASE_MS * Math.pow(2, retryCount) + Math.floor(Math.random() * 500);
+      console.log(`Email send transient error (attempt ${retryCount + 1}). Retrying in ${backoff}ms...`, error?.code || error?.message);
+      await sleep(backoff);
       return sendEmailWithRetry(mailOptions, retryCount + 1);
     }
-    
-    // Primary exhausted; attempt fallback provider once if configured and not in log-only mode
+
+    // Primary exhausted or non-transient: attempt fallback provider once if configured and not in log-only mode
     if (!usingJsonTransport && fallbackTransporter) {
       try {
-        console.log('Primary SMTP failed after retries, attempting fallback SMTP provider...');
-        const timeoutPromise = new Promise((_, reject) => {
-          setTimeout(() => reject(new Error('Fallback email sending timeout')), EMAIL_TIMEOUT_MS);
-        });
-        const fallbackPromise = fallbackTransporter.sendMail(mailOptions);
-        const info = await Promise.race([fallbackPromise, timeoutPromise]);
+        console.log('Attempting fallback SMTP provider...');
+        const info = await fallbackTransporter.sendMail(mailOptions);
         console.log('Fallback email sent successfully');
         return info;
       } catch (fallbackErr) {
@@ -164,8 +172,11 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0): Promise<any
       }
     }
 
-    // Max retries exceeded, throw the error
+    // No more retries; rethrow error
     throw error;
+  } finally {
+    // Clear dedupe registry entry after completion
+    inFlightSends.delete(key);
   }
 };
 
@@ -222,13 +233,16 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
 export const sendPasswordResetEmail = async (user: User): Promise<void> => {
   try {
     console.log(`Attempting to send password reset email to: ${user.email}`);
-    // Generate password reset token
-    const token = crypto.randomBytes(20).toString('hex');
-    const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
-    
-    user.resetPasswordToken = token;
-    user.resetPasswordExpires = expires;
-    await user.save();
+    // Generate or reuse password reset token (avoid duplicates if still valid)
+    const hasValidToken = user.resetPasswordToken && user.resetPasswordExpires && new Date(user.resetPasswordExpires).getTime() > Date.now();
+    const token = hasValidToken ? (user.resetPasswordToken as string) : crypto.randomBytes(20).toString('hex');
+    const expires = hasValidToken ? new Date(user.resetPasswordExpires as any) : new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    if (!hasValidToken) {
+      user.resetPasswordToken = token;
+      user.resetPasswordExpires = expires;
+      await user.save();
+    }
     
     // Create reset URL
     const resetUrl = `${APP_URL}/reset-password/${token}`;

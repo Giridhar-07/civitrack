@@ -10,6 +10,9 @@ import sequelize from '../config/database';
 // import { cacheUtils, cacheKeys, cacheTTL } from '../services/redisService';
 // import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
 import { getFileUrl } from '../utils/upload';
+import { isImageKitConfigured, uploadImage } from '../utils/imagekit';
+import fs from 'fs';
+import path from 'path';
 import NodeCache from 'node-cache';
 
 // Simple in-memory cache with 30-second TTL
@@ -41,9 +44,36 @@ export const createIssue = async (req: Request, res: Response): Promise<Response
     // Build photo URLs from uploaded files (preferred) or body (fallback)
     const uploadedFiles = (req.files as Express.Multer.File[]) || [];
     const origin = `${req.protocol}://${req.get('host')}`;
-    const filePhotoUrls = uploadedFiles.length > 0
-      ? uploadedFiles.map(f => `${origin}${getFileUrl(f.filename)}`)
-      : [];
+    let filePhotoUrls: string[] = [];
+
+    if (uploadedFiles.length > 0) {
+      if (isImageKitConfigured()) {
+        // Upload each file to ImageKit for durable URLs
+        const uploadedUrls: string[] = [];
+        for (const f of uploadedFiles) {
+          try {
+            const localFilePath = (f as any).path as string | undefined;
+            const buffer = localFilePath
+              ? await fs.promises.readFile(localFilePath)
+              : (f as any).buffer; // fallback if memory storage is used
+            const fileName = `issue_${Date.now()}_${f.originalname}`;
+            const response = await uploadImage(buffer, fileName, 'issue-photos');
+            uploadedUrls.push(response.url);
+            // Clean up local temp file
+            if (localFilePath) {
+              await fs.promises.unlink(localFilePath).catch(() => {});
+            }
+          } catch (ikErr) {
+            console.warn('ImageKit upload failed for one file, falling back to local URL:', ikErr);
+            uploadedUrls.push(`${origin}${getFileUrl(f.filename)}`);
+          }
+        }
+        filePhotoUrls = uploadedUrls;
+      } else {
+        // Fallback to local static hosting
+        filePhotoUrls = uploadedFiles.map(f => `${origin}${getFileUrl(f.filename)}`);
+      }
+    }
 
     let bodyPhotoUrls: string[] = [];
     if (req.body.photos) {
@@ -340,18 +370,45 @@ export const updateIssue = async (req: Request, res: Response): Promise<Response
       }
 
       // Update issue
+      // Prepare new photo URLs if any files uploaded
+      let appendedPhotoUrls = issue.photos;
+      if (req.files && (req.files as Express.Multer.File[]).length > 0) {
+        const newFiles = (req.files as Express.Multer.File[]);
+        if (isImageKitConfigured()) {
+          const newUrls: string[] = [];
+          for (const f of newFiles) {
+            try {
+              const localFilePath = (f as any).path as string | undefined;
+              const buffer = localFilePath
+                ? await fs.promises.readFile(localFilePath)
+                : (f as any).buffer;
+              const fileName = `issue_${id}_${Date.now()}_${f.originalname}`;
+              const response = await uploadImage(buffer, fileName, 'issue-photos');
+              newUrls.push(response.url);
+              if (localFilePath) {
+                await fs.promises.unlink(localFilePath).catch(() => {});
+              }
+            } catch (ikErr) {
+              console.warn('ImageKit upload failed for one file during update, falling back to local URL:', ikErr);
+              newUrls.push(`${req.protocol}://${req.get('host')}${getFileUrl(f.filename)}`);
+            }
+          }
+          appendedPhotoUrls = [...issue.photos, ...newUrls];
+        } else {
+          appendedPhotoUrls = [
+            ...issue.photos,
+            ...newFiles.map(file => `${req.protocol}://${req.get('host')}${getFileUrl(file.filename)}`)
+          ];
+        }
+      }
+
       await issue.update({
         title: title || issue.title,
         description: description || issue.description,
         category: category || issue.category,
         status: status || issue.status,
-        // If new images are uploaded, append them to existing ones (as absolute URLs)
-        photos: req.files 
-          ? [
-              ...issue.photos,
-              ...(req.files as Express.Multer.File[]).map(file => `${req.protocol}://${req.get('host')}${getFileUrl(file.filename)}`)
-            ] 
-          : issue.photos
+        // If new images are uploaded, append them to existing ones with durable URLs when available
+        photos: appendedPhotoUrls
       }, { transaction });
       
       // If status is being updated, create a status log

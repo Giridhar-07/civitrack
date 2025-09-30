@@ -54,6 +54,7 @@ export interface ChatResponse {
 
 class GeminiService {
   private model: any;
+  private static readonly VALIDATION_TIMEOUT_MS = 15000; // 15s to avoid Render timeouts
 
   constructor() {
     try {
@@ -175,10 +176,18 @@ class GeminiService {
         return false;
       }
 
-      // Test with a simple prompt
-      const testResult = await this.model.generateContent('Hello, test response');
-      const response = await testResult.response;
-      return response.text().length > 0;
+      // Test with a simple prompt, guard with timeout to avoid hanging
+      const testPromise = (async () => {
+        const testResult = await this.model.generateContent('Hello, test response');
+        const response = await testResult.response;
+        return response.text().length > 0;
+      })();
+
+      const timeoutPromise = new Promise<boolean>((resolve) => {
+        setTimeout(() => resolve(false), GeminiService.VALIDATION_TIMEOUT_MS);
+      });
+
+      return await Promise.race([testPromise, timeoutPromise]);
 
     } catch (error) {
       console.error('Gemini service validation failed:', error);
