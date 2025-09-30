@@ -430,17 +430,18 @@ if (!USE_MOCK_SERVICE) {
       // Use our error handler utility to extract a standardized error message
       const errorResponse = extractErrorMessage(error);
       
-      // Enhanced network error detection with better handling
-      const isNetworkError = !error.response || 
-        (error as any).code === 'ECONNABORTED' || 
-        errorResponse.errorCode === 'NETWORK_ERROR' || 
-        errorResponse.errorCode === 'TIMEOUT_ERROR' ||
-        errorResponse.errorCode === 'OFFLINE_ERROR' ||
-        error.message?.includes('Network Error') ||
-        error.message?.includes('Failed to fetch') ||
-        error.message?.includes('connection') ||
-        error.message?.includes('timeout') ||
-        error.message?.includes('abort') ||
+      // Prefer server-provided message and status when available (avoid mislabeling as network error)
+      if (error?.response && typeof error.response?.data === 'object') {
+        const serverMessage = (error.response.data as any)?.message;
+        if (serverMessage && typeof serverMessage === 'string') {
+          errorResponse.message = serverMessage;
+        }
+        errorResponse.statusCode = error.response.status;
+      }
+      
+      // Strict network error detection: only when no response, timeout, or offline
+      const isNetworkError = (!error.response) ||
+        (error as any).code === 'ECONNABORTED' ||
         (typeof navigator !== 'undefined' && !navigator.onLine);
         
       // Provide more specific error messages for network issues
@@ -505,28 +506,7 @@ if (!USE_MOCK_SERVICE) {
         }
       }
       
-      // Enhanced network error detection with improved patterns
-      if (!error.response || 
-          error.code === 'ECONNABORTED' || 
-          error.message?.includes('Network') || 
-          error.message?.includes('network') ||
-          error.message?.includes('timeout') || 
-          error.message?.includes('Timeout') ||
-          error.message?.includes('connection') ||
-          error.message?.includes('Connection') ||
-          !navigator.onLine) {
-        errorResponse.message = 'Network connection issue. Please check your internet connection and try again.';
-        errorResponse.errorCode = 'NETWORK_ERROR';
-        errorResponse.isNetworkError = true;
-        
-        // Log network errors as warnings instead of errors to avoid console flooding
-        if (process.env.NODE_ENV === 'development') {
-          console.warn('Network connectivity issue detected:', {
-            message: error.message,
-            code: error.code
-          });
-        }
-      }
+      // Do not re-classify as network error if server responded; keep backend message visible
       
       // Log all errors in development environment with readable message
       if (process.env.NODE_ENV === 'development') {

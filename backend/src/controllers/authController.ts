@@ -31,9 +31,10 @@ export const register = async (req: Request, res: Response): Promise<Response> =
     });
 
     if (existingUser) {
-      return badRequestResponse(
+      return errorResponse(
         res,
-        'An account with this email or username already exists. Please use a different one or log in.'
+        'An account with this email or username already exists. Please use a different one or log in.',
+        409
       );
     }
 
@@ -344,7 +345,7 @@ export const updateProfile = async (req: Request, res: Response): Promise<Respon
       });
 
       if (existingUser) {
-        return badRequestResponse(res, 'Email or username is already taken');
+        return errorResponse(res, 'Email or username is already taken', 409);
       }
     }
 
@@ -505,7 +506,7 @@ export const updateUserByAdmin = async (req: Request, res: Response): Promise<Re
       });
 
       if (existingUser) {
-        return badRequestResponse(res, 'Email or username is already taken');
+        return errorResponse(res, 'Email or username is already taken', 409);
       }
     }
 

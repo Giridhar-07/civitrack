@@ -4,6 +4,7 @@ import issueRoutes from './issueRoutes';
 import statusRequestRoutes from './statusRequestRoutes';
 import aiRoutes from './aiRoutes';
 import imagekitRoutes from './imagekitRoutes';
+import statusRoutes from './statusRoutes';
 
 const router = Router();
 
@@ -13,6 +14,7 @@ router.use('/issues', issueRoutes);
 router.use('/status-requests', statusRequestRoutes);
 router.use('/ai', aiRoutes);
 router.use('/imagekit', imagekitRoutes);
+router.use('/status', statusRoutes);
 
 
 export default router;
