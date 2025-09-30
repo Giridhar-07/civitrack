@@ -163,22 +163,15 @@ const authService = {
         return { user, token };
       }
       
-      // Verify backend availability before attempting login
-      try {
-        // Use the explicit health check endpoint with the base URL
-        await authService.checkBackendHealth();
-      } catch (healthError: any) {
-        // If health check fails, throw a clear network error
-        console.warn('Backend health check failed before login attempt:', healthError);
-        const serverError = new Error('Unable to reach the server. Please try again later.');
-        (serverError as any).errorCode = 'SERVER_UNAVAILABLE';
-        (serverError as any).isNetworkError = true;
-        throw serverError;
-      }
+      // Kick off a non-blocking backend health check to log issues but don't delay login
+      authService.checkBackendHealth().catch((healthError: any) => {
+        console.warn('Backend health check failed before login attempt (non-blocking):', healthError);
+      });
       
       // Use real API
       const response = await api.post<AuthResponse>('/auth/login', credentials, {
-        headers: { 'x-no-retry': 'true' }
+        headers: { 'x-no-retry': 'true' },
+        timeout: 5000
       });
       
       // Log successful login response
@@ -200,6 +193,13 @@ const authService = {
         // Set flag to indicate successful connection to backend
         localStorage.setItem('use_local_backend', 'false');
         
+        // Cache user for immediate UI hydration
+        try {
+          localStorage.setItem('cached_user', JSON.stringify(response.data.user));
+        } catch (e) {
+          console.warn('Failed to cache user in localStorage', e);
+        }
+
         // Dispatch a storage event to notify other components about the token change
         if (typeof window !== 'undefined') {
           window.dispatchEvent(new StorageEvent('storage', {
@@ -209,6 +209,11 @@ const authService = {
             storageArea: localStorage
           }));
         }
+
+        // Prefetch current user to speed up subsequent pages
+        setTimeout(() => {
+          api.get<User>('/auth/me').catch(() => {});
+        }, 0);
       } else {
         console.warn('No token received in login response');
       }
@@ -426,8 +431,10 @@ const authService = {
       }));
     }
     
-    // Clear any other auth-related data from localStorage if needed
-    // localStorage.removeItem('user');
+    // Clear cached user for immediate UI reset
+    try {
+      localStorage.removeItem('cached_user');
+    } catch {}
     
     // Optionally, you could make a logout API call here if the backend needs to invalidate the token
     // try {

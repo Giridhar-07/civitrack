@@ -53,6 +53,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       try {
         if (authService.isAuthenticated()) {
           console.log('Layout: Token found, fetching user data');
+          // Hydrate UI immediately with cached user if available
+          try {
+            const cached = localStorage.getItem('cached_user');
+            if (cached) {
+              const cachedUser: User = JSON.parse(cached);
+              setUser(cachedUser);
+            }
+          } catch {}
           const userData = await authService.getCurrentUser();
           console.log('Layout: User data fetched successfully:', userData);
           setUser(userData);

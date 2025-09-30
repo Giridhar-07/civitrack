@@ -61,8 +61,8 @@ const LoginForm: React.FC = () => {
     try {
       const response = await authService.login(credentials);
       console.log('Login successful');
-      localStorage.setItem('token', response.token);
-      window.location.href = '/';
+      // Token is stored inside authService.login; use router navigation for faster transition
+      navigate('/');
       return null;
     } catch (err: any) {
       console.error('Login error:', err);

@@ -10,15 +10,19 @@ export const getStatus = async (req: Request, res: Response): Promise<Response> 
   try {
     const verbose = String(req.query.verbose || '').toLowerCase() === 'true';
 
-    // AI health
-    const aiHealthy = await geminiService.validateService();
+    // AI health with short timeout to avoid blocking
+    const aiTimeoutMs = 2000;
+    const aiHealthy = await Promise.race<boolean>([
+      geminiService.validateService().catch(() => false),
+      new Promise<boolean>(resolve => setTimeout(() => resolve(false), aiTimeoutMs))
+    ]);
     const ai = {
       ok: aiHealthy,
       model: process.env.GEMINI_MODEL || 'gemini-1.5-flash',
-      error: aiHealthy ? undefined : 'AI service validation failed'
+      error: aiHealthy ? undefined : `AI service degraded or timeout after ${aiTimeoutMs}ms`
     };
 
-    // Email health
+    // Email health (non-blocking verify inside util)
     const email = await checkEmailHealth();
 
     // Storage health (ImageKit config + local uploads directory existence)
@@ -36,7 +40,8 @@ export const getStatus = async (req: Request, res: Response): Promise<Response> 
       error: imagekitConfigured || uploadsDirExists ? undefined : 'No storage configured: ImageKit not set and uploads directory missing'
     };
 
-    const ok = ai.ok && email.ok && storage.ok;
+    // Overall status focuses on core app functions (auth + storage)
+    const ok = email.ok && storage.ok;
 
     const result: any = {
       ok,

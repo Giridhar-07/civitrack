@@ -40,10 +40,14 @@ if (EMAIL_CONFIGURED) {
       user: EMAIL_USER!,
       pass: EMAIL_PASS!,
     },
-    // Increased connection timeout settings to prevent hanging connections
-    connectionTimeout: 30000, // 30 seconds
-    greetingTimeout: 20000,   // 20 seconds
-    socketTimeout: 30000,     // 30 seconds
+    // Faster timeouts to avoid long hangs
+    connectionTimeout: 5000, // 5 seconds
+    greetingTimeout: 5000,   // 5 seconds
+    socketTimeout: 7000,     // 7 seconds
+    // Enable a small pool to reuse connections efficiently
+    pool: true,
+    maxConnections: 3,
+    maxMessages: 10,
   });
 } else {
   // Use jsonTransport to avoid network calls; emails will be logged only
@@ -70,9 +74,12 @@ if (FALLBACK_CONFIGURED) {
         user: FALLBACK_EMAIL_USER!,
         pass: FALLBACK_EMAIL_PASS!,
       },
-      connectionTimeout: 30000,
-      greetingTimeout: 20000,
-      socketTimeout: 30000,
+      connectionTimeout: 5000,
+      greetingTimeout: 5000,
+      socketTimeout: 7000,
+      pool: true,
+      maxConnections: 2,
+      maxMessages: 10,
     });
     // Verify silently; failures handled at send time
     fallbackTransporter.verify().then(() => {
@@ -129,13 +136,13 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
  * @param retryCount Current retry count
  * @returns Promise resolving to nodemailer info object
  */
-const sendEmailWithRetry = async (mailOptions: any, retryCount = 0): Promise<any> => {
+const sendEmailWithRetry = async (mailOptions: any, retryCount = 0, internalRetry = false): Promise<any> => {
   const key = `${mailOptions.to}|${mailOptions.subject}`;
   const now = Date.now();
 
   // Dedupe: if a send started recently for the same key, skip
   const lastStart = inFlightSends.get(key);
-  if (lastStart && (now - lastStart) < DEDUPE_WINDOW_MS) {
+  if (!internalRetry && lastStart && (now - lastStart) < DEDUPE_WINDOW_MS) {
     console.warn(`Skipping duplicate email send within window for ${key}`);
     return { skipped: true };
   }
@@ -156,7 +163,7 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0): Promise<any
       const backoff = RETRY_BASE_MS * Math.pow(2, retryCount) + Math.floor(Math.random() * 500);
       console.log(`Email send transient error (attempt ${retryCount + 1}). Retrying in ${backoff}ms...`, error?.code || error?.message);
       await sleep(backoff);
-      return sendEmailWithRetry(mailOptions, retryCount + 1);
+      return sendEmailWithRetry(mailOptions, retryCount + 1, true);
     }
 
     // Primary exhausted or non-transient: attempt fallback provider once if configured and not in log-only mode
@@ -218,7 +225,7 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
       console.log('Verification email generated (log-only mode):', mailOptions);
     } else {
       const info = await sendEmailWithRetry(mailOptions);
-      console.log('Verification email sent successfully:', info.response);
+      console.log('Verification email sent successfully:', info?.messageId || info?.response || JSON.stringify(info));
     }
   } catch (error) {
     console.error('Error sending verification email:', error);
@@ -345,7 +352,12 @@ export interface EmailHealth {
 export const checkEmailHealth = async (): Promise<EmailHealth> => {
   try {
     if (EMAIL_CONFIGURED) {
-      await transporter.verify();
+      // Verify with a short timeout to avoid blocking
+      const withTimeout = <T>(p: Promise<T>, ms: number) => Promise.race([
+        p,
+        new Promise<T>((_, reject) => setTimeout(() => reject(new Error('EMAIL_VERIFY_TIMEOUT')), ms))
+      ]);
+      await withTimeout(transporter.verify(), 1500);
       return {
         smtpConfigured: true,
         smtpReachable: true,

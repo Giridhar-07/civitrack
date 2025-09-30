@@ -1,354 +1,300 @@
-2025-09-30T15:23:52.630412084Z ==> Downloading cache...
-2025-09-30T15:23:52.631946038Z ==> Cloning from https://github.com/Giridhar-07/civitrack
-2025-09-30T15:23:53.641252114Z ==> Checking out commit 7b11deaa656036a3a9751bfbcd3209ac72f11585 in branch dev
-2025-09-30T15:24:04.978312053Z ==> Transferred 111MB in 7s. Extraction took 3s.
-2025-09-30T15:24:30.986537972Z ==> Using Node.js version 22.16.0 (default)
-2025-09-30T15:24:31.010194013Z ==> Docs on specifying a Node.js version: https://render.com/docs/node-version
-2025-09-30T15:24:31.074023495Z ==> Running build command 'NODE_ENV=development npm install && npm run build'...
-2025-09-30T15:24:32.360802202Z 
-2025-09-30T15:24:32.360831673Z up to date, audited 841 packages in 1s
-2025-09-30T15:24:32.360837343Z 
-2025-09-30T15:24:32.360848273Z 89 packages are looking for funding
-2025-09-30T15:24:32.360853593Z   run `npm fund` for details
-2025-09-30T15:24:32.361993869Z 
-2025-09-30T15:24:32.362004509Z found 0 vulnerabilities
-2025-09-30T15:24:32.530092078Z 
-2025-09-30T15:24:32.530114889Z > civitrack-backend@1.0.0 build
-2025-09-30T15:24:32.530119259Z > tsc
-2025-09-30T15:24:32.530122949Z 
-2025-09-30T15:24:41.906116331Z ==> Uploading build...
-2025-09-30T15:24:49.301794827Z ==> Uploaded in 4.6s. Compression took 2.8s
-2025-09-30T15:24:49.320297351Z ==> Build successful 🎉
-2025-09-30T15:24:52.677247153Z ==> Deploying...
-2025-09-30T15:25:20.073640676Z   'http://localhost:3001',
-2025-09-30T15:25:20.073644566Z   'http://127.0.0.1:3001',
-2025-09-30T15:25:20.073649447Z   'https://civitrack-dev.netlify.app'
-2025-09-30T15:25:20.073653436Z ]
-2025-09-30T15:25:20.587343915Z Redis is explicitly disabled via DISABLE_REDIS environment variable
-2025-09-30T15:25:24.436108866Z Database connection has been established successfully.
-2025-09-30T15:25:24.437548092Z Server running on port 10000
-2025-09-30T15:25:24.437691034Z Environment: production
-2025-09-30T15:25:24.437915138Z Render deployment: true
-2025-09-30T15:25:24.437929739Z WebSocket server initialized
-2025-09-30T15:25:24.437934089Z Performance monitoring enabled
-2025-09-30T15:25:25.338081734Z info: request {"duration":5,"ip":"::1","method":"HEAD","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T15:25:25.336Z","url":"/","userAgent":"Go-http-client/1.1"}
-2025-09-30T15:25:34.109265564Z ==> Your service is live 🎉
-2025-09-30T15:25:34.141656031Z ==> 
-2025-09-30T15:25:34.170149589Z ==> ///////////////////////////////////////////////////////////
-2025-09-30T15:25:34.199123746Z ==> 
-2025-09-30T15:25:34.228811814Z ==> Available at your primary URL https://civitrack.onrender.com
-2025-09-30T15:25:34.257635481Z ==> 
-2025-09-30T15:25:34.287185779Z ==> ///////////////////////////////////////////////////////////
-2025-09-30T15:25:35.412131257Z info: request {"duration":3,"ip":"10.229.12.1","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T15:25:35.411Z","url":"/","userAgent":"Go-http-client/2.0"}
-2025-09-30T15:25:51.075294876Z Email configuration error details: Error: Connection timeout
-2025-09-30T15:25:51.075325537Z     at SMTPConnection._formatError (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
-2025-09-30T15:25:51.075334127Z     at SMTPConnection._onError (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
-2025-09-30T15:25:51.075370938Z     at Timeout.<anonymous> (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
-2025-09-30T15:25:51.075375818Z     at listOnTimeout (node:internal/timers:588:17)
-2025-09-30T15:25:51.075379347Z     at process.processTimers (node:internal/timers:523:7) {
-2025-09-30T15:25:51.075383348Z   code: 'ETIMEDOUT',
-2025-09-30T15:25:51.075386898Z   command: 'CONN'
-2025-09-30T15:25:51.075390458Z }
-2025-09-30T15:30:29.492659274Z ==> Detected service running on port 10000
-2025-09-30T15:30:29.635713938Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
-2025-09-30T15:32:36.375780741Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T15:32:36.375815682Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T15:32:36.375840072Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T15:32:36.375843412Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T15:32:36.375845772Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T15:32:36.375848192Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T15:32:36.375850682Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T15:32:36.375853982Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T15:32:36.375856562Z   status: 404,
-2025-09-30T15:32:36.375860112Z   statusText: 'Not Found',
-2025-09-30T15:32:36.375862563Z   errorDetails: undefined
-2025-09-30T15:32:36.375864723Z }
-2025-09-30T15:32:36.471640682Z info: request {"duration":694,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-09-30T15:32:36.471Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-09-30T15:32:37.672263532Z warn: request {"duration":1930,"ip":"10.229.170.66","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T15:32:37.671Z","url":"/api/issues","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-09-30T15:32:37.94503819Z warn: request {"duration":1668,"ip":"10.229.191.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T15:32:37.944Z","url":"/api/issues/nearby?latitude=40.7128&longitude=-74.006&radius=10","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-09-30T15:32:38.061103215Z info: request {"duration":3,"ip":"10.229.191.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T15:32:38.060Z","url":"/api/issues/nearby?latitude=40.7128&longitude=-74.006&radius=10","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-09-30T16:54:25.089476248Z ==> Running 'npm start'
-2025-09-30T16:54:26.184794976Z 
-2025-09-30T16:54:26.184823608Z > civitrack-backend@1.0.0 start
-2025-09-30T16:54:26.184829258Z > node dist/index.js
-2025-09-30T16:54:26.184831718Z 
-2025-09-30T16:54:28.787560168Z [dotenv@17.2.2] injecting env (0) from .env -- tip: 📡 auto-backup env with Radar: https://dotenvx.com/radar
-2025-09-30T16:54:29.981956363Z Email Config Status:
-2025-09-30T16:54:29.981982834Z   EMAIL_HOST: smtp.gmail.com
-2025-09-30T16:54:29.981995315Z   EMAIL_PORT: 587
-2025-09-30T16:54:29.982004565Z   EMAIL_USER: noreplycivitrack@gmail.com
-2025-09-30T16:54:29.982115402Z   EMAIL_FROM: CiviTrack <noreply@civitrack.com>
-2025-09-30T16:54:29.982138444Z   APP_URL: https://civitrack-dev.netlify.app
-2025-09-30T16:54:31.185511042Z Express trust proxy enabled for serverless environment
-2025-09-30T16:54:31.188428989Z Allowed CORS origins: [
-2025-09-30T16:54:31.18844728Z   'http://localhost:3000',
-2025-09-30T16:54:31.188452021Z   'http://127.0.0.1:3000',
-2025-09-30T16:54:31.188456441Z   'http://localhost:5173',
-2025-09-30T16:54:31.188460681Z   'http://127.0.0.1:5173',
-2025-09-30T16:54:31.188464641Z   'http://localhost:3001',
-2025-09-30T16:54:31.188468602Z   'http://127.0.0.1:3001',
-2025-09-30T16:54:31.188472862Z   'https://civitrack-dev.netlify.app'
-2025-09-30T16:54:31.188477132Z ]
-2025-09-30T16:54:31.887315981Z Redis is explicitly disabled via DISABLE_REDIS environment variable
-2025-09-30T16:54:35.178636807Z Database connection has been established successfully.
-2025-09-30T16:54:35.178667809Z Server running on port 10000
-2025-09-30T16:54:35.17867314Z Environment: production
-2025-09-30T16:54:35.17867748Z Render deployment: true
-2025-09-30T16:54:35.17868164Z WebSocket server initialized
-2025-09-30T16:54:35.17868591Z Performance monitoring enabled
-2025-09-30T16:54:39.686828798Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:54:39.68686454Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:54:39.68687022Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:54:39.68687433Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:54:39.686878441Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:54:39.686882391Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:54:39.686886271Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:54:39.686891071Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:54:39.686894992Z   status: 404,
-2025-09-30T16:54:39.686899362Z   statusText: 'Not Found',
-2025-09-30T16:54:39.686903292Z   errorDetails: undefined
-2025-09-30T16:54:39.686907012Z }
-2025-09-30T16:54:39.784495539Z info: request {"duration":500,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:54:39.783Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:40.08454343Z info: request {"duration":792,"ip":"10.229.191.1","method":"GET","route":"/","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:54:40.084Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:40.588490803Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:54:40.588514374Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:54:40.588517664Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:54:40.588520965Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:54:40.588523625Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:54:40.588526775Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:54:40.588529495Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:54:40.588533025Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:54:40.588535806Z   status: 404,
-2025-09-30T16:54:40.588539736Z   statusText: 'Not Found',
-2025-09-30T16:54:40.588542326Z   errorDetails: undefined
-2025-09-30T16:54:40.588544546Z }
-2025-09-30T16:54:40.682642571Z info: request {"duration":797,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:40.682Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:40.683833333Z warn: request {"duration":1478,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:40.683Z","url":"/api/issues/nearby?latitude=16.83158437389119&longitude=75.73951597279715&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:40.982149449Z warn: request {"duration":1443,"ip":"10.229.12.1","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:40.981Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.097740947Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:54:41.097760108Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:54:41.097763008Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:54:41.097765379Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:54:41.097777549Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:54:41.097779879Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:54:41.097782269Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:54:41.0977851Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:54:41.09778772Z   status: 404,
-2025-09-30T16:54:41.09779026Z   statusText: 'Not Found',
-2025-09-30T16:54:41.09779255Z   errorDetails: undefined
-2025-09-30T16:54:41.09779492Z }
-2025-09-30T16:54:41.098745568Z info: request {"duration":97,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:54:41.098Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.273408027Z warn: request {"duration":1887,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.273Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.285268526Z info: request {"duration":901,"ip":"10.229.170.66","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.284Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.329718431Z warn: request {"duration":1140,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.329Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.445781308Z info: request {"duration":960,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.445Z","url":"/api/issues/nearby?latitude=16.83158437389119&longitude=75.73951597279715&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.866440771Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:54:41.870267373Z info: request {"duration":4,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:54:41.870Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:44.777483469Z info: request {"duration":3,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:44.777Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:45.309475504Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:54:45.310853738Z info: request {"duration":1,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:54:45.310Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:01.99361069Z Email configuration error details: Error: Connection timeout
-2025-09-30T16:55:01.993628551Z     at SMTPConnection._formatError (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
-2025-09-30T16:55:01.993632082Z     at SMTPConnection._onError (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
-2025-09-30T16:55:01.993635262Z     at Timeout.<anonymous> (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
-2025-09-30T16:55:01.993638132Z     at listOnTimeout (node:internal/timers:588:17)
-2025-09-30T16:55:01.993640922Z     at process.processTimers (node:internal/timers:523:7) {
-2025-09-30T16:55:01.993644062Z   code: 'ETIMEDOUT',
-2025-09-30T16:55:01.993646912Z   command: 'CONN'
-2025-09-30T16:55:01.993649712Z }
-2025-09-30T16:55:04.368278103Z info: request {"duration":2,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:04.366Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:06.338801813Z info: request {"duration":140,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:06.338Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:06.338864937Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:55:06.338872548Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:55:06.338877628Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:55:06.338881818Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:55:06.338935122Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:55:06.338940632Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:55:06.338944732Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:55:06.338949153Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:55:06.338953213Z   status: 404,
-2025-09-30T16:55:06.338958213Z   statusText: 'Not Found',
-2025-09-30T16:55:06.338962423Z   errorDetails: undefined
-2025-09-30T16:55:06.338966414Z }
-2025-09-30T16:55:07.408612165Z warn: request {"duration":1485,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:55:07.408Z","url":"/api/issues/nearby?latitude=16.846769400695802&longitude=75.71193695068361&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:08.002652356Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:55:08.003775134Z info: request {"duration":1,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:55:08.003Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:13.317256203Z info: request {"duration":333,"ip":"10.229.170.66","method":"GET","route":"/","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:13.316Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:13.889466694Z info: request {"duration":437,"ip":"10.229.12.1","method":"GET","route":"/","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:13.887Z","url":"/api/issues?page=1&limit=9","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:13.98173277Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:55:13.982962765Z info: request {"duration":94,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:55:13.982Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:14.083723778Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:55:14.08374089Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:55:14.08374566Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:55:14.083769461Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:55:14.083773442Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:55:14.083777122Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:55:14.083780862Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:55:14.083784972Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:55:14.083788673Z   status: 404,
-2025-09-30T16:55:14.083792773Z   statusText: 'Not Found',
-2025-09-30T16:55:14.083796413Z   errorDetails: undefined
-2025-09-30T16:55:14.083799993Z }
-2025-09-30T16:55:14.083817664Z info: request {"duration":591,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:14.083Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:20.527723995Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:55:20.527752147Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:55:20.527756077Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:55:20.527758858Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:55:20.527761928Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:55:20.527764468Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:55:20.527767038Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:55:20.527770288Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:55:20.527772808Z   status: 404,
-2025-09-30T16:55:20.527775788Z   statusText: 'Not Found',
-2025-09-30T16:55:20.527778309Z   errorDetails: undefined
-2025-09-30T16:55:20.527780869Z }
-2025-09-30T16:55:20.528602299Z info: request {"duration":108,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:20.528Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:26.786079255Z Attempting to send password reset email to: clown7g7@gmail.com
-2025-09-30T16:55:53.454166788Z Skipping duplicate email send within window for clown7g7@gmail.com|CiviTrack - Password Reset Request
-2025-09-30T16:55:53.45420089Z Attempting to send password reset email to: clown7g7@gmail.com
-2025-09-30T16:55:53.45420606Z Password reset email sent successfully: undefined
-2025-09-30T16:55:53.45420956Z warn: request {"duration":1306,"ip":"10.229.12.1","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:55:53.453Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:56.972650603Z Email send transient error (attempt 1). Retrying in 2433ms... ETIMEDOUT
-2025-09-30T16:55:59.40596265Z Skipping duplicate email send within window for clown7g7@gmail.com|CiviTrack - Password Reset Request
-2025-09-30T16:55:59.406062386Z Password reset email sent successfully: undefined
-2025-09-30T16:55:59.406916918Z warn: request {"duration":32853,"ip":"10.229.170.66","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:55:59.406Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:40.588517664Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:54:40.588520965Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:54:40.588523625Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:54:40.588526775Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:54:40.588529495Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:54:40.588533025Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:54:40.588535806Z   status: 404,
-2025-09-30T16:54:40.588539736Z   statusText: 'Not Found',
-2025-09-30T16:54:40.588542326Z   errorDetails: undefined
-2025-09-30T16:54:40.588544546Z }
-2025-09-30T16:54:40.682642571Z info: request {"duration":797,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:40.682Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:40.683833333Z warn: request {"duration":1478,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:40.683Z","url":"/api/issues/nearby?latitude=16.83158437389119&longitude=75.73951597279715&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:40.982149449Z warn: request {"duration":1443,"ip":"10.229.12.1","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:40.981Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.097740947Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:54:41.097760108Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:54:41.097763008Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:54:41.097765379Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:54:41.097777549Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:54:41.097779879Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:54:41.097782269Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:54:41.0977851Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:54:41.09778772Z   status: 404,
-2025-09-30T16:54:41.09779026Z   statusText: 'Not Found',
-2025-09-30T16:54:41.09779255Z   errorDetails: undefined
-2025-09-30T16:54:41.09779492Z }
-2025-09-30T16:54:41.098745568Z info: request {"duration":97,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:54:41.098Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.273408027Z warn: request {"duration":1887,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.273Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.285268526Z info: request {"duration":901,"ip":"10.229.170.66","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.284Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.329718431Z warn: request {"duration":1140,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.329Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.445781308Z info: request {"duration":960,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:41.445Z","url":"/api/issues/nearby?latitude=16.83158437389119&longitude=75.73951597279715&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:41.866440771Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:54:41.870267373Z info: request {"duration":4,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:54:41.870Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:44.777483469Z info: request {"duration":3,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:54:44.777Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:54:45.309475504Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:54:45.310853738Z info: request {"duration":1,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:54:45.310Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:01.99361069Z Email configuration error details: Error: Connection timeout
-2025-09-30T16:55:01.993628551Z     at SMTPConnection._formatError (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
-2025-09-30T16:55:01.993632082Z     at SMTPConnection._onError (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
-2025-09-30T16:55:01.993635262Z     at Timeout.<anonymous> (/opt/render/project/src/backend/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
-2025-09-30T16:55:01.993638132Z     at listOnTimeout (node:internal/timers:588:17)
-2025-09-30T16:55:01.993640922Z     at process.processTimers (node:internal/timers:523:7) {
-2025-09-30T16:55:01.993644062Z   code: 'ETIMEDOUT',
-2025-09-30T16:55:01.993646912Z   command: 'CONN'
-2025-09-30T16:55:01.993649712Z }
-2025-09-30T16:55:04.368278103Z info: request {"duration":2,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:04.366Z","url":"/api/issues/nearby?latitude=16.83411832231644&longitude=75.72961807250978&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:06.338801813Z info: request {"duration":140,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:06.338Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:06.338864937Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:55:06.338872548Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:55:06.338877628Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:55:06.338881818Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:55:06.338935122Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:55:06.338940632Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:55:06.338944732Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:55:06.338949153Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:55:06.338953213Z   status: 404,
-2025-09-30T16:55:06.338958213Z   statusText: 'Not Found',
-2025-09-30T16:55:06.338962423Z   errorDetails: undefined
-2025-09-30T16:55:06.338966414Z }
-2025-09-30T16:55:07.408612165Z warn: request {"duration":1485,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:55:07.408Z","url":"/api/issues/nearby?latitude=16.846769400695802&longitude=75.71193695068361&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:08.002652356Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:55:08.003775134Z info: request {"duration":1,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:55:08.003Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:13.317256203Z info: request {"duration":333,"ip":"10.229.170.66","method":"GET","route":"/","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:13.316Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:13.889466694Z info: request {"duration":437,"ip":"10.229.12.1","method":"GET","route":"/","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:13.887Z","url":"/api/issues?page=1&limit=9","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:13.98173277Z Static file request: GET /uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png
-2025-09-30T16:55:13.982962765Z info: request {"duration":94,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T16:55:13.982Z","url":"/uploads/e030a1e0-99b7-4e9f-ab13-ee905929bfb4.png","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:14.083723778Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:55:14.08374089Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:55:14.08374566Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:55:14.083769461Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:55:14.083773442Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:55:14.083777122Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:55:14.083780862Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:55:14.083784972Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:55:14.083788673Z   status: 404,
-2025-09-30T16:55:14.083792773Z   statusText: 'Not Found',
-2025-09-30T16:55:14.083796413Z   errorDetails: undefined
-2025-09-30T16:55:14.083799993Z }
-2025-09-30T16:55:14.083817664Z info: request {"duration":591,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:14.083Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:20.527723995Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T16:55:20.527752147Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T16:55:20.527756077Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T16:55:20.527758858Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T16:55:20.527761928Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T16:55:20.527764468Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T16:55:20.527767038Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T16:55:20.527770288Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T16:55:20.527772808Z   status: 404,
-2025-09-30T16:55:20.527775788Z   statusText: 'Not Found',
-2025-09-30T16:55:20.527778309Z   errorDetails: undefined
-2025-09-30T16:55:20.527780869Z }
-2025-09-30T16:55:20.528602299Z info: request {"duration":108,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T16:55:20.528Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:26.786079255Z Attempting to send password reset email to: clown7g7@gmail.com
-2025-09-30T16:55:53.454166788Z Skipping duplicate email send within window for clown7g7@gmail.com|CiviTrack - Password Reset Request
-2025-09-30T16:55:53.45420089Z Attempting to send password reset email to: clown7g7@gmail.com
-2025-09-30T16:55:53.45420606Z Password reset email sent successfully: undefined
-2025-09-30T16:55:53.45420956Z warn: request {"duration":1306,"ip":"10.229.12.1","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:55:53.453Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T16:55:56.972650603Z Email send transient error (attempt 1). Retrying in 2433ms... ETIMEDOUT
-2025-09-30T16:55:59.40596265Z Skipping duplicate email send within window for clown7g7@gmail.com|CiviTrack - Password Reset Request
-2025-09-30T16:55:59.406062386Z Password reset email sent successfully: undefined
-2025-09-30T16:55:59.406916918Z warn: request {"duration":32853,"ip":"10.229.170.66","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-09-30T16:55:59.406Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T17:04:00.781238947Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T17:04:00.781273329Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T17:04:00.781277329Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T17:04:00.78127981Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T17:04:00.7812823Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T17:04:00.78128464Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T17:04:00.78128737Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T17:04:00.78129047Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T17:04:00.78129315Z   status: 404,
-2025-09-30T17:04:00.781296111Z   statusText: 'Not Found',
-2025-09-30T17:04:00.781298561Z   errorDetails: undefined
-2025-09-30T17:04:00.781300941Z }
-2025-09-30T17:04:00.78194017Z info: request {"duration":135,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T17:04:00.781Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T17:04:02.470397757Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T17:04:02.470415307Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T17:04:02.470418978Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T17:04:02.470421728Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T17:04:02.470424028Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T17:04:02.470426288Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T17:04:02.470428658Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T17:04:02.470431568Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T17:04:02.470433959Z   status: 404,
-2025-09-30T17:04:02.470437499Z   statusText: 'Not Found',
-2025-09-30T17:04:02.470439899Z   errorDetails: undefined
-2025-09-30T17:04:02.470442169Z }
-2025-09-30T17:04:02.470975822Z info: request {"duration":84,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T17:04:02.470Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T17:04:32.136926081Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-09-30T17:04:32.136967804Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-09-30T17:04:32.136972575Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-09-30T17:04:32.136975604Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-09-30T17:04:32.136978595Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-09-30T17:04:32.136981465Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
-2025-09-30T17:04:32.136983875Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
-2025-09-30T17:04:32.136986905Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-09-30T17:04:32.136989616Z   status: 404,
-2025-09-30T17:04:32.136993026Z   statusText: 'Not Found',
-2025-09-30T17:04:32.136995456Z   errorDetails: undefined
-2025-09-30T17:04:32.136997136Z }
-2025-09-30T17:04:32.137654276Z info: request {"duration":119,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T17:04:32.137Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-09-30T17:04:34.052524383Z warn: request {"duration":1738,"ip":"10.229.191.1","method":"POST","route":"/register","service":"performance-monitor","status":400,"timestamp":"2025-09-30T17:04:34.052Z","url":"/api/auth/register","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T18:44:40.011018739Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T18:44:40.011052131Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T18:44:40.011057321Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T18:44:40.011061052Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T18:44:40.011065052Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T18:44:40.011068742Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T18:44:40.011072192Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T18:44:40.011076393Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T18:44:40.011080123Z   status: 404,
+2025-09-30T18:44:40.011084313Z   statusText: 'Not Found',
+2025-09-30T18:44:40.011087793Z   errorDetails: undefined
+2025-09-30T18:44:40.011091274Z }
+2025-09-30T18:44:40.011392205Z info: request {"duration":129,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T18:44:40.011Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T18:44:42.754805104Z info: request {"duration":78,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T18:44:42.753Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T18:44:42.754810675Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T18:44:42.754838697Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T18:44:42.754844897Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T18:44:42.754849208Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T18:44:42.754853298Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T18:44:42.754857248Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T18:44:42.754861539Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T18:44:42.75488255Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T18:44:42.75488586Z   status: 404,
+2025-09-30T18:44:42.75488902Z   statusText: 'Not Found',
+2025-09-30T18:44:42.754891641Z   errorDetails: undefined
+2025-09-30T18:44:42.754894121Z }
+2025-09-30T18:44:50.00963755Z Attempting to send password reset email to: clown7g7@gmail.com
+2025-09-30T18:45:15.665470854Z Attempting to send password reset email to: clown7g7@gmail.com
+2025-09-30T18:45:15.666803557Z Password reset email sent successfully: undefined
+2025-09-30T18:45:15.666823558Z warn: request {"duration":1323,"ip":"10.229.191.1","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-09-30T18:45:15.666Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T18:45:15.666882312Z Skipping duplicate email send within window for clown7g7@gmail.com|CiviTrack - Password Reset Request
+2025-09-30T18:45:20.19307246Z Email send transient error (attempt 1). Retrying in 2348ms... ETIMEDOUT
+2025-09-30T18:45:22.542781066Z Skipping duplicate email send within window for clown7g7@gmail.com|CiviTrack - Password Reset Request
+2025-09-30T18:45:22.542804418Z Password reset email sent successfully: undefined
+2025-09-30T18:45:22.543509457Z warn: request {"duration":33933,"ip":"10.229.170.66","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-09-30T18:45:22.543Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:00:33.638223117Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:00:33.638246478Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:00:33.638251039Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:00:33.638255129Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:00:33.638258829Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:00:33.638262939Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:00:33.63827797Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:00:33.638283861Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:00:33.638287621Z   status: 404,
+2025-09-30T19:00:33.638291691Z   statusText: 'Not Found',
+2025-09-30T19:00:33.638295571Z   errorDetails: undefined
+2025-09-30T19:00:33.638299392Z }
+2025-09-30T19:00:33.639193274Z info: request {"duration":143,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:00:33.638Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:00:34.834499967Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:00:34.834521978Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:00:34.834538779Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:00:34.834542019Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:00:34.83454464Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:00:34.83454686Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:00:34.83454924Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:00:34.83455347Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:00:34.83455648Z   status: 404,
+2025-09-30T19:00:34.834560661Z   statusText: 'Not Found',
+2025-09-30T19:00:34.834563561Z   errorDetails: undefined
+2025-09-30T19:00:34.834566221Z }
+2025-09-30T19:00:34.835317393Z info: request {"duration":91,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:00:34.835Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:01:05.44654722Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:01:05.446586623Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:01:05.446592123Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:01:05.446596494Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:01:05.446600514Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:01:05.446604704Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:01:05.446609205Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:01:05.446614125Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:01:05.446618415Z   status: 404,
+2025-09-30T19:01:05.446623566Z   statusText: 'Not Found',
+2025-09-30T19:01:05.446628116Z   errorDetails: undefined
+2025-09-30T19:01:05.446631066Z }
+2025-09-30T19:01:05.447722032Z info: request {"duration":133,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:01:05.447Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:01:30.637819212Z warn: request {"duration":1735,"ip":"10.229.12.1","method":"POST","route":"/register","service":"performance-monitor","status":409,"timestamp":"2025-09-30T19:01:30.637Z","url":"/api/auth/register","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:01:34.87761579Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:01:34.877695785Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:01:34.877703476Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:01:34.877707256Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:01:34.877711356Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:01:34.877714897Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:01:34.877718357Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:01:34.877722517Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:01:34.877726307Z   status: 404,
+2025-09-30T19:01:34.877730318Z   statusText: 'Not Found',
+2025-09-30T19:01:34.877734148Z   errorDetails: undefined
+2025-09-30T19:01:34.877737788Z }
+2025-09-30T19:01:34.878465399Z info: request {"duration":127,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:01:34.878Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:02:05.084072011Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:02:05.084106293Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:02:05.084111743Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:02:05.084116094Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:02:05.084120064Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:02:05.084124204Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:02:05.084127904Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:02:05.084132805Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:02:05.084136625Z   status: 404,
+2025-09-30T19:02:05.084142215Z   statusText: 'Not Found',
+2025-09-30T19:02:05.084160437Z   errorDetails: undefined
+2025-09-30T19:02:05.084163027Z }
+2025-09-30T19:02:05.085810691Z info: request {"duration":126,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:02:05.085Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:02:10.312448733Z warn: request {"duration":1314,"ip":"10.229.170.66","method":"POST","route":"/register","service":"performance-monitor","status":409,"timestamp":"2025-09-30T19:02:10.312Z","url":"/api/auth/register","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:02:35.741893369Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:02:35.741931491Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:02:35.741936472Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:02:35.741940322Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:02:35.741944032Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:02:35.741947692Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:02:35.741951593Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:02:35.741956703Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:02:35.741961124Z   status: 404,
+2025-09-30T19:02:35.741965764Z   statusText: 'Not Found',
+2025-09-30T19:02:35.741969284Z   errorDetails: undefined
+2025-09-30T19:02:35.741972764Z }
+2025-09-30T19:02:35.742642411Z info: request {"duration":113,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:02:35.742Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:03:05.872628599Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:03:05.872736237Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:03:05.872744037Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:03:05.872748947Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:03:05.872753518Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:03:05.872758668Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:03:05.872774509Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:03:05.872800311Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:03:05.872803401Z   status: 404,
+2025-09-30T19:03:05.872806481Z   statusText: 'Not Found',
+2025-09-30T19:03:05.872809231Z   errorDetails: undefined
+2025-09-30T19:03:05.872811912Z }
+2025-09-30T19:03:05.873481948Z info: request {"duration":138,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:03:05.873Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:03:36.266950211Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:03:36.266974923Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:03:36.266980253Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:03:36.266984193Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:03:36.266988324Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:03:36.266992324Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:03:36.266996845Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:03:36.267003985Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:03:36.267008065Z   status: 404,
+2025-09-30T19:03:36.267012786Z   statusText: 'Not Found',
+2025-09-30T19:03:36.267016876Z   errorDetails: undefined
+2025-09-30T19:03:36.267020506Z }
+2025-09-30T19:03:36.26780585Z info: request {"duration":128,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:03:36.267Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:04:06.918925315Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:04:06.918968908Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:04:06.918975628Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:04:06.918979749Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:04:06.918983839Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:04:06.918988199Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:04:06.91900602Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:04:06.919009571Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:04:06.919012321Z   status: 404,
+2025-09-30T19:04:06.919015611Z   statusText: 'Not Found',
+2025-09-30T19:04:06.919018301Z   errorDetails: undefined
+2025-09-30T19:04:06.919020971Z }
+2025-09-30T19:04:06.919847709Z info: request {"duration":114,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:04:06.919Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:04:35.822703138Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:04:35.822740441Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:04:35.822746431Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:04:35.822750471Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:04:35.822755042Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:04:35.822759192Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:04:35.822763472Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:04:35.822768892Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:04:35.822772833Z   status: 404,
+2025-09-30T19:04:35.822776163Z   statusText: 'Not Found',
+2025-09-30T19:04:35.822778963Z   errorDetails: undefined
+2025-09-30T19:04:35.822781683Z }
+2025-09-30T19:04:35.823465561Z info: request {"duration":101,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:04:35.823Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:05:06.247496231Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:05:06.248450418Z info: request {"duration":118,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:05:06.248Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:05:06.249832624Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:05:06.249841404Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:05:06.249845404Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:05:06.249850185Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:05:06.249888187Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:05:06.249893288Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:05:06.249896278Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:05:06.249898058Z   status: 404,
+2025-09-30T19:05:06.249900588Z   statusText: 'Not Found',
+2025-09-30T19:05:06.249902348Z   errorDetails: undefined
+2025-09-30T19:05:06.249904018Z }
+2025-09-30T19:05:31.629798176Z info: request {"duration":1,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T19:05:31.629Z","url":"/api/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:05:32.313104639Z info: request {"duration":0,"ip":"10.229.170.66","method":"GET","service":"performance-monitor","status":404,"timestamp":"2025-09-30T19:05:32.312Z","url":"/api/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:05:33.398263118Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:05:33.39828731Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:05:33.39829535Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:05:33.398319022Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:05:33.398336503Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:05:33.398341283Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:05:33.398345754Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:05:33.398349484Z     at async getStatus (/opt/render/project/src/backend/dist/controllers/statusController.js:17:27) {
+2025-09-30T19:05:33.398352484Z   status: 404,
+2025-09-30T19:05:33.398355915Z   statusText: 'Not Found',
+2025-09-30T19:05:33.398358905Z   errorDetails: undefined
+2025-09-30T19:05:33.398361715Z }
+2025-09-30T19:05:34.832960639Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:05:34.832982451Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:05:34.832987431Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:05:34.833003602Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:05:34.833006282Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:05:34.833008532Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:05:34.833010813Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:05:34.833013503Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:05:34.833015653Z   status: 404,
+2025-09-30T19:05:34.833018623Z   statusText: 'Not Found',
+2025-09-30T19:05:34.833020753Z   errorDetails: undefined
+2025-09-30T19:05:34.833022793Z }
+2025-09-30T19:05:34.834111189Z info: request {"duration":79,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:05:34.833Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:05:51.107097793Z error: request {"duration":31338,"ip":"10.229.12.1","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-30T19:05:51.106Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:03.400694704Z warn: request {"duration":30433,"ip":"10.229.170.66","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T19:06:03.400Z","url":"/api/status","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:04.871181217Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:06:04.871209589Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:06:04.87122939Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:06:04.871235391Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:06:04.871239961Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:06:04.871244442Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:06:04.871248532Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:06:04.871253572Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:06:04.871257822Z   status: 404,
+2025-09-30T19:06:04.871262543Z   statusText: 'Not Found',
+2025-09-30T19:06:04.871266613Z   errorDetails: undefined
+2025-09-30T19:06:04.871270863Z }
+2025-09-30T19:06:04.871809341Z info: request {"duration":125,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:06:04.871Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:09.510864244Z info: request {"duration":1,"ip":"10.229.170.66","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-09-30T19:06:09.510Z","url":"/","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:10.770695515Z info: request {"duration":547,"ip":"10.229.12.1","method":"POST","route":"/login","service":"performance-monitor","status":403,"timestamp":"2025-09-30T19:06:10.770Z","url":"/api/auth/login","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:16.360207935Z error: request {"duration":31331,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":503,"timestamp":"2025-09-30T19:06:16.359Z","url":"/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:27.185981056Z error: request {"duration":30167,"ip":"10.229.12.1","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-09-30T19:06:27.185Z","url":"/api/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:34.864154906Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:06:34.864194848Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:06:34.864201449Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:06:34.864206179Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:06:34.8642105Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:06:34.86421463Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:06:34.86421885Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:06:34.864223501Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:06:34.864227921Z   status: 404,
+2025-09-30T19:06:34.864232571Z   statusText: 'Not Found',
+2025-09-30T19:06:34.864237442Z   errorDetails: undefined
+2025-09-30T19:06:34.864241682Z }
+2025-09-30T19:06:34.864903718Z info: request {"duration":125,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:06:34.864Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:06:37.30226147Z Attempting to send verification email to: giridharmalagi7@gmail.com
+2025-09-30T19:07:03.279222725Z Attempting to send verification email to: giridharmalagi7@gmail.com
+2025-09-30T19:07:03.279284999Z Skipping duplicate email send within window for giridharmalagi7@gmail.com|CiviTrack - Verify Your Email
+2025-09-30T19:07:03.280296519Z Verification email sent successfully: undefined
+2025-09-30T19:07:03.280339992Z warn: request {"duration":1321,"ip":"10.229.191.1","method":"POST","route":"/resend-verification","service":"performance-monitor","status":200,"timestamp":"2025-09-30T19:07:03.279Z","url":"/api/auth/resend-verification","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:07:04.880627252Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:07:04.880652284Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:07:04.880696487Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:07:04.880699447Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:07:04.880702107Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:07:04.880704927Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:07:04.880707508Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:07:04.880710668Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:07:04.880713388Z   status: 404,
+2025-09-30T19:07:04.880716438Z   statusText: 'Not Found',
+2025-09-30T19:07:04.880719399Z   errorDetails: undefined
+2025-09-30T19:07:04.880721369Z }
+2025-09-30T19:07:04.880964905Z info: request {"duration":148,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:07:04.880Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:07:07.320542731Z Email send transient error (attempt 1). Retrying in 2457ms... ETIMEDOUT
+2025-09-30T19:07:09.765098501Z Skipping duplicate email send within window for giridharmalagi7@gmail.com|CiviTrack - Verify Your Email
+2025-09-30T19:07:09.765132254Z Verification email sent successfully: undefined
+2025-09-30T19:07:09.766452835Z warn: request {"duration":33783,"ip":"10.229.170.66","method":"POST","route":"/resend-verification","service":"performance-monitor","status":200,"timestamp":"2025-09-30T19:07:09.765Z","url":"/api/auth/resend-verification","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:07:36.050595884Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:07:36.050628156Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:07:36.050633366Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:07:36.050637336Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:07:36.050677399Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:07:36.05068326Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:07:36.05068575Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:07:36.05068887Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:07:36.0506917Z   status: 404,
+2025-09-30T19:07:36.050697431Z   statusText: 'Not Found',
+2025-09-30T19:07:36.050699891Z   errorDetails: undefined
+2025-09-30T19:07:36.050702111Z }
+2025-09-30T19:07:36.05169379Z info: request {"duration":142,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:07:36.051Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:08:05.904088919Z info: request {"duration":112,"ip":"10.229.191.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:08:05.900Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
+2025-09-30T19:08:05.904136463Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:08:05.904143093Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:08:05.904147913Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:08:05.904151524Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:08:05.904155384Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:08:05.904159214Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:08:05.904162984Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:08:05.904167274Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:08:05.904171135Z   status: 404,
+2025-09-30T19:08:05.904175685Z   statusText: 'Not Found',
+2025-09-30T19:08:05.904179426Z   errorDetails: undefined
+2025-09-30T19:08:05.904183126Z }
+2025-09-30T19:09:01.926527216Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
+2025-09-30T19:09:01.9271567Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
+2025-09-30T19:09:01.92716732Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-09-30T19:09:01.927185702Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-09-30T19:09:01.927221684Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-09-30T19:09:01.927228245Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:154:36
+2025-09-30T19:09:01.927231025Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:161:20)
+2025-09-30T19:09:01.927234335Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-09-30T19:09:01.927236875Z   status: 404,
+2025-09-30T19:09:01.927240445Z   statusText: 'Not Found',
+2025-09-30T19:09:01.927243215Z   errorDetails: undefined
+2025-09-30T19:09:01.927246206Z }
+2025-09-30T19:09:01.927293049Z info: request {"duration":123,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-09-30T19:09:01.927Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
