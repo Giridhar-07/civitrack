@@ -10,6 +10,10 @@ import sequelize from '../config/database';
 // import { cacheUtils, cacheKeys, cacheTTL } from '../services/redisService';
 // import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
 import { getFileUrl } from '../utils/upload';
+import NodeCache from 'node-cache';
+
+// Simple in-memory cache with 30-second TTL
+const nearbyIssuesCache = new NodeCache({ stdTTL: 30, checkperiod: 60 });
 
 // Create a new issue
 export const createIssue = async (req: Request, res: Response): Promise<Response> => {
@@ -184,8 +188,13 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
     const pageNum = parseInt(page as string, 10);
     const limitNum = parseInt(limit as string, 10);
     
-    // Redis caching disabled to resolve connection issues
-    // const cacheKey = cacheKeys.nearbyIssues(lat, lng, radiusKm, pageNum, limitNum);
+    // Implement simple in-memory caching with 30-second TTL
+    const cacheKey = `nearby:${lat.toFixed(4)}:${lng.toFixed(4)}:${radiusKm}:${pageNum}:${limitNum}`;
+    const cachedResult = nearbyIssuesCache.get(cacheKey);
+    
+    if (cachedResult) {
+      return successResponse(res, cachedResult, 'Nearby issues retrieved from cache');
+    }
     
     // Build spatial where using Sequelize.fn to avoid string literals and enable parameterization
     const geoPoint: any = sequelize.fn('ST_SetSRID', sequelize.fn('ST_MakePoint', lng, lat), 4326);
@@ -251,6 +260,9 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
 
     // Execute the function directly instead of using Redis
     const resultData = await result();
+    
+    // Cache the result
+    nearbyIssuesCache.set(cacheKey, resultData);
 
     return successResponse(res, resultData, 'Nearby issues retrieved successfully');
   } catch (error) {

@@ -52,11 +52,19 @@ const ChangeMapView: React.FC<{ center: LatLngExpression }> = ({ center }) => {
 
 // Component to notify parent on map move end
 const MapMoveHandler: React.FC<{ onMoveEnd?: (center: Location) => void }> = ({ onMoveEnd }) => {
+  const [lastMoveTime, setLastMoveTime] = useState(0);
+  
   useMapEvents({
     moveend: (e) => {
       if (onMoveEnd) {
-        const c = e.target.getCenter();
-        onMoveEnd({ latitude: c.lat, longitude: c.lng });
+        const now = Date.now();
+        // Only trigger onMoveEnd if it's been at least 500ms since the last move
+        // This prevents excessive API calls when the user is continuously panning the map
+        if (now - lastMoveTime > 500) {
+          const c = e.target.getCenter();
+          onMoveEnd({ latitude: c.lat, longitude: c.lng });
+          setLastMoveTime(now);
+        }
       }
     }
   });

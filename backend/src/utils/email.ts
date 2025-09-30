@@ -40,6 +40,10 @@ if (EMAIL_CONFIGURED) {
       user: EMAIL_USER!,
       pass: EMAIL_PASS!,
     },
+    // Add connection timeout settings to prevent hanging connections
+    connectionTimeout: 15000, // 15 seconds
+    greetingTimeout: 10000,   // 10 seconds
+    socketTimeout: 15000,     // 15 seconds
   });
 } else {
   // Use jsonTransport to avoid network calls; emails will be logged only
@@ -70,6 +74,45 @@ export const generateVerificationToken = async (user: User): Promise<string> => 
   await user.save();
   
   return token;
+};
+
+// Maximum number of retry attempts for email sending
+const MAX_RETRY_ATTEMPTS = 3;
+// Delay between retry attempts in milliseconds (exponential backoff)
+const RETRY_DELAY_MS = 1000;
+// Email sending timeout in milliseconds (15 seconds)
+const EMAIL_TIMEOUT_MS = 15000;
+
+/**
+ * Send an email with retry mechanism and timeout handling
+ * @param mailOptions Email options
+ * @param retryCount Current retry count
+ * @returns Promise resolving to nodemailer info object
+ */
+const sendEmailWithRetry = async (mailOptions: any, retryCount = 0): Promise<any> => {
+  try {
+    // Create a promise that will reject after timeout
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Email sending timeout')), EMAIL_TIMEOUT_MS);
+    });
+    
+    // Create the email sending promise
+    const emailPromise = transporter.sendMail(mailOptions);
+    
+    // Race the promises - whichever completes/fails first wins
+    const info = await Promise.race([emailPromise, timeoutPromise]);
+    return info;
+  } catch (error: any) {
+    // If we haven't exceeded max retries, try again with exponential backoff
+    if (retryCount < MAX_RETRY_ATTEMPTS) {
+      console.log(`Email sending attempt ${retryCount + 1} failed, retrying in ${RETRY_DELAY_MS * (2 ** retryCount)}ms...`);
+      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS * (2 ** retryCount)));
+      return sendEmailWithRetry(mailOptions, retryCount + 1);
+    }
+    
+    // Max retries exceeded, throw the error
+    throw error;
+  }
 };
 
 // Send verification email
@@ -105,11 +148,11 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
       `,
     };
     
-    // Send or log email
-    const info = await transporter.sendMail(mailOptions);
+    // Send or log email with retry mechanism
     if (!EMAIL_CONFIGURED) {
-      console.log('Verification email generated (log-only mode):', info);
+      console.log('Verification email generated (log-only mode):', mailOptions);
     } else {
+      const info = await sendEmailWithRetry(mailOptions);
       console.log('Verification email sent successfully:', info.response);
     }
   } catch (error) {
@@ -158,11 +201,11 @@ export const sendPasswordResetEmail = async (user: User): Promise<void> => {
       `,
     };
     
-    // Send or log email
-    const info = await transporter.sendMail(mailOptions);
+    // Send or log email with retry mechanism
     if (!EMAIL_CONFIGURED) {
-      console.log('Password reset email generated (log-only mode):', info);
+      console.log('Password reset email generated (log-only mode):', mailOptions);
     } else {
+      const info = await sendEmailWithRetry(mailOptions);
       console.log('Password reset email sent successfully:', info.response);
     }
   } catch (error) {

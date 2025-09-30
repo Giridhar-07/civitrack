@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { 
   Container, 
   Grid, 
@@ -29,6 +29,7 @@ import Layout from '../components/layout/Layout';
 import { IssueCategory } from '../types';
 import issueService from '../services/issueService';
 import { useAuth, useTheme, useApi } from '../hooks';
+import { debounce } from '../utils/debounceUtils';
 
 const HomePage: React.FC = () => {
   const { theme } = useTheme();
@@ -58,9 +59,17 @@ const HomePage: React.FC = () => {
     data: issues = [], 
     loading, 
     error,
-    execute: fetchIssues,
+    execute: fetchIssuesRaw,
     setState: setIssuesState
   } = useApi(issueService.getNearbyIssues, { immediate: false });
+  
+  // Create debounced version of fetchIssues to prevent excessive API calls
+  const fetchIssues = useCallback(
+    debounce((lat: number, lng: number, radius: number) => {
+      fetchIssuesRaw(lat, lng, radius);
+    }, 500),
+    [fetchIssuesRaw]
+  );
   
   // Filtered issues based on search term and category
   const filteredIssues = React.useMemo(() => {

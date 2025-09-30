@@ -1,23 +1,42 @@
-# Getting Started with Create React App
+# CiviTrack - Civic Issue Tracking Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+CiviTrack is a modern web application designed to help citizens report and track civic issues in their communities. The platform enables users to register, log in, report issues with location data, and monitor the status of reported problems.
 
-## Available Scripts
+## Project Overview
+
+CiviTrack consists of:
+- **Frontend**: React application with Material UI components
+- **Backend**: RESTful API service
+- **Authentication**: JWT-based user authentication system
+- **Mapping**: Interactive maps for issue visualization using Leaflet
+
+## Testing
+
+The project includes comprehensive test coverage for critical components:
+
+### Authentication Tests
+- **RegisterForm**: Tests for form validation, API responses (400, 409, 422, 429), and network errors
+- **LoginForm**: Tests for form validation, authentication flow, and error handling
+
+### Running Tests
 
 In the project directory, you can run:
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Launches the test runner in the interactive watch mode.
+
+### `npm test -- --ci`
+
+Runs tests in CI mode without watch mode.
+
+### `npm test -- --testPathPattern="(RegisterForm|LoginForm)" --ci`
+
+Runs specific component tests in CI mode.
+
+### `npm test -- --json --outputFile=test-report.json`
+
+Generates a JSON test report.
 
 ### `npm run build`
 
