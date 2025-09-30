@@ -11,6 +11,7 @@ import sequelize from '../config/database';
 // import { emitNewIssue, emitIssueUpdate, emitIssueDelete } from '../services/socketService';
 import { getFileUrl } from '../utils/upload';
 import NodeCache from 'node-cache';
+import cloneDeep from 'clone-deep';
 
 // Simple in-memory cache with 30-second TTL
 const nearbyIssuesCache = new NodeCache({ stdTTL: 30, checkperiod: 60 });
@@ -261,8 +262,9 @@ export const getNearbyIssues = async (req: Request, res: Response): Promise<Resp
     // Execute the function directly instead of using Redis
     const resultData = await result();
     
-    // Cache the result
-    nearbyIssuesCache.set(cacheKey, resultData);
+    // Use cloneDeep to safely cache the result without TCP object issues
+    const safeResultData = cloneDeep(resultData);
+    nearbyIssuesCache.set(cacheKey, safeResultData);
 
     return successResponse(res, resultData, 'Nearby issues retrieved successfully');
   } catch (error) {
