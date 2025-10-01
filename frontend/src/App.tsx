@@ -10,6 +10,7 @@ import ResetPassword from './components/auth/ResetPassword';
 import IssueDetailPage from './pages/IssueDetailPage';
 import ReportIssuePage from './pages/ReportIssuePage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
+import AdminDiagnosticsPage from './pages/AdminDiagnosticsPage';
 import ProfilePage from './pages/ProfilePage';
 import NotFoundPage from './pages/NotFoundPage';
 import { ThemeProvider } from './hooks/useTheme';
@@ -93,6 +94,14 @@ const App: React.FC = () => {
                 element={
                   <ProtectedRoute adminOnly={true}>
                     <AdminDashboardPage />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/diagnostics" 
+                element={
+                  <ProtectedRoute adminOnly={true}>
+                    <AdminDiagnosticsPage />
                   </ProtectedRoute>
                 } 
               />

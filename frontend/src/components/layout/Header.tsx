@@ -96,6 +96,14 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
           <ListItemText>Admin Dashboard</ListItemText>
         </MenuItem>
       )}
+      {user?.isAdmin && (
+        <MenuItem onClick={() => { handleMenuClose(); navigate('/diagnostics'); }}>
+          <ListItemIcon>
+            <Dashboard fontSize="small" sx={{ color: '#fff' }} />
+          </ListItemIcon>
+          <ListItemText>Diagnostics</ListItemText>
+        </MenuItem>
+      )}
       
       <MenuItem onClick={handleLogout}>
         <ListItemIcon>
@@ -172,6 +180,14 @@ const Header: React.FC<HeaderProps> = ({ user, onLogout }) => {
                 <Dashboard sx={{ color: '#fff' }} />
               </ListItemIcon>
               <ListItemText primary="Admin Dashboard" />
+            </ListItem>
+          )}
+          {user.isAdmin && (
+            <ListItem button component={RouterLink} to="/diagnostics" onClick={toggleMobileMenu}>
+              <ListItemIcon>
+                <Dashboard sx={{ color: '#fff' }} />
+              </ListItemIcon>
+              <ListItemText primary="Diagnostics" />
             </ListItem>
           )}
           

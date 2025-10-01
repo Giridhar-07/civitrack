@@ -42,10 +42,10 @@ if (EMAIL_CONFIGURED) {
       user: EMAIL_USER!,
       pass: EMAIL_PASS!,
     },
-    // Faster timeouts to avoid long hangs
-    connectionTimeout: 5000, // 5 seconds
-    greetingTimeout: 5000,   // 5 seconds
-    socketTimeout: 7000,     // 7 seconds
+    // Increased timeouts for better resilience on potentially slower networks/SMTP servers
+    connectionTimeout: 10000, // 10 seconds
+    greetingTimeout: 10000,   // 10 seconds
+    socketTimeout: 15000,     // 15 seconds
     // Enable a small pool to reuse connections efficiently
     pool: true,
     maxConnections: 3,
@@ -121,9 +121,9 @@ export const generateVerificationToken = async (user: User): Promise<string> => 
 };
 
 // Maximum number of retry attempts for email sending
-const MAX_RETRY_ATTEMPTS = 5;
+const MAX_RETRY_ATTEMPTS = 7; // Increased retry attempts
 // Base delay between retry attempts in milliseconds (exponential backoff with jitter)
-const RETRY_BASE_MS = 2000;
+const RETRY_BASE_MS = 3000; // Increased base retry delay
 // Deduplication window to prevent duplicate sends (in ms)
 const DEDUPE_WINDOW_MS = 2 * 60 * 1000; // 2 minutes
 
@@ -151,10 +151,13 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0, internalRetr
   inFlightSends.set(key, now);
 
   try {
+    console.time(`Email send attempt for ${key}`);
     // Attempt send with built-in transporter timeouts
     const info = await transporter.sendMail(mailOptions);
+    console.timeEnd(`Email send attempt for ${key}`);
     return info;
   } catch (error: any) {
+    console.timeEnd(`Email send attempt for ${key}`); // End timer on error too
     const usingJsonTransport = !EMAIL_CONFIGURED;
 
     // Determine if error is transient and worth retrying
