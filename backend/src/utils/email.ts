@@ -17,17 +17,19 @@ console.log(`  EMAIL_PORT: ${EMAIL_PORT}`);
 console.log(`  EMAIL_USER: ${EMAIL_USER}`);
 console.log(`  EMAIL_FROM: ${EMAIL_FROM}`);
 console.log(`  APP_URL: ${APP_URL}`);
-
+console.log(`  EMAIL_PASS: ${EMAIL_PASS ? '********' : 'NOT SET'}`); // Mask password for logs
+ 
 // Determine if email is properly configured
 const isPlaceholderValue = (v?: string) => (
   !v || v === 'smtp.example.com' || v === 'user@example.com' || v === 'password' || v.trim() === ''
 );
-
+ 
 const EMAIL_CONFIGURED = (
   !isPlaceholderValue(EMAIL_HOST) &&
   !isPlaceholderValue(EMAIL_USER) &&
   !isPlaceholderValue(EMAIL_PASS)
 );
+console.log(`  EMAIL_CONFIGURED: ${EMAIL_CONFIGURED}`);
 
 // Create nodemailer transporter (log-only mode when not configured)
 let transporter: Transporter;
@@ -294,6 +296,7 @@ export const sendPasswordResetEmail = async (user: User): Promise<void> => {
 // Verify email token
 export const verifyEmailToken = async (token: string): Promise<User | null> => {
   try {
+    console.log(`Attempting to verify email token: ${token}`);
     // Find user with matching token that hasn't expired
     const user = await User.findOne({
       where: {
@@ -303,9 +306,20 @@ export const verifyEmailToken = async (token: string): Promise<User | null> => {
     });
     
     if (!user) {
+      console.log(`No user found for token: ${token} or token expired.`);
+      // Check if a user exists with the token but it's expired
+      const expiredUser = await User.findOne({
+        where: {
+          emailVerificationToken: token,
+        },
+      });
+      if (expiredUser) {
+        console.log(`User found for token ${token}, but token is expired. Expiry: ${expiredUser.emailVerificationExpires}`);
+      }
       return null;
     }
     
+    console.log(`User ${user.email} found for token ${token}. Marking email as verified.`);
     // Mark email as verified and clear token
     user.isEmailVerified = true;
     user.emailVerificationToken = null;
@@ -313,6 +327,7 @@ export const verifyEmailToken = async (token: string): Promise<User | null> => {
     
     // Save user
     await user.save();
+    console.log(`User ${user.email} email verification status updated.`);
     
     return user;
   } catch (error) {
