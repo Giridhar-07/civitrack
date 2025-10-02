@@ -257,8 +257,11 @@ const healthHandler = async (_req: Request, res: Response) => {
 };
 
 // Mount health routes
-app.get('/health', healthHandler);
-app.get('/api/health', healthHandler);
+  app.get('/health', healthHandler);
+  app.get('/api/health', healthHandler);
+  // Alias routes to keep legacy /status URLs working
+  app.get('/status', healthHandler);
+  app.get('/api/status', healthHandler);
 
 // 404 handler
 app.use((req: Request, res: Response) => {

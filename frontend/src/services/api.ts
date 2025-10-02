@@ -172,6 +172,8 @@ const VALID_API_ENDPOINTS = {
   // Health check endpoints
   '/health': ['GET'],
   '/api/health': ['GET'],
+  '/status': ['GET'],
+  '/api/status': ['GET'],
   
   // Auth endpoints
   '/auth/login': ['POST'],
