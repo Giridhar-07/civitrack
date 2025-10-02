@@ -5,10 +5,11 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
 // Allow overriding model via env; default to widely available v1 models
 // Prefer current models to avoid deprecated/unsupported variants
+// Restrict to free-tier models only
 const ALLOWED_FREE_MODELS = new Set([
   'gemini-1.5-flash',
-  'gemini-1.5-pro',
   'gemini-1.5-flash-8b',
+  'gemini-1.5-flash-latest',
 ]);
 const ENV_MODEL = process.env.GEMINI_MODEL;
 const DEFAULT_MODEL = (ENV_MODEL && ALLOWED_FREE_MODELS.has(ENV_MODEL)) ? ENV_MODEL : 'gemini-1.5-flash';
@@ -114,7 +115,17 @@ class GeminiService {
       // Add current user message
       prompt += `User: ${userMessage}\n\nAssistant:`;
 
-      const result = await this.model.generateContent(prompt);
+      // Use structured contents format for v1beta models
+      const result = await this.model.generateContent({
+        contents: [
+          {
+            role: 'user',
+            parts: [
+              { text: prompt }
+            ]
+          }
+        ]
+      });
       const response = await result.response;
       const text = response.text();
 
@@ -178,7 +189,11 @@ class GeminiService {
 
       // Test with a simple prompt, guard with timeout to avoid hanging
       const testPromise = (async () => {
-        const testResult = await this.model.generateContent('Hello, test response');
+        const testResult = await this.model.generateContent({
+          contents: [
+            { role: 'user', parts: [{ text: 'Hello, test response' }] }
+          ]
+        });
         const response = await testResult.response;
         return response.text().length > 0;
       })();

@@ -34,10 +34,12 @@ console.log(`  EMAIL_CONFIGURED: ${EMAIL_CONFIGURED}`);
 // Create nodemailer transporter (log-only mode when not configured)
 let transporter: Transporter;
 if (EMAIL_CONFIGURED) {
-  transporter = nodemailer.createTransport({
+  // Prefer secure SMTPS (465). For STARTTLS (587), require TLS and a modern minimum version.
+  const useSecure = EMAIL_PORT === 465;
+  const baseTransportOptions: any = {
     host: EMAIL_HOST!,
     port: EMAIL_PORT,
-    secure: EMAIL_PORT === 465, // true for 465, false for other ports
+    secure: useSecure,
     auth: {
       user: EMAIL_USER!,
       pass: EMAIL_PASS!,
@@ -50,7 +52,21 @@ if (EMAIL_CONFIGURED) {
     pool: true,
     maxConnections: 3,
     maxMessages: 10,
-  });
+  };
+
+  // Harden TLS only for STARTTLS (port 587). SMTPS on 465 is already encrypted at connection.
+  if (!useSecure) {
+    baseTransportOptions.requireTLS = true;
+    baseTransportOptions.tls = {
+      minVersion: 'TLSv1.2'
+    };
+  }
+
+  transporter = nodemailer.createTransport(baseTransportOptions);
+
+  console.log(useSecure 
+    ? 'Email transport: using secure SMTPS (port 465)'
+    : 'Email transport: using STARTTLS (port 587) with TLS >= 1.2');
 } else {
   // Use jsonTransport to avoid network calls; emails will be logged only
   transporter = nodemailer.createTransport({ jsonTransport: true });
@@ -151,13 +167,15 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0, internalRetr
   inFlightSends.set(key, now);
 
   try {
-    console.time(`Email send attempt for ${key}`);
+    const attemptLabel = `Email send attempt for ${key} #${retryCount}`;
+    console.time(attemptLabel);
     // Attempt send with built-in transporter timeouts
     const info = await transporter.sendMail(mailOptions);
-    console.timeEnd(`Email send attempt for ${key}`);
+    console.timeEnd(attemptLabel);
     return info;
   } catch (error: any) {
-    console.timeEnd(`Email send attempt for ${key}`); // End timer on error too
+    const attemptLabel = `Email send attempt for ${key} #${retryCount}`;
+    try { console.timeEnd(attemptLabel); } catch (_) {}
     const usingJsonTransport = !EMAIL_CONFIGURED;
 
     // Determine if error is transient and worth retrying
