@@ -45,6 +45,40 @@ FRONTEND_URL=https://your-frontend-url.com
 
     **Note on Gmail Sending Limits:** Gmail accounts are primarily designed for personal use and have daily sending limits (e.g., 500 emails per day). For applications requiring higher email volumes or more robust delivery features, it is highly recommended to use a dedicated email service provider like SendGrid or Mailgun (Options 2 and 3 below). These services offer better deliverability, analytics, and higher sending limits suitable for production environments.
 
+### Option 2: Brevo (Free Plan) — Recommended
+
+Brevo (formerly Sendinblue) offers a generous free tier suitable for production-like usage.
+
+1. Create a Brevo account at https://www.brevo.com and verify your email.
+2. Navigate to SMTP & API and generate an SMTP key.
+3. Use the following settings:
+   ```
+   EMAIL_HOST=smtp-relay.brevo.com
+   EMAIL_PORT=587
+   EMAIL_USER=<your-brevo-username-or-account-email>
+   EMAIL_PASS=<your-brevo-smtp-key>
+   EMAIL_FROM=CiviTrack <noreply@civitrack.com>
+   ```
+   - If your account email is used for SMTP auth, set `EMAIL_USER` to that email. For accounts that provide a specific SMTP username, use that instead.
+   - If you experience STARTTLS negotiation timeouts on certain hosts, try SMTPS on port `465` by setting `EMAIL_PORT=465`.
+4. (Optional but recommended) Set `EMAIL_FROM` to match a domain you control and configure SPF/DKIM in Brevo for better deliverability.
+
+### Option 3: Mailjet (Free Plan)
+
+Mailjet’s free plan supports SMTP with reasonable limits.
+
+1. Create a Mailjet account at https://www.mailjet.com and verify your sender domain.
+2. Generate SMTP credentials and note your API key and secret.
+3. Use the following settings:
+   ```
+   EMAIL_HOST=in-v3.mailjet.com
+   EMAIL_PORT=587
+   EMAIL_USER=<your-mailjet-api-key>
+   EMAIL_PASS=<your-mailjet-secret-key>
+   EMAIL_FROM=CiviTrack <noreply@civitrack.com>
+   ```
+   - Switch to `EMAIL_PORT=465` if you see STARTTLS timeout issues.
+
 ### Option 2: SendGrid
 
 1. Create a SendGrid account at [sendgrid.com](https://sendgrid.com)
@@ -109,3 +143,67 @@ transporter.verify((error: Error | null) => {
 ## Support
 
 If you encounter any issues with the email service, please open an issue on the CiviTrack GitHub repository with details about your configuration and the error messages you're seeing.
+---
+
+## Render Environment Variable Updates (Backend)
+
+To update the backend service on Render with the new email provider:
+
+1. Edit `backend/.env` with your new SMTP settings. Example for Brevo:
+   ```
+   EMAIL_HOST=smtp-relay.brevo.com
+   EMAIL_PORT=587
+   EMAIL_USER=you@example.com
+   EMAIL_PASS=your-brevo-smtp-key
+   EMAIL_FROM=CiviTrack <noreply@civitrack.com>
+   FRONTEND_URL=https://civitrack-dev.netlify.app
+   ```
+2. Ensure Render credentials are set:
+   ```
+   RENDER_SERVICE_ID=<your-render-service-id>
+   RENDER_API_KEY=<your-render-api-key>
+   ```
+3. Sync env vars and redeploy using the provided script:
+   ```
+   node deploy-backend.js
+   ```
+   - The script will push env changes to the Render service and trigger a deployment.
+4. Verify health:
+   - `GET https://civitrack.onrender.com/api/status?verbose=true`
+   - Ensure `services.email.ok: true` and `smtpReachable: true`.
+
+If your region exhibits STARTTLS timeouts (`ETIMEDOUT` at ~10s per attempt), switch to SMTPS:
+``` 
+EMAIL_PORT=465 
+```
+
+---
+
+## AI Component (Free Model Configuration)
+
+The backend uses the official Google Generative AI SDK. To stay within the free tier and avoid endpoint mismatches:
+
+1. Set a free-tier model in `backend/.env`:
+   ```
+   GEMINI_MODEL=gemini-1.5-flash-latest
+   GEMINI_API_KEY=<your-gemini-api-key>
+   ```
+   - Alternatives: `gemini-1.5-flash-8b` or `gemini-1.5-flash`.
+2. Redeploy with `node deploy-backend.js`.
+3. Verify AI health quickly:
+   - `GET https://civitrack.onrender.com/api/status?verbose=true`
+   - `services.ai.ok` should be `true` or the short health timeout may show degraded. Functional endpoints (chat) should still work.
+
+Note: The service code is restricted to free models; if an unsupported `GEMINI_MODEL` is set, it falls back to `gemini-1.5-flash`.
+
+---
+
+## MCP-Assisted Verification (Optional)
+
+You can use the MCP utilities in this workspace to quickly verify deployment health:
+
+- Fetch unified status:
+  - `GET https://civitrack.onrender.com/api/status?verbose=true`
+- Re-run after any env change and redeploy to confirm `email.ok` and `ai.ok`.
+
+These checks help ensure your SMTP provider and chosen AI model are correctly configured and reachable from Render.

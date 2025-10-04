@@ -48,12 +48,14 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       isEmailVerified: false,
     });
 
-    // Send verification email
+    // Send verification email (fire-and-forget to avoid blocking on SMTP timeouts)
     try {
-      await sendVerificationEmail(user);
+      void sendVerificationEmail(user).catch(emailError => {
+        console.error('Failed to send verification email:', emailError);
+      });
     } catch (emailError) {
-      console.error('Failed to send verification email:', emailError);
-      // Continue with registration even if email fails
+      console.error('Failed to schedule verification email:', emailError);
+      // Continue with registration even if email scheduling fails
     }
 
     // Generate JWT token
@@ -604,8 +606,10 @@ export const requestPasswordReset = async (req: Request, res: Response): Promise
       return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
     }
     
-    // Send password reset email
-    await sendPasswordResetEmail(user);
+    // Send password reset email (fire-and-forget to avoid blocking on SMTP timeouts)
+    void sendPasswordResetEmail(user).catch(err => {
+      console.error('Password reset email send failed:', err);
+    });
     
     return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
   } catch (error) {
@@ -667,8 +671,10 @@ export const resendVerificationEmail = async (req: Request, res: Response): Prom
       return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
     }
     
-    // Send verification email
-    await sendVerificationEmail(user);
+    // Send verification email (fire-and-forget to avoid blocking on SMTP timeouts)
+    void sendVerificationEmail(user).catch(err => {
+      console.error('Resend verification email send failed:', err);
+    });
     
     return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
   } catch (error) {

@@ -52,6 +52,8 @@ function readLocalEnvForRender() {
     'EMAIL_PASS',
     'EMAIL_FROM',
     'APP_URL',
+    // Also sync frontend URL used by email templates/links
+    'FRONTEND_URL',
     'CORS_ORIGIN',
     'JWT_AUDIENCE',
     'JWT_ISSUER'
@@ -110,9 +112,13 @@ function mergeEnvVars(existingList, localMap) {
  * Try common payload shapes for compatibility across API versions.
  */
 async function updateServiceEnvVars(envVarsList) {
+  // Sanitize payload: remove any entries with undefined/null values and coerce to strings
+  const sanitized = envVarsList
+    .filter((item) => item && item.key && item.value !== undefined && item.value !== null)
+    .map(({ key, value }) => ({ key, value: String(value) }));
   try {
     // Attempt with array body first
-    await axios.put(RENDER_ENV_API_URL, envVarsList, {
+    await axios.put(RENDER_ENV_API_URL, sanitized, {
       headers: {
         Authorization: `Bearer ${RENDER_API_KEY}`,
         'Content-Type': 'application/json'
@@ -126,7 +132,7 @@ async function updateServiceEnvVars(envVarsList) {
     // Retry with wrapped payload
     await axios.put(
       RENDER_ENV_API_URL,
-      { envVars: envVarsList },
+      { envVars: sanitized },
       {
         headers: {
           Authorization: `Bearer ${RENDER_API_KEY}`,

@@ -1,4 +1,5 @@
 import nodemailer, { Transporter } from 'nodemailer';
+import * as https from 'https';
 import { User } from '../models';
 import crypto from 'crypto';
 import { Op } from 'sequelize';
@@ -10,6 +11,7 @@ const EMAIL_USER = process.env.EMAIL_USER;
 const EMAIL_PASS = process.env.EMAIL_PASS;
 const EMAIL_FROM = process.env.EMAIL_FROM || 'CiviTrack <noreply@civitrack.com>';
 const APP_URL = process.env.FRONTEND_URL || 'https://civitrack-dev.netlify.app';
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
 console.log('Email Config Status:');
 console.log(`  EMAIL_HOST: ${EMAIL_HOST}`);
@@ -18,6 +20,7 @@ console.log(`  EMAIL_USER: ${EMAIL_USER}`);
 console.log(`  EMAIL_FROM: ${EMAIL_FROM}`);
 console.log(`  APP_URL: ${APP_URL}`);
 console.log(`  EMAIL_PASS: ${EMAIL_PASS ? '********' : 'NOT SET'}`); // Mask password for logs
+console.log(`  BREVO_API_KEY set: ${BREVO_API_KEY ? 'true' : 'false'}`);
  
 // Determine if email is properly configured
 const isPlaceholderValue = (v?: string) => (
@@ -30,6 +33,65 @@ const EMAIL_CONFIGURED = (
   !isPlaceholderValue(EMAIL_PASS)
 );
 console.log(`  EMAIL_CONFIGURED: ${EMAIL_CONFIGURED}`);
+
+// Helper to parse sender name/email from EMAIL_FROM
+const parseSender = (from: string): { email: string; name?: string } => {
+  const match = from.match(/\s*([^<]*)\s*<([^>]+)>\s*/);
+  if (match) {
+    const name = match[1].trim();
+    const email = match[2].trim();
+    return { email, name: name || undefined };
+  }
+  return { email: from.trim() };
+};
+
+// Minimal Brevo API client using https; avoids adding new deps
+const brevoRequest = (path: string, method: 'GET' | 'POST', body?: any, timeoutMs = 6000): Promise<any> => {
+  return new Promise((resolve, reject) => {
+    if (!BREVO_API_KEY) {
+      return reject(new Error('BREVO_API_KEY_NOT_SET'));
+    }
+    const data = body ? Buffer.from(JSON.stringify(body)) : undefined;
+    const options: https.RequestOptions = {
+      hostname: 'api.brevo.com',
+      path: `/v3/${path}`,
+      method,
+      headers: {
+        'accept': 'application/json',
+        'api-key': BREVO_API_KEY,
+        ...(data ? { 'content-type': 'application/json', 'content-length': String(data.length) } : {})
+      }
+    };
+    const req = https.request(options, (res) => {
+      const chunks: Buffer[] = [];
+      res.on('data', (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
+      res.on('end', () => {
+        const raw = Buffer.concat(chunks).toString('utf8');
+        const status = res.statusCode || 0;
+        let json: any = null;
+        try {
+          json = raw ? JSON.parse(raw) : null;
+        } catch (_) {
+          // non-JSON body; wrap
+          json = { raw };
+        }
+        if (status >= 200 && status < 300) {
+          resolve(json);
+        } else {
+          const err = new Error(`BREVO_API_ERROR ${status}: ${raw}`);
+          (err as any).status = status;
+          reject(err);
+        }
+      });
+    });
+    req.on('error', (e) => reject(e));
+    req.setTimeout(timeoutMs, () => {
+      req.destroy(new Error('BREVO_API_TIMEOUT'));
+    });
+    if (data) req.write(data);
+    req.end();
+  });
+};
 
 // Create nodemailer transporter (log-only mode when not configured)
 let transporter: Transporter;
@@ -52,6 +114,9 @@ if (EMAIL_CONFIGURED) {
     pool: true,
     maxConnections: 3,
     maxMessages: 10,
+    // Enable verbose logging to diagnose SMTP handshake/timeouts in production
+    logger: true,
+    debug: true,
   };
 
   // Harden TLS only for STARTTLS (port 587). SMTPS on 465 is already encrypted at connection.
@@ -71,6 +136,9 @@ if (EMAIL_CONFIGURED) {
   // Use jsonTransport to avoid network calls; emails will be logged only
   transporter = nodemailer.createTransport({ jsonTransport: true });
   console.warn('Email service is not fully configured. Running in log-only mode. Set EMAIL_HOST/USER/PASS to enable SMTP sending.');
+  if (BREVO_API_KEY) {
+    console.log('BREVO_API_KEY detected: Brevo HTTP API will be used for sending, SMTP is disabled.');
+  }
 }
 
 // Optional fallback SMTP configuration
@@ -148,6 +216,24 @@ const inFlightSends = new Map<string, number>();
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+// Send via Brevo HTTP API if available
+const sendViaBrevo = async (mailOptions: any): Promise<any> => {
+  const sender = parseSender(mailOptions.from || EMAIL_FROM);
+  const to = Array.isArray(mailOptions.to) ? mailOptions.to : [mailOptions.to];
+  const payload = {
+    sender: sender,
+    to: to.map((addr: string) => ({ email: String(addr).trim() })),
+    subject: mailOptions.subject,
+    htmlContent: mailOptions.html,
+    // Optionally include textContent if provided
+    ...(mailOptions.text ? { textContent: mailOptions.text } : {}),
+  };
+  console.log('Brevo API: sending email', { subject: payload.subject, to: payload.to });
+  const res = await brevoRequest('smtp/email', 'POST', payload, 10000);
+  // Brevo returns messageId in header/body; pass through
+  return { messageId: res?.messageId || res?.message || 'brevo-api' };
+};
+
 /**
  * Send an email with retry mechanism and timeout handling
  * @param mailOptions Email options
@@ -169,18 +255,64 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0, internalRetr
   try {
     const attemptLabel = `Email send attempt for ${key} #${retryCount}`;
     console.time(attemptLabel);
-    // Attempt send with built-in transporter timeouts
+    // Prefer Brevo HTTP API if API key is set; fallback to SMTP
+    if (BREVO_API_KEY) {
+      try {
+        const info = await sendViaBrevo(mailOptions);
+        console.timeEnd(attemptLabel);
+        return info;
+      } catch (apiErr: any) {
+        console.warn('Brevo API send failed; evaluating retry/fallback:', apiErr?.message || String(apiErr));
+        // Retry Brevo once for transient errors before falling back to SMTP
+        const apiTransient = /BREVO_API_TIMEOUT|timeout|ECONNRESET|EHOSTUNREACH|ENETUNREACH/.test(apiErr?.message || '');
+        if (apiTransient && retryCount < MAX_RETRY_ATTEMPTS) {
+          const backoff = RETRY_BASE_MS * Math.pow(2, retryCount) + Math.floor(Math.random() * 500);
+          console.log(`Brevo API transient error (attempt ${retryCount + 1}). Retrying in ${backoff}ms...`, apiErr?.message);
+          await sleep(backoff);
+          const info = await sendViaBrevo(mailOptions);
+          console.timeEnd(attemptLabel);
+          return info;
+        }
+        // continue to SMTP path below if API fails or non-transient
+      }
+    }
+    // Attempt SMTP send with built-in transporter timeouts
     const info = await transporter.sendMail(mailOptions);
     console.timeEnd(attemptLabel);
     return info;
   } catch (error: any) {
     const attemptLabel = `Email send attempt for ${key} #${retryCount}`;
     try { console.timeEnd(attemptLabel); } catch (_) {}
-    const usingJsonTransport = !EMAIL_CONFIGURED;
+    const usingJsonTransport = !EMAIL_CONFIGURED && !BREVO_API_KEY;
 
     // Determine if error is transient and worth retrying
     const transientCodes = new Set(['ETIMEDOUT', 'ECONNRESET', 'EHOSTUNREACH', 'ENETUNREACH']);
-    const isTransient = transientCodes.has(error?.code) || /timeout/i.test(error?.message || '') || /socket/i.test(error?.message || '');
+    const isTransient = transientCodes.has(error?.code) || /timeout/i.test(error?.message || '') || /socket/i.test(error?.message || '') || /BREVO_API_TIMEOUT/.test(error?.message || '');
+
+    // Immediate SMTPS fallback when STARTTLS (587) times out to avoid long retries
+    if (!usingJsonTransport && EMAIL_PORT === 587 && (error?.code === 'ETIMEDOUT' || /timeout/i.test(error?.message || ''))) {
+      try {
+        console.log('Detected STARTTLS timeout; attempting immediate SMTPS (465) fallback...');
+        const altTransporter = nodemailer.createTransport(<any>{
+          host: EMAIL_HOST!,
+          port: 465,
+          secure: true,
+          auth: { user: EMAIL_USER!, pass: EMAIL_PASS! },
+          connectionTimeout: 8000,
+          greetingTimeout: 8000,
+          socketTimeout: 12000,
+          pool: false,
+          logger: true,
+          debug: true,
+        });
+        const info = await altTransporter.sendMail(mailOptions);
+        console.log('SMTPS (465) immediate fallback succeeded');
+        return info;
+      } catch (altErr) {
+        console.warn('SMTPS immediate fallback failed:', (altErr as any)?.message || String(altErr));
+        // proceed to normal transient backoff below
+      }
+    }
 
     if (isTransient && retryCount < MAX_RETRY_ATTEMPTS) {
       const backoff = RETRY_BASE_MS * Math.pow(2, retryCount) + Math.floor(Math.random() * 500);
@@ -199,6 +331,31 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0, internalRetr
       } catch (fallbackErr) {
         console.error('Fallback SMTP sending failed:', fallbackErr);
         throw fallbackErr;
+      }
+    }
+
+    // If STARTTLS (587) is timing out repeatedly and no explicit fallback is configured,
+    // attempt a one-time SMTPS (465) send using the same credentials.
+    if (!usingJsonTransport && EMAIL_PORT === 587 && (error?.code === 'ETIMEDOUT' || /timeout/i.test(error?.message || ''))) {
+      try {
+        console.log('STARTTLS appears to be timing out; attempting SMTPS (port 465) once...');
+        const altTransporter = nodemailer.createTransport(<any>{
+          host: EMAIL_HOST!,
+          port: 465,
+          secure: true,
+          auth: { user: EMAIL_USER!, pass: EMAIL_PASS! },
+          connectionTimeout: 8000,
+          greetingTimeout: 8000,
+          socketTimeout: 12000,
+          pool: false,
+          logger: true,
+          debug: true,
+        });
+        const info = await altTransporter.sendMail(mailOptions);
+        console.log('SMTPS (465) email sent successfully as alternate path');
+        return info;
+      } catch (altErr) {
+        console.error('Alternate SMTPS (465) send failed:', (altErr as any)?.message || String(altErr));
       }
     }
 
@@ -380,28 +537,85 @@ export interface EmailHealth {
   smtpReachable: boolean;
   host: string;
   port: number;
-  mode: 'smtp' | 'log-only';
+  mode: 'smtp' | 'log-only' | 'brevo_api';
   ok: boolean; // overall email health indicator
   error?: string;
 }
 
 export const checkEmailHealth = async (): Promise<EmailHealth> => {
   try {
-    if (EMAIL_CONFIGURED) {
+    if (BREVO_API_KEY) {
+      try {
+        await brevoRequest('account', 'GET', undefined, 5000);
+        return {
+          smtpConfigured: EMAIL_CONFIGURED,
+          smtpReachable: true,
+          host: EMAIL_HOST || 'brevo-api',
+          port: EMAIL_PORT,
+          mode: 'brevo_api',
+          ok: true
+        };
+      } catch (apiErr: any) {
+        return {
+          smtpConfigured: EMAIL_CONFIGURED,
+          smtpReachable: false,
+          host: EMAIL_HOST || 'brevo-api',
+          port: EMAIL_PORT,
+          mode: 'brevo_api',
+          ok: false,
+          error: apiErr?.message || 'BREVO_API_UNREACHABLE'
+        };
+      }
+    } else if (EMAIL_CONFIGURED) {
       // Verify with a short timeout to avoid blocking
       const withTimeout = <T>(p: Promise<T>, ms: number) => Promise.race([
         p,
         new Promise<T>((_, reject) => setTimeout(() => reject(new Error('EMAIL_VERIFY_TIMEOUT')), ms))
       ]);
-      await withTimeout(transporter.verify(), 1500);
-      return {
-        smtpConfigured: true,
-        smtpReachable: true,
-        host: EMAIL_HOST!,
-        port: EMAIL_PORT,
-        mode: 'smtp',
-        ok: true
-      };
+      try {
+        await withTimeout(transporter.verify(), 6000);
+        return {
+          smtpConfigured: true,
+          smtpReachable: true,
+          host: EMAIL_HOST!,
+          port: EMAIL_PORT,
+          mode: 'smtp',
+          ok: true
+        };
+      } catch (primaryErr: any) {
+        // If primary verify times out on STARTTLS (587), attempt SMTPS(465) verify fallback
+        const timedOut = primaryErr?.message === 'EMAIL_VERIFY_TIMEOUT' || /timeout/i.test(primaryErr?.message || '');
+        if (EMAIL_CONFIGURED && EMAIL_PORT === 587 && timedOut) {
+          try {
+            console.log('Email verify timeout on STARTTLS; attempting SMTPS (465) verify fallback...');
+            const altTransporter = nodemailer.createTransport(<any>{
+              host: EMAIL_HOST!,
+              port: 465,
+              secure: true,
+              auth: { user: EMAIL_USER!, pass: EMAIL_PASS! },
+              connectionTimeout: 8000,
+              greetingTimeout: 8000,
+              socketTimeout: 12000,
+              pool: false,
+              logger: true,
+              debug: true,
+            });
+            await withTimeout(altTransporter.verify(), 5000);
+            return {
+              smtpConfigured: true,
+              smtpReachable: true,
+              host: EMAIL_HOST!,
+              port: 465,
+              mode: 'smtp',
+              ok: true
+            };
+          } catch (altVerifyErr: any) {
+            // fall through to outer catch to report failure
+            throw altVerifyErr;
+          }
+        }
+        throw primaryErr;
+      }
     } else {
       // In log-only mode, we consider transport reachable but not configured; mark ok=false to surface config issue
       return {
