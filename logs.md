@@ -1,84 +1,77 @@
-2025-10-04T05:43:23.053219431Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-10-04T05:43:23.053225161Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-10-04T05:43:23.053229711Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-10-04T05:43:23.053233882Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-10-04T05:43:23.053238562Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:165:36
-2025-10-04T05:43:23.053242812Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:176:20)
-2025-10-04T05:43:23.053247702Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-10-04T05:43:23.053251883Z   status: 404,
-2025-10-04T05:43:23.053268184Z   statusText: 'Not Found',
-2025-10-04T05:43:23.053271124Z   errorDetails: undefined
-2025-10-04T05:43:23.053273764Z }
-2025-10-04T05:43:23.053339157Z info: request {"duration":112,"ip":"10.229.170.66","method":"GET","route":"/health","service":"performance-monitor","status":200,"timestamp":"2025-10-04T05:43:23.053Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-10-04T05:43:24.580592826Z warn: request {"duration":1404,"ip":"10.229.12.1","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-10-04T05:43:24.580Z","url":"/api/issues","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-10-04T05:43:24.790675638Z warn: request {"duration":1183,"ip":"10.229.170.66","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-10-04T05:43:24.790Z","url":"/api/issues/nearby?latitude=40.7128&longitude=-74.006&radius=10","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-10-04T05:43:24.90470083Z info: request {"duration":1,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-10-04T05:43:24.904Z","url":"/api/issues/nearby?latitude=40.7128&longitude=-74.006&radius=10","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-10-04T05:43:25.804048712Z warn: request {"duration":2874,"ip":"10.229.170.66","method":"GET","route":"/api/health","service":"performance-monitor","status":503,"timestamp":"2025-10-04T05:43:25.802Z","url":"/api/health","userAgent":"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/131.0.6778.0 Safari/537.36"}
-2025-10-04T05:44:11.015900024Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-10-04T05:44:11.015922346Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-10-04T05:44:11.015926646Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-10-04T05:44:11.015929726Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-10-04T05:44:11.015932936Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-10-04T05:44:11.015936006Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:165:36
-2025-10-04T05:44:11.015938917Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:176:20)
-2025-10-04T05:44:11.015942277Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-10-04T05:44:11.015945157Z   status: 404,
-2025-10-04T05:44:11.015948437Z   statusText: 'Not Found',
-2025-10-04T05:44:11.015951217Z   errorDetails: undefined
-2025-10-04T05:44:11.015953977Z }
-2025-10-04T05:44:11.01655789Z info: request {"duration":127,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-10-04T05:44:11.016Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-10-04T05:44:12.174988232Z warn: request {"duration":1325,"ip":"10.229.12.1","method":"GET","route":"/","service":"performance-monitor","status":304,"timestamp":"2025-10-04T05:44:12.174Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-10-04T05:44:12.493680645Z info: request {"duration":863,"ip":"10.229.191.1","method":"GET","route":"/nearby","service":"performance-monitor","status":304,"timestamp":"2025-10-04T05:44:12.493Z","url":"/api/issues/nearby?latitude=40.7128&longitude=-74.006&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-10-04T05:44:12.511647178Z info: request {"duration":334,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-10-04T05:44:12.511Z","url":"/api/issues/nearby?latitude=16.831466420095204&longitude=75.73953321285276&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-10-04T05:44:12.804621218Z Gemini service validation failed: GoogleGenerativeAIFetchError: [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent: [404 Not Found] models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.
-2025-10-04T05:44:12.804646749Z     at handleResponseNotOk (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:434:11)
-2025-10-04T05:44:12.80465195Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-2025-10-04T05:44:12.80465509Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
-2025-10-04T05:44:12.804658Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
-2025-10-04T05:44:12.80466112Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:165:36
-2025-10-04T05:44:12.80466394Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:176:20)
-2025-10-04T05:44:12.804667191Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
-2025-10-04T05:44:12.804670321Z   status: 404,
-2025-10-04T05:44:12.804673781Z   statusText: 'Not Found',
-2025-10-04T05:44:12.804676521Z   errorDetails: undefined
-2025-10-04T05:44:12.804678761Z }
-2025-10-04T05:44:12.805300965Z info: request {"duration":81,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-10-04T05:44:12.805Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0"}
-2025-10-04T05:44:19.465349945Z Attempting to send password reset email to: giridharmalagi7@gmail.com
-2025-10-04T05:44:26.529046152Z ==> Detected service running on port 10000
-2025-10-04T05:44:26.641043645Z ==> Docs on specifying a port: https://render.com/docs/web-services#port-binding
-2025-10-04T05:44:29.642630466Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #0: 10.005s
-2025-10-04T05:44:29.642655197Z Email send transient error (attempt 1). Retrying in 3126ms... ETIMEDOUT
-2025-10-04T05:44:42.781167051Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #1: 10.010s
-2025-10-04T05:44:42.781185612Z Email send transient error (attempt 2). Retrying in 6249ms... ETIMEDOUT
-2025-10-04T05:44:46.103982168Z Attempting to send password reset email to: giridharmalagi7@gmail.com
-2025-10-04T05:44:56.10536105Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #0: 10.002s
-2025-10-04T05:44:56.105388661Z Email send transient error (attempt 1). Retrying in 3472ms... ETIMEDOUT
-2025-10-04T05:44:59.0374888Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #2: 10.003s
-2025-10-04T05:44:59.03767062Z Email send transient error (attempt 3). Retrying in 12218ms... ETIMEDOUT
-2025-10-04T05:45:09.579975736Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #1: 10.002s
-2025-10-04T05:45:09.580028699Z Email send transient error (attempt 2). Retrying in 6490ms... ETIMEDOUT
-2025-10-04T05:45:12.548405697Z Attempting to send password reset email to: giridharmalagi7@gmail.com
-2025-10-04T05:45:21.257140613Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #3: 10.001s
-2025-10-04T05:45:21.257167284Z Email send transient error (attempt 4). Retrying in 24286ms... ETIMEDOUT
-2025-10-04T05:45:22.550542564Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #0: 10.002s
-2025-10-04T05:45:22.551936249Z Email send transient error (attempt 1). Retrying in 3093ms... ETIMEDOUT
-2025-10-04T05:45:26.073285493Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #2: 10.001s
-2025-10-04T05:45:26.07341452Z Email send transient error (attempt 3). Retrying in 12034ms... ETIMEDOUT
-2025-10-04T05:45:35.645524Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #1: 10.002s
-2025-10-04T05:45:35.645634806Z Email send transient error (attempt 2). Retrying in 6087ms... ETIMEDOUT
-2025-10-04T05:45:38.619084188Z Attempting to send password reset email to: giridharmalagi7@gmail.com
-2025-10-04T05:45:48.111590614Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #3: 10.003s
-2025-10-04T05:45:48.111687809Z Email send transient error (attempt 4). Retrying in 24110ms... ETIMEDOUT
-2025-10-04T05:45:48.620293509Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #0: 10.001s
-2025-10-04T05:45:48.62031363Z Email send transient error (attempt 1). Retrying in 3090ms... ETIMEDOUT
-2025-10-04T05:45:51.736119086Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #2: 10.001s
-2025-10-04T05:45:51.736134087Z Email send transient error (attempt 3). Retrying in 12332ms... ETIMEDOUT
-2025-10-04T05:45:58.215319048Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #4: 12.671s
-2025-10-04T05:45:58.21534814Z Email send transient error (attempt 5). Retrying in 48348ms... ETIMEDOUT
-2025-10-04T05:46:01.715443789Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #1: 10.003s
-2025-10-04T05:46:01.71547956Z Email send transient error (attempt 2). Retrying in 6476ms... ETIMEDOUT
-2025-10-04T05:46:04.087913698Z Attempting to send password reset email to: giridharmalagi7@gmail.com
-2025-10-04T05:46:14.07157453Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #3: 10.003s
-2025-10-04T05:46:14.071592991Z Email send transient error (attempt 4). Retrying in 24358ms... ETIMEDOUT
-2025-10-04T05:46:14.089932705Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #0: 10.002s
-2025-10-04T05:46:14.09002664Z Email send transient error (attempt 1). Retrying in 3245ms... ETIMEDOUT
+2025-10-04T16:32:02.424123914Z     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-10-04T16:32:02.424128254Z     at async makeRequest (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:403:9)
+2025-10-04T16:32:02.424132584Z     at async generateContent (/opt/render/project/src/backend/node_modules/@google/generative-ai/dist/index.js:867:22)
+2025-10-04T16:32:02.424137014Z     at async /opt/render/project/src/backend/dist/services/geminiService.js:165:36
+2025-10-04T16:32:02.424141244Z     at async GeminiService.validateService (/opt/render/project/src/backend/dist/services/geminiService.js:176:20)
+2025-10-04T16:32:02.424146284Z     at async validateService (/opt/render/project/src/backend/dist/controllers/aiController.js:44:20) {
+2025-10-04T16:32:02.424150574Z   status: 404,
+2025-10-04T16:32:02.424155634Z   statusText: 'Not Found',
+2025-10-04T16:32:02.424159985Z   errorDetails: undefined
+2025-10-04T16:32:02.424164125Z }
+2025-10-04T16:32:02.425116737Z info: request {"duration":239,"ip":"10.229.12.1","method":"GET","route":"/health","service":"performance-monitor","status":304,"timestamp":"2025-10-04T16:32:02.424Z","url":"/api/ai/health","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"}
+2025-10-04T16:32:03.453192047Z warn: request {"duration":2050,"ip":"10.229.191.1","method":"GET","route":"/","service":"performance-monitor","status":200,"timestamp":"2025-10-04T16:32:03.452Z","url":"/api/issues","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"}
+2025-10-04T16:32:03.45875533Z warn: request {"duration":1654,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-10-04T16:32:03.458Z","url":"/api/issues/nearby?latitude=40.7128&longitude=-74.006&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"}
+2025-10-04T16:32:03.515111546Z info: request {"duration":910,"ip":"10.229.12.1","method":"GET","route":"/nearby","service":"performance-monitor","status":200,"timestamp":"2025-10-04T16:32:03.514Z","url":"/api/issues/nearby?latitude=16.831464845630737&longitude=75.73954550867053&radius=10","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"}
+2025-10-04T16:32:09.647877871Z Attempting to send password reset email to: giridharmalagi7@gmail.com
+2025-10-04T16:32:09.656897347Z info: request {"duration":198,"ip":"10.229.170.66","method":"POST","route":"/request-password-reset","service":"performance-monitor","status":200,"timestamp":"2025-10-04T16:32:09.655Z","url":"/api/auth/request-password-reset","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"}
+2025-10-04T16:32:10.565020802Z Brevo API: sending email {
+2025-10-04T16:32:10.565043493Z   subject: 'CiviTrack - Password Reset Request',
+2025-10-04T16:32:10.565048353Z   to: [ { email: 'giridharmalagi7@gmail.com' } ]
+2025-10-04T16:32:10.565052143Z }
+2025-10-04T16:32:11.271720868Z Brevo API send failed; evaluating retry/fallback: BREVO_API_ERROR 401: {"message":"Key not found","code":"unauthorized"}
+2025-10-04T16:32:11.271736708Z 
+2025-10-04T16:32:11.272184569Z [2025-10-04 16:32:11] DEBUG Sending mail using SMTP (pool)/6.10.1[client:6.10.1]
+2025-10-04T16:32:11.275899547Z [2025-10-04 16:32:11] INFO  [#1] Created new pool resource #1
+2025-10-04T16:32:11.276049611Z [2025-10-04 16:32:11] DEBUG [#1] Assigned message <72fd1058-4a19-ab08-cafd-d61209ab90a5@civitrack.com> to #1 (1)
+2025-10-04T16:32:11.276657265Z [2025-10-04 16:32:11] DEBUG [90NbqGUk9t0] Resolved smtp-relay.brevo.com as 1.179.119.1 [cache hit]
+2025-10-04T16:32:21.279235521Z [2025-10-04 16:32:21] ERROR [90NbqGUk9t0] Connection timeout
+2025-10-04T16:32:21.279360844Z [2025-10-04 16:32:21] ERROR [#1] Pool Error for #1: Connection timeout
+2025-10-04T16:32:21.27961771Z [2025-10-04 16:32:21] ERROR Send Error: Connection timeout
+2025-10-04T16:32:21.280229084Z [2025-10-04 16:32:21] DEBUG [90NbqGUk9t0] Closing connection to the server using "destroy"
+2025-10-04T16:32:21.280502321Z [2025-10-04 16:32:21] INFO  [#1] Connection #1 was closed
+2025-10-04T16:32:21.280667195Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #0: 10.716s
+2025-10-04T16:32:21.280911281Z Email send transient error (attempt 1). Retrying in 3431ms... ETIMEDOUT
+2025-10-04T16:32:24.714909042Z Brevo API: sending email {
+2025-10-04T16:32:24.714941013Z   subject: 'CiviTrack - Password Reset Request',
+2025-10-04T16:32:24.714946353Z   to: [ { email: 'giridharmalagi7@gmail.com' } ]
+2025-10-04T16:32:24.714966763Z }
+2025-10-04T16:32:25.398233949Z Brevo API send failed; evaluating retry/fallback: BREVO_API_ERROR 401: {"message":"Key not found","code":"unauthorized"}
+2025-10-04T16:32:25.39827549Z 
+2025-10-04T16:32:25.398295521Z [2025-10-04 16:32:25] DEBUG Sending mail using SMTP (pool)/6.10.1[client:6.10.1]
+2025-10-04T16:32:25.398300161Z [2025-10-04 16:32:25] INFO  [#2] Created new pool resource #2
+2025-10-04T16:32:25.398391533Z [2025-10-04 16:32:25] DEBUG [#2] Assigned message <0c4b18ef-f6a9-2eca-22f6-746f3205fdde@civitrack.com> to #2 (1)
+2025-10-04T16:32:25.398590028Z [2025-10-04 16:32:25] DEBUG [n0988X4L36s] Resolved smtp-relay.brevo.com as 1.179.119.1 [cache hit]
+2025-10-04T16:32:35.403531109Z [2025-10-04 16:32:35] ERROR [n0988X4L36s] Connection timeout
+2025-10-04T16:32:35.403596331Z [2025-10-04 16:32:35] ERROR [#2] Pool Error for #2: Connection timeout
+2025-10-04T16:32:35.403642462Z [2025-10-04 16:32:35] ERROR Send Error: Connection timeout
+2025-10-04T16:32:35.403744214Z [2025-10-04 16:32:35] DEBUG [n0988X4L36s] Closing connection to the server using "destroy"
+2025-10-04T16:32:35.403896148Z [2025-10-04 16:32:35] INFO  [#2] Connection #2 was closed
+2025-10-04T16:32:35.40398943Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #1: 10.690s
+2025-10-04T16:32:35.404055782Z Email send transient error (attempt 2). Retrying in 6249ms... ETIMEDOUT
+2025-10-04T16:32:41.653910074Z Brevo API: sending email {
+2025-10-04T16:32:41.653935415Z   subject: 'CiviTrack - Password Reset Request',
+2025-10-04T16:32:41.653941065Z   to: [ { email: 'giridharmalagi7@gmail.com' } ]
+2025-10-04T16:32:41.653945245Z }
+2025-10-04T16:32:42.21237225Z Brevo API send failed; evaluating retry/fallback: BREVO_API_ERROR 401: {"message":"Key not found","code":"unauthorized"}
+2025-10-04T16:32:42.21239591Z 
+2025-10-04T16:32:42.212415181Z [2025-10-04 16:32:42] DEBUG Sending mail using SMTP (pool)/6.10.1[client:6.10.1]
+2025-10-04T16:32:42.213049726Z [2025-10-04 16:32:42] INFO  [#3] Created new pool resource #3
+2025-10-04T16:32:42.213104047Z [2025-10-04 16:32:42] DEBUG [#3] Assigned message <4be19dad-ec13-00fd-bfb9-3f49d9b4e788@civitrack.com> to #3 (1)
+2025-10-04T16:32:42.213341323Z [2025-10-04 16:32:42] DEBUG [6zdEzVcD96U] Resolved smtp-relay.brevo.com as 1.179.119.1 [cache hit]
+2025-10-04T16:32:52.214230428Z [2025-10-04 16:32:52] ERROR [6zdEzVcD96U] Connection timeout
+2025-10-04T16:32:52.214284589Z [2025-10-04 16:32:52] ERROR [#3] Pool Error for #3: Connection timeout
+2025-10-04T16:32:52.214369662Z [2025-10-04 16:32:52] ERROR Send Error: Connection timeout
+2025-10-04T16:32:52.214442573Z [2025-10-04 16:32:52] DEBUG [6zdEzVcD96U] Closing connection to the server using "destroy"
+2025-10-04T16:32:52.214587787Z [2025-10-04 16:32:52] INFO  [#3] Connection #3 was closed
+2025-10-04T16:32:52.214684329Z Email send attempt for giridharmalagi7@gmail.com|CiviTrack - Password Reset Request #2: 10.561s
+2025-10-04T16:32:52.21473303Z Email send transient error (attempt 3). Retrying in 12136ms... ETIMEDOUT
+2025-10-04T16:33:04.354265695Z Brevo API: sending email {
+2025-10-04T16:33:04.354295255Z   subject: 'CiviTrack - Password Reset Request',
+2025-10-04T16:33:04.354299695Z   to: [ { email: 'giridharmalagi7@gmail.com' } ]
+2025-10-04T16:33:04.354303165Z }
+2025-10-04T16:33:04.887843036Z Brevo API send failed; evaluating retry/fallback: BREVO_API_ERROR 401: {"message":"Key not found","code":"unauthorized"}
+2025-10-04T16:33:04.887866937Z 
+2025-10-04T16:33:04.887924988Z [2025-10-04 16:33:04] DEBUG Sending mail using SMTP (pool)/6.10.1[client:6.10.1]
+2025-10-04T16:33:04.888484211Z [2025-10-04 16:33:04] INFO  [#4] Created new pool resource #4
+2025-10-04T16:33:04.888544503Z [2025-10-04 16:33:04] DEBUG [#4] Assigned message <7cce8ba9-0f05-17ce-7e2b-c6a07bc405cf@civitrack.com> to #4 (1)
+2025-10-04T16:33:04.888756448Z [2025-10-04 16:33:04] DEBUG [OuwikrBd3Yo] Resolved smtp-relay.brevo.com as 1.179.119.1 [cache hit]

@@ -12,6 +12,7 @@ const EMAIL_PASS = process.env.EMAIL_PASS;
 const EMAIL_FROM = process.env.EMAIL_FROM || 'CiviTrack <noreply@civitrack.com>';
 const APP_URL = process.env.FRONTEND_URL || 'https://civitrack-dev.netlify.app';
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
+const brevoApiKeyLooksValid = (key?: string) => !!(key && /^xkeysib-[A-Za-z0-9_\-]{10,}$/.test(key));
 
 console.log('Email Config Status:');
 console.log(`  EMAIL_HOST: ${EMAIL_HOST}`);
@@ -50,6 +51,11 @@ const brevoRequest = (path: string, method: 'GET' | 'POST', body?: any, timeoutM
   return new Promise((resolve, reject) => {
     if (!BREVO_API_KEY) {
       return reject(new Error('BREVO_API_KEY_NOT_SET'));
+    }
+    if (!brevoApiKeyLooksValid(BREVO_API_KEY)) {
+      const e = new Error('BREVO_API_KEY_INVALID_FORMAT');
+      (e as any).status = 401;
+      return reject(e);
     }
     const data = body ? Buffer.from(JSON.stringify(body)) : undefined;
     const options: https.RequestOptions = {
@@ -216,6 +222,14 @@ const inFlightSends = new Map<string, number>();
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
+export interface EmailDeliveryMeta {
+  attempted: boolean;
+  channel: 'brevo_api' | 'smtp' | 'log-only';
+  status: 'accepted' | 'failed' | 'deferred' | 'skipped';
+  error?: string;
+  messageId?: string;
+}
+
 // Send via Brevo HTTP API if available
 const sendViaBrevo = async (mailOptions: any): Promise<any> => {
   const sender = parseSender(mailOptions.from || EMAIL_FROM);
@@ -232,6 +246,36 @@ const sendViaBrevo = async (mailOptions: any): Promise<any> => {
   const res = await brevoRequest('smtp/email', 'POST', payload, 10000);
   // Brevo returns messageId in header/body; pass through
   return { messageId: res?.messageId || res?.message || 'brevo-api' };
+};
+
+// Try a single quick attempt to send via Brevo, return meta quickly.
+const attemptImmediateEmailSend = async (mailOptions: any): Promise<EmailDeliveryMeta> => {
+  // Prefer Brevo HTTP API for immediate confirmation if key looks valid
+  if (BREVO_API_KEY && brevoApiKeyLooksValid(BREVO_API_KEY)) {
+    try {
+      const info = await sendViaBrevo(mailOptions);
+      return { attempted: true, channel: 'brevo_api', status: 'accepted', messageId: info?.messageId };
+    } catch (err: any) {
+      const status = err?.status || 0;
+      const msg = err?.message || String(err);
+      const transient = status >= 500 || /TIMEOUT|ECONNRESET|EHOSTUNREACH|ENETUNREACH|timeout/i.test(msg);
+      if (transient) {
+        // schedule background retries with fallback
+        void sendEmailWithRetry(mailOptions).catch(e => console.error('Background email retry failed:', e));
+        return { attempted: true, channel: 'brevo_api', status: 'deferred', error: msg };
+      }
+      // Non-transient (e.g., unauthorized) — report failed and do not block
+      return { attempted: true, channel: 'brevo_api', status: 'failed', error: msg };
+    }
+  }
+  // Without valid Brevo API key, avoid blocking on SMTP handshake; schedule background attempt if configured
+  if (EMAIL_CONFIGURED) {
+    void sendEmailWithRetry(mailOptions).catch(e => console.error('Background SMTP send failed:', e));
+    return { attempted: true, channel: 'smtp', status: 'deferred' };
+  }
+  // Log-only mode: no actual send
+  console.log('Email generated (log-only):', mailOptions);
+  return { attempted: false, channel: 'log-only', status: 'skipped' };
 };
 
 /**
@@ -368,7 +412,7 @@ const sendEmailWithRetry = async (mailOptions: any, retryCount = 0, internalRetr
 };
 
 // Send verification email
-export const sendVerificationEmail = async (user: User): Promise<void> => {
+export const sendVerificationEmail = async (user: User): Promise<EmailDeliveryMeta> => {
   try {
     console.log(`Attempting to send verification email to: ${user.email}`);
     // Generate verification token if missing or expired
@@ -400,24 +444,25 @@ export const sendVerificationEmail = async (user: User): Promise<void> => {
       `,
     };
     
-    // Send or log email with retry mechanism
-    if (!EMAIL_CONFIGURED) {
-      console.log('Verification email generated (log-only mode):', mailOptions);
+    const meta = await attemptImmediateEmailSend(mailOptions);
+    if (meta.status === 'accepted') {
+      console.log('Verification email accepted by provider:', meta.messageId || 'n/a');
+    } else if (meta.status === 'deferred') {
+      console.log('Verification email deferred; background delivery scheduled');
+    } else if (meta.status === 'failed') {
+      console.warn('Verification email failed immediately:', meta.error);
     } else {
-      const info = await sendEmailWithRetry(mailOptions);
-      console.log('Verification email sent successfully:', info?.messageId || info?.response || JSON.stringify(info));
+      console.log('Verification email logged-only (no send)');
     }
+    return meta;
   } catch (error) {
     console.error('Error sending verification email:', error);
-    // In log-only mode, do not throw to avoid noisy logs
-    if (EMAIL_CONFIGURED) {
-      throw new Error('Failed to send verification email');
-    }
+    return { attempted: EMAIL_CONFIGURED || !!BREVO_API_KEY, channel: BREVO_API_KEY ? 'brevo_api' : (EMAIL_CONFIGURED ? 'smtp' : 'log-only'), status: 'failed', error: (error as any)?.message || String(error) };
   }
 };
 
 // Send password reset email
-export const sendPasswordResetEmail = async (user: User): Promise<void> => {
+export const sendPasswordResetEmail = async (user: User): Promise<EmailDeliveryMeta> => {
   try {
     console.log(`Attempting to send password reset email to: ${user.email}`);
     // Generate or reuse password reset token (avoid duplicates if still valid)
@@ -456,18 +501,20 @@ export const sendPasswordResetEmail = async (user: User): Promise<void> => {
       `,
     };
     
-    // Send or log email with retry mechanism
-    if (!EMAIL_CONFIGURED) {
-      console.log('Password reset email generated (log-only mode):', mailOptions);
+    const meta = await attemptImmediateEmailSend(mailOptions);
+    if (meta.status === 'accepted') {
+      console.log('Password reset email accepted by provider:', meta.messageId || 'n/a');
+    } else if (meta.status === 'deferred') {
+      console.log('Password reset email deferred; background delivery scheduled');
+    } else if (meta.status === 'failed') {
+      console.warn('Password reset email failed immediately:', meta.error);
     } else {
-      const info = await sendEmailWithRetry(mailOptions);
-      console.log('Password reset email sent successfully:', info.response);
+      console.log('Password reset email logged-only (no send)');
     }
+    return meta;
   } catch (error) {
     console.error('Error sending password reset email:', error);
-    if (EMAIL_CONFIGURED) {
-      throw new Error('Failed to send password reset email');
-    }
+    return { attempted: EMAIL_CONFIGURED || !!BREVO_API_KEY, channel: BREVO_API_KEY ? 'brevo_api' : (EMAIL_CONFIGURED ? 'smtp' : 'log-only'), status: 'failed', error: (error as any)?.message || String(error) };
   }
 };
 

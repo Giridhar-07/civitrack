@@ -48,14 +48,12 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       isEmailVerified: false,
     });
 
-    // Send verification email (fire-and-forget to avoid blocking on SMTP timeouts)
+    // Send verification email with immediate delivery meta (non-blocking for long SMTP)
+    let emailMeta: any = null;
     try {
-      void sendVerificationEmail(user).catch(emailError => {
-        console.error('Failed to send verification email:', emailError);
-      });
+      emailMeta = await sendVerificationEmail(user);
     } catch (emailError) {
-      console.error('Failed to schedule verification email:', emailError);
-      // Continue with registration even if email scheduling fails
+      console.error('Verification email immediate attempt failed:', emailError);
     }
 
     // Generate JWT token
@@ -72,7 +70,12 @@ export const register = async (req: Request, res: Response): Promise<Response> =
       createdAt: user.createdAt,
     };
 
-    return successResponse(res, { user: userData, token }, 'User registered successfully. Please check your email to verify your account.', 201);
+    return successResponse(
+      res,
+      { user: userData, token, meta: { emailDelivery: emailMeta } },
+      'User registered successfully. Please check your email to verify your account.',
+      201
+    );
   } catch (error) {
     console.error('Registration error:', error);
     return errorResponse(res, 'Error registering user');
@@ -606,12 +609,15 @@ export const requestPasswordReset = async (req: Request, res: Response): Promise
       return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
     }
     
-    // Send password reset email (fire-and-forget to avoid blocking on SMTP timeouts)
-    void sendPasswordResetEmail(user).catch(err => {
-      console.error('Password reset email send failed:', err);
-    });
+    // Send password reset email with immediate delivery meta (non-blocking for long SMTP)
+    let emailMeta: any = null;
+    try {
+      emailMeta = await sendPasswordResetEmail(user);
+    } catch (err) {
+      console.error('Password reset immediate attempt failed:', err);
+    }
     
-    return successResponse(res, {}, 'If your email exists in our system, you will receive a password reset link');
+    return successResponse(res, { meta: { emailDelivery: emailMeta } }, 'If your email exists in our system, you will receive a password reset link');
   } catch (error) {
     console.error('Password reset request error:', error);
     // Still return success to prevent email enumeration
@@ -671,12 +677,15 @@ export const resendVerificationEmail = async (req: Request, res: Response): Prom
       return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
     }
     
-    // Send verification email (fire-and-forget to avoid blocking on SMTP timeouts)
-    void sendVerificationEmail(user).catch(err => {
-      console.error('Resend verification email send failed:', err);
-    });
+    // Send verification email with immediate delivery meta
+    let emailMeta: any = null;
+    try {
+      emailMeta = await sendVerificationEmail(user);
+    } catch (err) {
+      console.error('Resend verification immediate attempt failed:', err);
+    }
     
-    return successResponse(res, {}, 'If your email exists and is not verified, you will receive a verification email');
+    return successResponse(res, { meta: { emailDelivery: emailMeta } }, 'If your email exists and is not verified, you will receive a verification email');
   } catch (error) {
     console.error('Resend verification email error:', error);
     // Still return success to prevent email enumeration
