@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { getCircuitBreaker } from '../utils/circuitBreaker';
 
 // Initialize Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
@@ -57,9 +58,11 @@ export interface ChatResponse {
 
 class GeminiService {
   private model: any;
+  private circuitBreaker: ReturnType<typeof getCircuitBreaker>;
   private static readonly VALIDATION_TIMEOUT_MS = 15000; // 15s to avoid Render timeouts
 
   constructor() {
+    this.circuitBreaker = getCircuitBreaker('geminiService');
     try {
       this.model = genAI.getGenerativeModel({ model: DEFAULT_MODEL });
     } catch (error) {
@@ -68,7 +71,6 @@ class GeminiService {
         this.model = genAI.getGenerativeModel({ model: FALLBACK_MODEL });
       } catch (fallbackError) {
         console.error('Error initializing Gemini model with fallback:', fallbackError);
-        // Do not throw here to avoid crashing the server; we'll handle gracefully at call sites
         this.model = null;
       }
     }
@@ -93,62 +95,64 @@ class GeminiService {
    * Generate a response to user message with conversation context
    */
   async generateResponse(userMessage: string, conversationHistory: ChatMessage[] = []): Promise<ChatResponse> {
-    try {
-      if (!this.model) {
-        this.ensureModelInitialized();
-      }
-      if (!this.model) {
-        throw new Error('AI model not initialized');
-      }
+    return this.circuitBreaker.execute(async () => {
+      try {
+        if (!this.model) {
+          this.ensureModelInitialized();
+        }
+        if (!this.model) {
+          throw new Error('AI model not initialized');
+        }
 
-      // Build conversation context
-      let prompt = SYSTEM_PROMPT + '\n\n';
-      
-      // Add conversation history (limit to last 10 messages for context)
-      const recentHistory = conversationHistory.slice(-10);
-      if (recentHistory.length > 0) {
-        prompt += 'Conversation History:\n';
-        recentHistory.forEach(msg => {
-          prompt += `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}\n`;
+        // Build conversation context
+        let prompt = SYSTEM_PROMPT + '\n\n';
+        
+        // Add conversation history (limit to last 10 messages for context)
+        const recentHistory = conversationHistory.slice(-10);
+        if (recentHistory.length > 0) {
+          prompt += 'Conversation History:\n';
+          recentHistory.forEach(msg => {
+            prompt += `${msg.role === 'user' ? 'User' : 'Assistant'}: ${msg.content}\n`;
+          });
+          prompt += '\n';
+        }
+
+        // Add current user message
+        prompt += `User: ${userMessage}\n\nAssistant:`;
+
+        // Use structured contents format for v1beta models
+        const result = await this.model.generateContent({
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                { text: prompt }
+              ]
+            }
+          ]
         });
-        prompt += '\n';
+        const response = await result.response;
+        const text = response.text();
+
+        if (!text || text.trim().length === 0) {
+          throw new Error('Empty response from AI service');
+        }
+
+        return {
+          message: text.trim(),
+          timestamp: new Date()
+        };
+
+      } catch (error) {
+        console.error('Error generating AI response:', error);
+        
+        // Provide fallback response for service errors
+        return {
+          message: "I'm sorry, I'm experiencing technical difficulties. Please try again in a moment. For immediate assistance with civic issues, you can browse the platform or contact your local government office directly.",
+          timestamp: new Date()
+        };
       }
-
-      // Add current user message
-      prompt += `User: ${userMessage}\n\nAssistant:`;
-
-      // Use structured contents format for v1beta models
-      const result = await this.model.generateContent({
-        contents: [
-          {
-            role: 'user',
-            parts: [
-              { text: prompt }
-            ]
-          }
-        ]
-      });
-      const response = await result.response;
-      const text = response.text();
-
-      if (!text || text.trim().length === 0) {
-        throw new Error('Empty response from AI service');
-      }
-
-      return {
-        message: text.trim(),
-        timestamp: new Date()
-      };
-
-    } catch (error) {
-      console.error('Error generating AI response:', error);
-      
-      // Provide fallback response for service errors
-      return {
-        message: "I'm sorry, I'm experiencing technical difficulties. Please try again in a moment. For immediate assistance with civic issues, you can browse the platform or contact your local government office directly.",
-        timestamp: new Date()
-      };
-    }
+    });
   }
 
   /**
@@ -164,7 +168,7 @@ class GeminiService {
       map: "How do I use the map feature to view and report issues?"
     } as const;
 
-    const prompt = (helpPrompts as any)[topic] || 
+    const prompt = (helpPrompts as any)[topic] ||
                   "Provide general help information about using the CiviTrack platform.";
 
     return await this.generateResponse(prompt);
@@ -174,42 +178,44 @@ class GeminiService {
    * Validate API key and service availability
    */
   async validateService(): Promise<boolean> {
-    try {
-      if (!process.env.GEMINI_API_KEY) {
-        console.error('Gemini API key not configured');
-        return false;
-      }
+    return this.circuitBreaker.execute(async () => {
+      try {
+        if (!process.env.GEMINI_API_KEY) {
+          console.error('Gemini API key not configured');
+          return false;
+        }
 
-      if (!this.model) {
-        this.ensureModelInitialized();
-      }
+        if (!this.model) {
+          this.ensureModelInitialized();
+        }
 
-      if (!this.model) {
-        console.error('Gemini model not initialized');
-        return false;
-      }
+        if (!this.model) {
+          console.error('Gemini model not initialized');
+          return false;
+        }
 
-      // Test with a simple prompt, guard with timeout to avoid hanging
-      const testPromise = (async () => {
-        const testResult = await this.model.generateContent({
-          contents: [
-            { role: 'user', parts: [{ text: 'Hello, test response' }] }
-          ]
+        // Test with a simple prompt, guard with timeout to avoid hanging
+        const testPromise = (async () => {
+          const testResult = await this.model.generateContent({
+            contents: [
+              { role: 'user', parts: [{ text: 'Hello, test response' }] }
+            ]
+          });
+          const response = await testResult.response;
+          return response.text().length > 0;
+        })();
+
+        const timeoutPromise = new Promise<boolean>((resolve) => {
+          setTimeout(() => resolve(false), GeminiService.VALIDATION_TIMEOUT_MS);
         });
-        const response = await testResult.response;
-        return response.text().length > 0;
-      })();
 
-      const timeoutPromise = new Promise<boolean>((resolve) => {
-        setTimeout(() => resolve(false), GeminiService.VALIDATION_TIMEOUT_MS);
-      });
+        return await Promise.race([testPromise, timeoutPromise]);
 
-      return await Promise.race([testPromise, timeoutPromise]);
-
-    } catch (error) {
-      console.error('Gemini service validation failed:', error);
-      return false;
-    }
+      } catch (error) {
+        console.error('Gemini service validation failed:', error);
+        return false;
+      }
+    });
   }
 }
 
