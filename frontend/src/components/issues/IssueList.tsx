@@ -116,7 +116,8 @@ const IssueList: React.FC<IssueListProps> = ({
 
   return (
     <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
-      <Grid container spacing={3}>
+      {showToolbar && (
+        <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
           <TextField
             fullWidth
@@ -220,7 +221,8 @@ const IssueList: React.FC<IssueListProps> = ({
             </Select>
           </FormControl>
         </Grid>
-      </Grid>
+        </Grid>
+      )}
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', my: 4 }}>
           <CircularProgress />

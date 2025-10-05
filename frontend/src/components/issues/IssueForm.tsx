@@ -35,6 +35,7 @@ const IssueForm: React.FC = () => {
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
   const [photoPreviewUrls, setPhotoPreviewUrls] = useState<string[]>([]);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [titleError, setTitleError] = useState<string>('');
   
   // Initialize form with useApiForm hook
   const form = useApiForm<IssueFormData, void>(
@@ -73,6 +74,19 @@ const IssueForm: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     formHandleChange(name as keyof IssueFormData, value);
+
+    if (name === 'title') {
+      const trimmed = value.trim();
+      if (!trimmed) {
+        setTitleError('Title is required');
+      } else if (trimmed.length < 5) {
+        setTitleError('Title must be at least 5 characters');
+      } else if (trimmed.length > 100) {
+        setTitleError('Title must be at most 100 characters');
+      } else {
+        setTitleError('');
+      }
+    }
   };
 
   const handleLocationSelect = (location: Location) => {
@@ -140,8 +154,21 @@ const IssueForm: React.FC = () => {
   const validateStep = (step: number): boolean => {
     switch (step) {
       case 0: // Basic info
-        if (!formData.title.trim()) {
-          return false;
+        {
+          const t = formData.title.trim();
+          if (!t) {
+            setTitleError('Title is required');
+            return false;
+          }
+          if (t.length < 5) {
+            setTitleError('Title must be at least 5 characters');
+            return false;
+          }
+          if (t.length > 100) {
+            setTitleError('Title must be at most 100 characters');
+            return false;
+          }
+          setTitleError('');
         }
         if (!formData.description.trim()) {
           return false;
@@ -200,6 +227,9 @@ const IssueForm: React.FC = () => {
               onChange={handleChange}
               margin="normal"
               required
+              error={Boolean(titleError)}
+              helperText={titleError || 'Enter a clear, concise title (5–100 characters)'}
+              inputProps={{ minLength: 5, maxLength: 100 }}
               sx={{ 
                 mb: 3,
                 '& .MuiOutlinedInput-root': {
