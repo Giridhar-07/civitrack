@@ -52,6 +52,8 @@ function readLocalEnvForRender() {
     'EMAIL_PASS',
     'EMAIL_FROM',
     'APP_URL',
+    // Ensure Brevo API key sync so remote env reflects local changes
+    'BREVO_API_KEY',
     // Also sync frontend URL used by email templates/links
     'FRONTEND_URL',
     'CORS_ORIGIN',

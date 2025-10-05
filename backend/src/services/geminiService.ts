@@ -10,10 +10,12 @@ const ALLOWED_FREE_MODELS = new Set([
   'gemini-1.5-flash',
   'gemini-1.5-flash-8b',
   'gemini-1.5-flash-latest',
+  'gemini-pro',
+  'gemini-pro-latest',
 ]);
 const ENV_MODEL = process.env.GEMINI_MODEL;
-const DEFAULT_MODEL = (ENV_MODEL && ALLOWED_FREE_MODELS.has(ENV_MODEL)) ? ENV_MODEL : 'gemini-1.5-flash';
-const FALLBACK_MODEL = 'gemini-1.5-flash';
+const DEFAULT_MODEL = (ENV_MODEL && ALLOWED_FREE_MODELS.has(ENV_MODEL)) ? ENV_MODEL : 'gemini-pro-latest';
+const FALLBACK_MODEL = 'gemini-pro-latest';
 if (ENV_MODEL && !ALLOWED_FREE_MODELS.has(ENV_MODEL)) {
   console.warn(`GEMINI_MODEL="${ENV_MODEL}" is not a supported free-tier model. Falling back to "${DEFAULT_MODEL}".`);
 }
