@@ -175,6 +175,10 @@ const VALID_API_ENDPOINTS = {
   '/status': ['GET'],
   '/api/status': ['GET'],
   
+  // About endpoints
+  '/about': ['GET'],
+  '/api/about': ['GET'],
+  
   // Auth endpoints
   '/auth/login': ['POST'],
   '/auth/register': ['POST'],

@@ -55,21 +55,25 @@ const Footer: React.FC = () => {
               Connect With Us
             </Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
+              <Link href="https://github.com/Giridhar-07" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <IconButton sx={{ color: '#fff' }}>
+                  <GitHub />
+                </IconButton>
+              </Link>
+              <Link href="https://www.instagram.com/unknown_fan_07/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <IconButton sx={{ color: '#C13584' }}>
+                  <Instagram />
+                </IconButton>
+              </Link>
               <IconButton aria-label="facebook" sx={{ color: '#4267B2' }}>
                 <Facebook />
               </IconButton>
               <IconButton aria-label="twitter" sx={{ color: '#1DA1F2' }}>
                 <Twitter />
               </IconButton>
-              <IconButton aria-label="instagram" sx={{ color: '#C13584' }}>
-                <Instagram />
-              </IconButton>
-              <IconButton aria-label="github" sx={{ color: '#fff' }}>
-                <GitHub />
-              </IconButton>
             </Box>
             <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-              Contact: support@civitrack.com
+              Contact: noreplycivitrack@gmail.com
             </Typography>
           </Grid>
         </Grid>

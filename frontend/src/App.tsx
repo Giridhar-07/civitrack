@@ -20,6 +20,7 @@ import NotificationSystem from './components/common/NotificationSystem';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import MapPage from './pages/MapPage';
 import SearchPage from './pages/SearchPage';
+import AboutPage from './pages/AboutPage';
 import testApiConnection from './utils/testApiConnection';
 
 // Protected route component that uses our useAuth hook
@@ -81,6 +82,7 @@ const App: React.FC = () => {
               <Route path="/issues/:id" element={<IssueDetailPage />} />
               <Route path="/map" element={<MapPage />} />
               <Route path="/search" element={<SearchPage />} />
+              <Route path="/about" element={<AboutPage />} />
               <Route 
                 path="/report" 
                 element={
