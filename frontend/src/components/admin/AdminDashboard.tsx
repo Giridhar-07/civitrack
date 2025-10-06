@@ -614,8 +614,8 @@ const AdminDashboard: React.FC = () => {
     
     setDeleting(true);
     try {
-      // In a real app, you would call an API to delete the issue
-      // For demo purposes, we'll just remove it from the state
+      // Call the API to delete the issue
+      await issueService.deleteIssue(issueToDelete);
       
       // Remove from issues list
       const updatedIssues = issues?.filter(issue => issue.id !== issueToDelete) ?? [];
@@ -628,10 +628,12 @@ const AdminDashboard: React.FC = () => {
       // Update stats
       updateStats(updatedIssues);
       
+      showSuccess('Issue deleted successfully');
       handleDeleteDialogClose();
     } catch (error) {
       console.error('Failed to delete issue:', error);
       setErrorMessage('Failed to delete issue. Please try again.');
+      showError('Failed to delete issue');
     } finally {
       setDeleting(false);
     }

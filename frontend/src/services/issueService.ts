@@ -330,6 +330,24 @@ const issueService = {
       throw error;
     }
   },
+  
+  deleteIssue: async (issueId: string): Promise<void> => {
+    try {
+      // Add cache control headers to prevent 304 responses
+      const response = await api.delete(`/issues/${issueId}`, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store',
+          'Pragma': 'no-cache',
+          'If-None-Match': '',
+          'If-Modified-Since': ''
+        }
+      });
+      // Delete endpoint returns void; ignore response body
+      return;
+    } catch (error) {
+      throw error;
+    }
+  },
 
   getNearbyIssues: async (latitude: number, longitude: number, radius: number = 5): Promise<Issue[]> => {
     try {
