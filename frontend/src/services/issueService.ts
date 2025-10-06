@@ -333,15 +333,8 @@ const issueService = {
   
   deleteIssue: async (issueId: string): Promise<void> => {
     try {
-      // Add cache control headers to prevent 304 responses
-      const response = await api.delete(`/issues/${issueId}`, {
-        headers: {
-          'Cache-Control': 'no-cache, no-store',
-          'Pragma': 'no-cache',
-          'If-None-Match': '',
-          'If-Modified-Since': ''
-        }
-      });
+      // Perform DELETE without non-simple headers to avoid CORS preflight failures
+      const response = await api.delete(`/issues/${issueId}`);
       // Delete endpoint returns void; ignore response body
       return;
     } catch (error) {

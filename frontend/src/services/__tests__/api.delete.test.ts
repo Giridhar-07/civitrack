@@ -28,7 +28,7 @@ jest.mock('../../utils/apiRetry', () => {
 import api from '../api';
 
 describe('api.delete cache-control headers', () => {
-  it('adds cache-control headers to DELETE requests', async () => {
+  it('appends cache-busting query param to DELETE url', async () => {
     const apiRetry = require('../../utils/apiRetry');
     const deleteMock = apiRetry.__deleteMock as jest.Mock;
 
@@ -36,12 +36,7 @@ describe('api.delete cache-control headers', () => {
 
     expect(deleteMock).toHaveBeenCalled();
     const call = deleteMock.mock.calls[0];
-    const cfg = call[1] || {};
-    const headers = cfg.headers || {};
-
-    expect(headers['Cache-Control']).toContain('no-cache');
-    expect(headers['Pragma']).toBe('no-cache');
-    expect(headers['Expires']).toBe('0');
-    expect(headers['X-Requested-With']).toMatch(/^XMLHttpRequest-/);
+    const url = call[0] as string;
+    expect(url).toMatch(/\?_=[0-9]+$/);
   });
 });

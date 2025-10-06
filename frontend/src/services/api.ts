@@ -374,22 +374,12 @@ const api: ApiInterface = USE_MOCK_SERVICE ? mockApi : {
       console.error(`Invalid API endpoint: DELETE ${url}`);
       throw new Error(`Invalid API endpoint: DELETE ${url}. This endpoint does not exist or is not accessible.`);
     }
-    
-    // Add cache control headers to prevent 304 Not Modified responses
-    const cacheControlConfig = {
-      ...config,
-      headers: {
-        ...(config?.headers || {}),
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
-        // Add random query parameter to bypass cache
-        'X-Requested-With': `XMLHttpRequest-${Date.now()}`
-      }
-    };
-    
+    // Use cache-busting query parameter to avoid any proxy caching without adding custom headers
+    const separator = url.includes('?') ? '&' : '?';
+    const finalUrl = `${url}${separator}_=${Date.now()}`;
+
     try {
-      const response = await axiosInstance.delete<T>(url, cacheControlConfig);
+      const response = await axiosInstance.delete<T>(finalUrl, config);
       return { data: unwrap<T>(response) };
     } catch (error: any) {
       if (error.statusCode === 404) {
